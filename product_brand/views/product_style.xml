@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!-- createe form view of Product Syle  -->
+		<record id="view_product_type_form_1" model="ir.ui.view">
+            <field name="name">product.style.form</field>
+            <field name="model">product.style</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <form string="Product Style">
+                    <sheet>
+                        <group>
+                            <field name="name"/>
+                            <field name="code"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+		</record>
+        
+        <!-- createe tree view of Product style -->
+		<record id="view_product_type_tree_1" model="ir.ui.view">
+		<field name = "name">product.style.tree</field>
+        <field name = "model">product.style</field>
+        <field name="type">tree</field>
+        <field name = "arch" type = "xml">
+            <tree string="Product Style">
+                <field name="name"/>
+                <field name="code"/>
+            </tree>
+       </field>
+	   </record>
+
+      <!-- create action of Product style -->
+		<record id="product_style_action" model="ir.actions.act_window">
+            <field name = "name">Style</field>
+            <field name = "res_model">product.style</field>
+            <field name = "view_type">form</field>
+            <field name = "view_mode">tree,form</field>
+        </record>
+        
+    <menuitem action="product_style_action" id="menu_product_style_action" parent="sale.prod_config_main" sequence="13" />
+    
+    </data>
+</odoo>

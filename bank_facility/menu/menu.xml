@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+<!--
+        <menuitem id="menu_bank_facility_root" name="Bank Facility"
+          sequence="2" />
+-->
+
+         <menuitem name="Bank Facility" id="menu_granite_measurement"
+			parent="account.menu_finance_configuration" action="action_bank_facility_view"
+			sequence="3" />
+    </data>
+</odoo>

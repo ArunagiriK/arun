@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="purchase_order_inheirt_form" model="ir.ui.view">
+            <field name="name">purchase_order_inheirt_form</field>
+            <field name="model">purchase.order</field>
+            <field name="inherit_id" ref="purchase.purchase_order_form"/>
+            <field name="arch" type="xml">
+                 <xpath expr="//field[@name='company_id']" position="after">
+                        <field name="is_currency" attrs="{'readonly': [('state', 'in', ('purchase'))]}"/>
+                        <field name="currency_rate"  readonly="1" attrs="{'invisible': [('is_currency', '!=', True)]}"/>
+                        <field name="currency_rate1" attrs="{'invisible': [('is_currency', '!=', True)]}"/>
+                        <field name="currency_rate2" readonly="1" attrs="{'invisible': [('is_currency', '!=', True)]}"/>
+                 </xpath>
+<!--
+                <xpath expr="//field[@name='currency_id']" position="replace">
+                    <field name="currency_id1" groups="base.group_multi_currency"/>
+                </xpath>
+-->
+            </field>
+        </record>
+    </data>
+</odoo>

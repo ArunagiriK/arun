@@ -1,0 +1,118 @@
+<?xml version="1.0" ?>
+<odoo>
+    <data noupdate="0">
+    
+    
+       <record id="email_pending_sale_order_status_summary" model="mail.template">
+            <field name="name">Pending Sales Order Report</field>
+            
+            <field name="email_from">${user.email}</field>
+            <!-- <field name="email_to">lal@kreoltrade.net,kreol@kreoltrade.net,rajeev@kreoltrade.net,nandu@kreoltrade.net,sudhi@kreoltrade.net,baiju@kreoltrade.net</field>-->
+            <field name="email_to">lal@kreoltrade.net,kreol@kreoltrade.net,vijayan@kreoltrade.net</field>
+            <field name="email_cc">karthik@kreoltrade.net,vinod@kreoltrade.net,vinodvs@kreoltrade.net,jinesh@kreoltrade.net,
+ subin@kreoltrade.net,rijin@kreoltrade.net,
+ jijin@kreoltrade.net,james@kreoltrade.net,shameer@kreoltrade.net,
+ ajith@kreoltrade.net,guthus@kreoltrade.net,bipinraj@kreoltrade.net,
+ libeesh@kreoltrade.net,sakthi@kreoltrade.net,john@kreoltrade.net,minoj@kreoltrade.net,
+ jishor@kreoltrade.net,kannan@kreoltrade.net,sureshan@kreoltrade.net,sevi@kreoltrade.net,
+ rajesh@kreoltrade.net,sooraj@kreoltrade.net,sudheesh.badra@gmail.com,
+ midhunparappur@gmail.com,jojijosephne@yahoo.com,shinosh@kreoltrade.net,
+ suvil@kreoltrade.net,salgi@kreoltrade.net,subin@kreoltrade.net,libeeshms@gmail.com,
+ bipinraj@kreoltrade.net,denny@kreoltrade.net,jishor@kreoltrade.net,jithin@kreoltrade.net,piyush@kreoltrade.net</field>
+            <field name="subject">Butterfly Pending Sale Order  Report As on ${ctx["common_data"]["date"]}</field>
+            <field name="auto_delete" eval="True"/>
+            <field name="model_id" ref="base.model_res_users"/>
+           
+            <field name="body_html"><![CDATA[
+<p>Dear All,
+ % macro order_summary(values,detail):
+ 					
+                <table cellspacing="1" border="1" cellpadding="4">
+                <tr style="color:blue;">
+                    <th>Area</th>
+                    <th>Quotation</th>
+                    <th>Sales Order</th>
+                    <th>Total</th>
+                   
+                  
+                    
+                </tr>
+                        % for data in values:
+                    <tr>
+                        <td>${data.get('Area','')}</td>
+                        <td align="right">${data.get('qtn','')}</td>
+                        <td align="right">${data.get('sale','')}</td>
+                        <td align="right">${data.get('total','')}</td>
+                                             
+                       
+                    </tr>
+
+                % endfor
+                <tr style="color:blue;font-weight: bold;">
+                	<td>Total</td>
+                	<td align="right">${detail.get('qtn','')}</td>
+                    <td align="right">${detail.get('sale','')}</td>
+                	<td align="right">${detail.get('total','')}</td>
+              </tr>
+                </table>
+                % endmacro
+                
+                 % macro order_details(values,total_amount):
+ 					
+                <table cellspacing="1" border="1" cellpadding="4">
+                <tr style="color:blue;">
+                    <th width="10%">DATE</th>
+                    <th>ORDER NO.</th>
+                    <th>CUSTOMER NAME</th>
+                    <th>SALES MAN</th>
+                    <th>TOTAL</th>
+                     <th>STATE</th>
+                    <th>REMARKS</th>
+                    
+                </tr>
+                        % for dat in values:
+                    <tr>
+                        <td>${dat.get('Date','')}</td>
+                        <td>${dat.get('Order_No','')}</td>
+                        <td>${dat.get('Party','')}</td>
+                        <td>${dat.get('Salesman','')}</td>
+                        <td align="right">${dat.get('Amount','')}</td>
+                          <td>${dat.get('State','')}</td>
+                         <td>${dat.get('Remarks','')}</td>
+                       
+                    </tr>
+
+                % endfor
+                <tr style="color:blue;font-weight: bold;">
+                	<td>Total</td>
+                	<td></td>
+                	<td></td>
+                	<td></td>
+                	<td align="right">${total_amount}</td>
+                	<td></td>
+                	<td></td>
+                </tr>
+                </table>
+                % endmacro
+
+
+                <h4>Please see below the details of pending Sale Orders as on ${ctx["common_data"]["date"]}</h4>
+                <h2><u>Pending Sale Order Summary</u></h2>
+                ${order_summary(ctx["summary"],ctx["summary_sum"])}
+                 <h2><u>Pending Sale Order Detailed </u></h2>
+                ${order_details(ctx["data"],ctx["total_amount"])}
+                <p>
+                Thanks,
+                </p>
+                <pre>
+                --
+                Butterfly Auto Generated Email
+                </pre>
+
+]]></field>
+        </record>
+        
+    
+    
+    </data>
+</odoo>

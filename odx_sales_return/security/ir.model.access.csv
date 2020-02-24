@@ -1,0 +1,4 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_odx_sales_return_id,auth_sales_return,model_odx_sale_return,,1,1,1,1
+access_odx_sales_return_line_id,auth_sales_return_line,model_odx_sale_return_line,,1,1,1,1
+access_odx_return_configuration_id,odx_return_configuration,model_odx_return_configuration,,1,1,1,1

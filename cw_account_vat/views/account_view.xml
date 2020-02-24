@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<data>
+
+		<record id="view_partner_vat_form" model="ir.ui.view">
+			<field name="name">res.partner.vat.form.inherit</field>
+			<field name="model">res.partner</field>
+			<field name="inherit_id" ref="base.view_partner_form" />
+			<field name="arch" type="xml">
+				<xpath expr="//field[@name='vat']" position="replace" />
+			</field>
+		</record>
+			
+
+		<record id="view_partner_vat_account_form" model="ir.ui.view">
+			<field name="name">res.partner.vat.acc.form.inherit</field>
+			<field name="model">res.partner</field>
+			<field name="inherit_id" ref="base.view_partner_form" />
+			<field name="groups_id" eval="[(4, ref('account.group_account_invoice'))]" />
+			<field name="arch" type="xml">
+				<xpath expr="//group[@name='fiscal_information']" position="inside">
+					<field name="tax_type" />
+					<field name="vat" placeholder="e.g. 110477472701"
+						attrs="{'required': [('place_supply_country_code', 'in', ('ae', 'AE')),
+                        					('is_company','=', True), 
+                        					('parent_id','=',False), 
+                        					'|', ('customer', '=', True), ('supplier', '=', True)],
+                        		'invisible': ['|', ('is_company','=', False), ('parent_id','!=',False)]}" />
+					<!-- <field name="place_supply_state_id" options="{'no_create': True, 
+						'no_open': True}" attrs="{ 'invisible': [ '|', '|', ('type', '=', 'contact'), 
+						('tax_type', 'in', ('non_gcc')), '&amp;', ('customer', '!=', True), ('supplier', 
+						'!=', True) ], 'required': [ ('type', '!=', 'contact'), ('tax_type', 'not 
+						in', ('non_gcc')), '|', ('customer', '=', True), ('supplier', '=', True) 
+						]}" /> <field name="place_supply_country_id" options="{'no_create': True, 
+						'no_open': True}" attrs="{ 'invisible': [ '|', '|', ('type', '=', 'contact'), 
+						('tax_type', 'in', ('non_gcc')), '&amp;', ('customer', '!=', True), ('supplier', 
+						'!=', True) ], 'required': [ ('type', '!=', 'contact'), ('tax_type', 'not 
+						in', ('non_gcc')), '|', ('customer', '=', True), ('supplier', '=', True) 
+						]}" /> -->
+					<field name="place_supply_state_id" options="{'no_create': True, 'no_create_edit': True, 'no_open': True}" 
+											attrs="{'required': 
+													[
+													('place_supply_country_code', 'in', ('ae', 'AE')),
+			                        				('is_company','=', True), 
+			                        				('parent_id','=',False), 
+                        							'|', ('customer', '=', True), ('supplier', '=', True)
+                        						]}" />
+					<field name="place_supply_country_id" options="{'no_create': True, 'no_create_edit': True, 'no_open': True}"
+											attrs="{'required': 
+													[
+													('tax_type', 'in', ('vat', 'gcc_vat', 'vat_des')),
+			                        				('is_company','=', True), 
+			                        				('parent_id','=',False), 
+                        							'|', ('customer', '=', True), ('supplier', '=', True)
+                        						]}" />
+					<field name="place_supply_country_code" invisible="1" />
+				</xpath>
+			</field>
+		</record>
+
+
+		<record id="view_account_position_form_inherit" model="ir.ui.view">
+			<field name="name">account.fiscal.position.form.inherit</field>
+			<field name="model">account.fiscal.position</field>
+			<field name="inherit_id" ref="account.view_account_position_form" />
+			<field name="arch" type="xml">
+				<xpath expr="//field[@name='active']" position="after">
+					<field name="tax_type" />
+				</xpath>
+			</field>
+		</record>
+
+
+		<record id="view_move_form_inherit" model="ir.ui.view">
+			<field name="name">account.move.form.inherit</field>
+			<field name="model">account.move</field>
+			<field name="inherit_id" ref="account.view_move_form" />
+			<field name="arch" type="xml">
+				<xpath expr="//field[@name='line_ids']/tree/field[@name='date_maturity']"
+					position="after">
+					<field name="invl_id" groups="base.group_no_one" />
+					<field name="invoice_tax_line_id" groups="base.group_no_one" />
+				</xpath>
+			</field>
+		</record>
+
+
+		<record id="view_account_tax_group_form" model="ir.ui.view">
+			<field name="name">account.tax.group.form</field>
+			<field name="model">account.tax.group</field>
+			<field name="arch" type="xml">
+				<form string="Tax Group">
+					<sheet>
+						<group>
+							<group>
+								<field name="name" />
+								<field name="type" />
+							</group>
+							<group>
+								<field name="sequence" />
+							</group>
+						</group>
+					</sheet>
+				</form>
+			</field>
+		</record>
+
+
+		<record id="invoice_form_inherit" model="ir.ui.view">
+			<field name="name">account.invoice.supplier.form.inherit</field>
+			<field name="model">account.invoice</field>
+			<field name="inherit_id" ref="account.invoice_form" />
+			<field name="arch" type="xml">
+				<xpath
+					expr="//field[@name='fiscal_position_id']"
+					position="after">
+					<field name="tax_type" invisible="1" />
+				</xpath>
+				<xpath
+					expr="//field[@name='invoice_line_ids']//field[@name='invoice_line_tax_ids']"
+					position="attributes">
+					<attribute name="context">{'type':parent.type, 'tax_type': parent.tax_type}</attribute>
+				</xpath>
+			</field>
+		</record>
+
+
+		<record id="invoice_supplier_form_inherit" model="ir.ui.view">
+			<field name="name">account.invoice.supplier.form.inherit</field>
+			<field name="model">account.invoice</field>
+			<field name="inherit_id" ref="account.invoice_supplier_form" />
+			<field name="arch" type="xml">
+				<xpath
+					expr="//field[@name='fiscal_position_id']"
+					position="after">
+					<field name="tax_type" invisible="1" />
+				</xpath>
+				<xpath
+					expr="//field[@name='invoice_line_ids']//field[@name='invoice_line_tax_ids']"
+					position="attributes">
+					<attribute name="context">{'type':parent.type, 'tax_type': parent.tax_type}</attribute>
+				</xpath>
+			</field>
+		</record>
+		
+		
+<!--		<record id="view_company_account_form" model="ir.ui.view">-->
+<!--			<field name="name">res.company.account.form</field>-->
+<!--			<field name="model">res.company</field>-->
+<!--			<field name="inherit_id" ref="base.view_company_form" />-->
+<!--			<field name="arch" type="xml">-->
+<!--				<field name="report_footer" position="after">-->
+<!--					<field name="anglo_saxon_accounting" />-->
+<!--				</field>-->
+<!--			</field>-->
+<!--		</record>-->
+
+
+
+	</data>
+</odoo>

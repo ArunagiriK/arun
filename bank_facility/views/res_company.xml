@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <data>
+        <record id="pm_res_company_form" model="ir.ui.view">
+            <field name="name">pm_res_company_form</field>
+            <field name="model">res.company</field>
+            <field name="inherit_id" ref="base.view_company_form"/>
+            <field name="arch" type="xml">
+               <xpath expr="//field[@name='currency_id']" position="after">
+                        <field name="facility_total" attrs="{'invisible': [('parent_id', '!=', False)]}" />
+                        <field name="facility_total_child" attrs="{'invisible': [('parent_id', '=', False)]}"/>
+                        <field name="facility_utilized" attrs="{'invisible': [('parent_id', '!=', False)]}" />
+<!--
+                        <field name="facility_utilized_child" attrs="{'invisible': [('parent_id', '=', False)]}"/>
+-->
+                        <field name="faciltity_utilized_given" attrs="{'invisible': [('parent_id', '=', False)]}"/>
+                        <field name="facility_available" attrs="{'invisible': [('parent_id', '!=', False)]}" />
+                        <field name="facility_available_child" attrs="{'invisible': [('parent_id', '=', False)]}"/>
+               </xpath>
+            </field>
+        </record>
+    </data>
+
+</odoo>

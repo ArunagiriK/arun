@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2016-2017 Onestein (<http://www.onestein.eu>)
+     License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl). -->
+
+<odoo>
+
+    <record id="edit_holiday_new_expiration" model="ir.ui.view">
+        <field name="model">hr.leave</field>
+        <field name="inherit_id" ref="hr_holidays.hr_leave_view_form" />
+        <field name="arch" type="xml">
+            <xpath expr="//sheet" position="inside">
+                <notebook>
+                    <page autofocus="autofocus" name='expiration' string="Expiration">
+                        <group name="validity">
+                            <group string="Expiring">
+                                <field name="expiration_date" />
+                                <field name="expire_template_id" attrs="{'required':[('expiration_date','!=',False)]}"/>
+                                <field name="email_notify"/>
+                                <field name="expired" invisible="1"/>
+<!--
+                                <field name="limit" invisible="1"/>
+-->
+                            </group>
+                            <group string="Notification" attrs="{'invisible':[('email_notify','=',False)]}">
+                                <field name="notify_period" attrs="{'required':[('email_notify','!=',False)]}"/>
+                                <field name="notify_template_id" attrs="{'required':[('email_notify','!=',False)]}"/>
+                                <field name="notify_to" attrs="{'required':[('email_notify','!=',False)]}"/>
+                                <field name="notification_sent" invisible="1"/>
+                            </group>
+                             <!--Buttons for testing, uncomment if you want to use them:-->
+                             <!--<button name="check_expiring" type="object" string="test check expired"-->
+                                 <!--class="oe_link oe_edit_only" groups="base.group_no_one"/>-->
+                             <!--<button name="send_notifications" type="object" string="test send email"-->
+                                 <!--class="oe_link oe_edit_only" groups="base.group_no_one"/>-->
+                        </group>
+                    </page>
+                </notebook>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="view_holiday_allocation_expiration_tree" model="ir.ui.view">
+        <field name="model">hr.leave</field>
+        <field name="inherit_id" ref="hr_holidays.hr_leave_allocation_view_tree_my"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='name']" position="after">
+                <field name="expiration_date" />
+            </xpath>
+<!--
+            <xpath expr="//field[@name='date_from']" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+            <xpath expr="//field[@name='date_to']" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+-->
+        </field>
+    </record>
+
+    <record id="view_holiday_simple" model="ir.ui.view">
+        <field name="model">hr.leave</field>
+        <field name="inherit_id" ref="hr_holidays.hr_leave_view_tree"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='date_to']" position="after">
+                <field name="expiration_date" />
+            </xpath>
+        </field>
+    </record>
+
+
+ <record id="edit_holiday_allocation_request_new_expiration" model="ir.ui.view">
+        <field name="model">hr.leave.allocation</field>
+        <field name="inherit_id" ref="hr_holidays.hr_leave_allocation_view_form" />
+        <field name="arch" type="xml">
+            <xpath expr="//sheet" position="inside">
+                <notebook>
+                    <page autofocus="autofocus" name='expiration' string="Expiration">
+                        <group name="validity">
+                            <group string="Expiring">
+                                <field name="expiration_date" />
+                                <field name="expire_template_id" attrs="{'required':[('expiration_date','!=',False)]}"/>
+                                <field name="email_notify"/>
+                                <field name="expired" invisible="1"/>
+<!--
+                                <field name="limit" invisible="1"/>
+-->
+                            </group>
+                            <group string="Notification" attrs="{'invisible':[('email_notify','=',False)]}">
+                                <field name="notify_period" attrs="{'required':[('email_notify','!=',False)]}"/>
+                                <field name="notify_template_id" attrs="{'required':[('email_notify','!=',False)]}"/>
+                                <field name="notify_to" attrs="{'required':[('email_notify','!=',False)]}"/>
+                                <field name="notification_sent" invisible="1"/>
+                            </group>
+                             <!--Buttons for testing, uncomment if you want to use them:-->
+                             <!--<button name="check_expiring" type="object" string="test check expired"-->
+                                 <!--class="oe_link oe_edit_only" groups="base.group_no_one"/>-->
+                             <!--<button name="send_notifications" type="object" string="test send email"-->
+                                 <!--class="oe_link oe_edit_only" groups="base.group_no_one"/>-->
+                        </group>
+                    </page>
+                </notebook>
+            </xpath>
+        </field>
+    </record>
+
+ <record id="edit_holiday_manager_allocation_request_new_expiration" model="ir.ui.view">
+        <field name="model">hr.leave.allocation</field>
+        <field name="inherit_id" ref="hr_holidays.hr_leave_allocation_view_form" />
+        <field name="arch" type="xml">
+            <xpath expr="//sheet" position="inside">
+                <notebook>
+                    <page autofocus="autofocus" name='expiration' string="Expiration">
+                        <group name="validity">
+                            <group string="Expiring">
+                                <field name="expiration_date" />
+                                <field name="expire_template_id" attrs="{'required':[('expiration_date','!=',False)]}"/>
+                                <field name="email_notify"/>
+                                <field name="expired" invisible="1"/>
+<!--
+                                <field name="limit" invisible="1"/>
+-->
+                            </group>
+                            <group string="Notification" attrs="{'invisible':[('email_notify','=',False)]}">
+                                <field name="notify_period" attrs="{'required':[('email_notify','!=',False)]}"/>
+                                <field name="notify_template_id" attrs="{'required':[('email_notify','!=',False)]}"/>
+                                <field name="notify_to" attrs="{'required':[('email_notify','!=',False)]}"/>
+                                <field name="notification_sent" invisible="1"/>
+                            </group>
+                             <!--Buttons for testing, uncomment if you want to use them:-->
+                             <!--<button name="check_expiring" type="object" string="test check expired"-->
+                                 <!--class="oe_link oe_edit_only" groups="base.group_no_one"/>-->
+                             <!--<button name="send_notifications" type="object" string="test send email"-->
+                                 <!--class="oe_link oe_edit_only" groups="base.group_no_one"/>-->
+                        </group>
+                    </page>
+                </notebook>
+            </xpath>
+        </field>
+    </record>
+
+
+
+
+
+</odoo>

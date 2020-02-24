@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+<odoo>
+	<data>
+	
+		<record id="view_common_clarify_line_tree" model="ir.ui.view">
+			<field name="name">common.clarify.line.tree</field>
+			<field name="model">common.clarify.line</field>
+			<field name="arch" type="xml">
+				<tree string="Clarification" editable="bottom" create="false"
+					delete="false">
+					<field name="date" readonly="1" />
+					<field name="request_user_id" readonly="1" />
+					<field name="comment" readonly="1" />
+					<field name="reason" readonly="1" />
+					<field name="respond_user_id" readonly="1" />
+					<field name="previous_state" readonly="1" invisible="1" />
+					<field name="return_state" readonly="1" invisible="1" />
+					<field name="check" invisible="1" />
+					<field name="update" invisible="1" />
+				</tree>
+			</field>
+		</record>
+
+	</data>
+</odoo>

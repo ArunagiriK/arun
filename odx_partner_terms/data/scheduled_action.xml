@@ -1,0 +1,106 @@
+<odoo>
+    <record forcecreate="True" id="automatic_scheduler_fuction" model="ir.cron">
+        <field name="name">Automatic Partner Terms</field>
+        <field name="model_id" ref="model_res_partner"/>
+        <field name="state">code</field>
+        <field name="code">
+                model.automatic_function_call()
+        </field>
+        <field eval="True" name="active"/>
+        <field name="user_id" ref="base.user_root"/>
+        <field name="interval_number">1</field>
+        <field name="interval_type">days</field>
+        <field name="numbercall">-1</field>
+        <field eval="False" name="doall"/>
+    </record>
+
+<!--    <record forcecreate="True" id="automatic_scheduler_periodic_daily" model="ir.cron">-->
+<!--        <field name="name">Automatic Periodic Partner Terms(Daily)</field>-->
+<!--        <field name="model_id" ref="model_res_partner"/>-->
+<!--        <field name="state">code</field>-->
+<!--        <field name="code">-->
+<!--                model.automatic_function_periodic_dialy()-->
+<!--        </field>-->
+<!--        <field eval="True" name="active"/>-->
+<!--        <field name="user_id" ref="base.user_root"/>-->
+<!--        <field name="interval_number">1</field>-->
+<!--        <field name="interval_type">days</field>-->
+<!--        <field name="numbercall">-1</field>-->
+<!--        <field eval="False" name="doall"/>-->
+<!--    </record>-->
+
+<!--    <record forcecreate="True" id="automatic_scheduler_periodic_weekly" model="ir.cron">-->
+<!--        <field name="name">Automatic Periodic Partner Terms(Weekly)</field>-->
+<!--        <field name="model_id" ref="model_res_partner"/>-->
+<!--        <field name="state">code</field>-->
+<!--        <field name="code">-->
+<!--                model.automatic_function_periodic_weekly()-->
+<!--        </field>-->
+<!--        <field eval="True" name="active"/>-->
+<!--        <field name="user_id" ref="base.user_root"/>-->
+<!--        <field name="interval_number">1</field>-->
+<!--        <field name="interval_type">weeks</field>-->
+<!--        <field name="numbercall">-1</field>-->
+<!--        <field eval="False" name="doall"/>-->
+<!--    </record>-->
+
+<!--    <record forcecreate="True" id="automatic_scheduler_periodic_monthly" model="ir.cron">-->
+<!--        <field name="name">Automatic Periodic Partner Terms(Monthly)</field>-->
+<!--        <field name="model_id" ref="model_res_partner"/>-->
+<!--        <field name="state">code</field>-->
+<!--        <field name="code">-->
+<!--                model.automatic_function_periodic_monthly()-->
+<!--        </field>-->
+<!--        <field eval="True" name="active"/>-->
+<!--        <field name="user_id" ref="base.user_root"/>-->
+<!--        <field name="interval_number">1</field>-->
+<!--        <field name="interval_type">months</field>-->
+<!--        <field name="numbercall">-1</field>-->
+<!--        <field eval="False" name="doall"/>-->
+<!--    </record>-->
+
+<!--    <record forcecreate="True" id="automatic_scheduler_periodic_quarterly" model="ir.cron">-->
+<!--        <field name="name">Automatic Periodic Partner Terms(Quarterly)</field>-->
+<!--        <field name="model_id" ref="model_res_partner"/>-->
+<!--        <field name="state">code</field>-->
+<!--        <field name="code">-->
+<!--                model.automatic_function_periodic_quarterly()-->
+<!--        </field>-->
+<!--        <field eval="True" name="active"/>-->
+<!--        <field name="user_id" ref="base.user_root"/>-->
+<!--        <field name="interval_number">3</field>-->
+<!--        <field name="interval_type">months</field>-->
+<!--        <field name="numbercall">-1</field>-->
+<!--        <field eval="False" name="doall"/>-->
+<!--    </record>-->
+
+<!--    <record forcecreate="True" id="automatic_scheduler_periodic_halfyearly" model="ir.cron">-->
+<!--        <field name="name">Automatic Periodic Partner Terms(Half-Yearly)</field>-->
+<!--        <field name="model_id" ref="model_res_partner"/>-->
+<!--        <field name="state">code</field>-->
+<!--        <field name="code">-->
+<!--                model.automatic_function_periodic_half_yearly()-->
+<!--        </field>-->
+<!--        <field eval="True" name="active"/>-->
+<!--        <field name="user_id" ref="base.user_root"/>-->
+<!--        <field name="interval_number">6</field>-->
+<!--        <field name="interval_type">months</field>-->
+<!--        <field name="numbercall">-1</field>-->
+<!--        <field eval="False" name="doall"/>-->
+<!--    </record>-->
+
+<!--       <record forcecreate="True" id="automatic_scheduler_periodic_yearly" model="ir.cron">-->
+<!--        <field name="name">Automatic Periodic Partner Terms(Yearly)</field>-->
+<!--        <field name="model_id" ref="model_res_partner"/>-->
+<!--        <field name="state">code</field>-->
+<!--        <field name="code">-->
+<!--                model.automatic_function_periodic_annually()-->
+<!--        </field>-->
+<!--        <field eval="True" name="active"/>-->
+<!--        <field name="user_id" ref="base.user_root"/>-->
+<!--        <field name="interval_number">12</field>-->
+<!--        <field name="interval_type">months</field>-->
+<!--        <field name="numbercall">-1</field>-->
+<!--        <field eval="False" name="doall"/>-->
+<!--    </record>-->
+</odoo>

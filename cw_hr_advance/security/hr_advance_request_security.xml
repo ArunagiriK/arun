@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<data>
+
+		<record id="property_rule_salary_advance_employee" model="ir.rule">
+			<field name="name">Employee Salary Advance</field>
+			<field name="model_id" ref="model_advance_request_form" />
+			<field name="domain_force">[('employee_id.user_id','=',user.id)]</field>
+			<field name="groups" eval="[(4,ref('base.group_user'))]" />
+		</record>
+
+		<record id="property_rule_salary_advance_officer" model="ir.rule">
+			<field name="name">Salary Advance Officer</field>
+			<field name="model_id" ref="model_advance_request_form" />
+			<field name="domain_force">[(1,'=',1)]</field>
+			<field name="groups" eval="[(4,ref('hr.group_hr_user'))]" />
+		</record>
+
+	</data>
+</odoo>

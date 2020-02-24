@@ -1,0 +1,48 @@
+
+<odoo>
+    <data>
+        <record id="od_despatch_wiz_tree" model="ir.ui.view">
+            <field name="name">od.despatch.datewise</field>
+            <field name="model">od.despatch.datewise</field>
+            <field name="arch" type="xml">
+                <tree string="Despatch Details">
+                    <field name="od_despatch_date"/>
+                    <field name="od_despatch_ref_id"/>
+                     <field name="partner_id"/>
+                    <field name="number"/>
+                    <field name="date_invoice"/>
+                     <field name="amount_total"/>
+                    <field name="od_transport_type"/>                     
+                     <field name="od_transporter_id"/>
+                    <field name="od_trans_ref"/>
+                    <field name="no_ofcarton"/>
+                    <field name="od_amount"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="od_despatch_wiz_piv" model="ir.ui.view">
+            <field name="name">od.despatch.datewise</field>
+            <field name="model">od.despatch.datewise</field>
+            <field name="arch" type="xml">
+                <pivot>
+                    <field name="od_despatch_date"/>
+                </pivot>
+            </field>
+        </record>        
+
+        
+        
+
+        <record id="act_od_despatch_wiz_tree" model="ir.actions.act_window">
+             <field name="name">Despatch Details</field>
+             <field name="type">ir.actions.act_window</field>
+             <field name="res_model">od.despatch.datewise</field>
+             <field name="view_type">form</field>
+             <field name="view_mode">tree,pivot</field>
+        </record>
+
+        
+
+    </data>
+</odoo>

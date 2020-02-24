@@ -1,0 +1,278 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<data>
+		<!-- Report Salary Advance Expenses Voucher -->
+		<!-- <report id="report_salary_advance_expenses_statement" string="Payment 
+			Voucher" model="advance.request.form" report_type="qweb-pdf" file="cw_hr_advance.salary_advance_expenses_voucher" 
+			name="cw_hr_advance.report_salary_advance_expenses_voucher_document" /> -->
+
+		<record id="view_hr_advance_category_form" model="ir.ui.view">
+			<field name="name">advance.category.form</field>
+			<field name="model">advance.category</field>
+			<field name="arch" type="xml">
+				<form string="Advance Category">
+					<sheet>
+						<group>
+							<field name="name" required="1" />
+							<field name="type" required="1" />
+							<field name="amount_percentage" attrs="{'invisible': [('type','=', 'fixed')]}" />
+							<field name="months" attrs="{'invisible': [('type','=', 'fixed')]}" />
+							<field name="maximum_amount" attrs="{'invisible': [('type','=', 'variable')]}" />
+							<field name="repayment_period" />
+						</group>
+					</sheet>
+				</form>
+			</field>
+		</record>
+
+		<record id="view_hr_advance_category_tree" model="ir.ui.view">
+			<field name="name">advance.category.tree</field>
+			<field name="model">advance.category</field>
+			<field name="arch" type="xml">
+				<tree string="Advance Category">
+					<field name="name" />
+					<field name="type" />
+				</tree>
+			</field>
+		</record>
+
+		<record id="action_hr_advance_category" model="ir.actions.act_window">
+			<field name="name">Advance Category</field>
+			<field name="type">ir.actions.act_window</field>
+			<field name="res_model">advance.category</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">tree,form</field>
+			<field name="domain">[]</field>
+		</record>
+
+		<menuitem action="action_hr_advance_category" id="menu_hr_advance_category"
+			parent="hr.menu_human_resources_configuration" sequence="80"
+			groups="hr.group_hr_user" />
+
+		<record id="view_hr_advance_request_tree" model="ir.ui.view">
+			<field name="name">advance.request.form.tree</field>
+			<field name="model">advance.request.form</field>
+			<field name="arch" type="xml">
+				<tree string="Adavance" decoration-danger="state == 'refuse'"
+					decoration-info="state == 'draft'" decoration-bf="message_needaction == True">
+					<field name="employee_id" />
+					<field name="date" />
+					<field name="amount_required" />
+					<field name="deduction_amount" />
+					<field name="due_balance" />
+					<field name="state" />
+					<field name="message_needaction" invisible="1" />
+				</tree>
+			</field>
+		</record>
+
+		<record id="view_hr_advance_request_form" model="ir.ui.view">
+			<field name="name">advance.request.form</field>
+			<field name="model">advance.request.form</field>
+			<field name="arch" type="xml">
+				<form string="Advance">
+					<header>
+						<!-- To do buttons -->
+						<button string="Clarification"
+							name="%(cw_common_clarify.action_common_clarify_wiz)d" states="confirm,verify"
+							groups="base.group_user" type="action" class="oe_highlight"
+							context="{'default_employee_id': employee_id, 'default_state': state}" />
+
+						<button string="Update Clarification"
+							name="%(cw_common_clarify.action_common_clarify_update_wiz)d"
+							attrs="{'invisible': ['|', ('state', 'not in', ('clarify')), ('is_latest_clarif_respond_user', '=', False)]}"
+							groups="base.group_user" type="action" class="oe_highlight"
+							context="{'default_clarif_id': latest_clarif_record, 'default_return_mode': latest_clarif_return_mode, 'default_return_state': latest_clarif_return_state}" />
+
+						<button name="action_confirm" type="object" string="Confirm"
+							states="draft" groups="base.group_user" />
+
+						<button name="action_verify" type="object" string="Verify"
+							states="confirm" groups="hr.group_hr_user" />
+
+						<button string="Approve" name="action_approve" states="verify"
+							groups="hr.group_hr_manager" type="object" class="oe_highlight" />
+
+						<button string="Refuse" name="action_refuse" states="confirm,verify"
+							groups="hr.group_hr_user" type="object" class="oe_highlight" />
+
+						<button name="action_set_to_draft" string="Set To Draft"
+							type="object" states="refuse" groups="hr.group_hr_user" />
+
+						<button name="action_release_payment" string="Release Payment"
+							type="object" groups="hr.group_hr_user"
+							attrs="{'invisible': ['|','|',('state', '!=', 'approve'),('payment_done', '=',True),('payment_type', '=', 'payslip')]}" />
+
+						<field name="state" widget="statusbar" statusbar_visible="draft" />
+					</header>
+					<sheet>
+						<div class="oe_right oe_button_box" name="button_box">
+							<button class="oe_stat_button" name="attachment_tree_view"
+								type="object" icon="fa-files-o" groups="base.group_user"
+								attrs="{'invisible': [('payment_done','=', False)]}">
+								<field string="Documents" name="doc_count" widget="statinfo" />
+							</button>
+						</div>
+						<div class="oe_title">
+							<h2>
+								<field name="name" readonly="1" force_save="1" />
+							</h2>
+						</div>
+						<group>
+							<group>
+								<field name="employee_id" required="1" options="{'no_create': True}" />
+								<!--to be reverted back domain="[('user_id','=', uid)]" /> -->
+								<field name="advance_category_id" required="1" widget="selection" />
+								<field name="amount_required" force_save="1" required="1" />
+								<field name="repayment_period" force_save="1" required="1" />
+							</group>
+							<group>
+								<field name="date" required="1" force_save="1" />
+								<field name="amount" required="1" readonly="1" force_save="1" />
+								<field name="eligible_amount" required="1" readonly="1"
+									force_save="1" />
+								<field name="repayment_per_month" force_save="1" />
+								<field name="deduction_amount" readonly="1" />
+								<field name="due_balance" readonly="1" />
+							</group>
+							<group col="4" colspan="4">
+								<field name="paid_by_payslip" invisible="1" />
+								<field name="on_hold" groups="hr.group_hr_user" invisible="1" />
+								<field name="current_emp_id" invisible="1" />
+								<field name="payment_done" invisible="1" />
+								<field name="payment_type" invisible="1" />
+							</group>
+						</group>
+						<notebook>
+							<page string="Notes">
+								<!-- <field name="reason" placeholder="Reason...."/> -->
+								<group colspan="4" col="4">
+									<field name="description" nolabel="1" placeholder="Description" />
+									<field name="amount_word" invisible="1" />
+								</group>
+								<group class="oe_subtotal_footer oe_right" colspan="2"
+									name="sale_total">
+									<field name="amount_total" invisible="1" />
+								</group>
+							</page>
+							<page string="Deductions">
+								<field name="deduction_lines" readonly="1">
+									<tree>
+										<field name="payslip_id" />
+										<field name="date_from" />
+										<field name="date_to" />
+										<field name="amount" sum="Total Deduction Amount" />
+									</tree>
+								</field>
+
+							</page>
+							<page string="Clarification">
+								<field name="clarify_line_ids"
+									context="{'tree_view_ref': 'cw_common_clarify.view_common_clarify_line_tree'}" />
+								<group string="Latest Clarification Details" groups="base.group_no_one">
+									<group>
+										<field name="latest_clarif_record" readonly="1" />
+										<field name="latest_clarif_return_mode" readonly="1" />
+									</group>
+									<group>
+										<field name="latest_clarif_return_state" readonly="1" />
+										<field name="latest_clarif_respond_uid" readonly="1" />
+										<field name="is_latest_clarif_respond_user" invisible="1" />
+										<field name="is_an_employee" readonly="1" />
+										<field name="is_a_coach" readonly="1" />
+										<field name="is_a_manager" readonly="1" />
+										<field name="is_a_hr_user" readonly="1" />
+										<field name="is_a_hr_manager" readonly="1" />
+										<field name="rec_msg_read" readonly="1" />
+									</group>
+								</group>
+							</page>
+						</notebook>
+					</sheet>
+					<div class="oe_chatter">
+						<field name="message_follower_ids" widget="mail_followers" />
+						<field name="message_ids" widget="mail_thread" />
+					</div>
+				</form>
+			</field>
+		</record>
+
+		<record id="view_hr_advance_request_filter" model="ir.ui.view">
+			<field name="name">advance.request.filter</field>
+			<field name="model">advance.request.form</field>
+			<field name="arch" type="xml">
+				<search string="Advance Request">
+					<field name="employee_id" />
+					<field name="date" />
+					<filter
+						domain="['|',
+                '|',
+                '|',
+                '|',
+                '&amp;', ('is_an_employee','=', True), ('state', 'in', ['draft', 'clarify']),
+                '&amp;', ('is_a_hr_user','=', True), ('state', '=', 'confirm'),
+                '&amp;', ('is_a_hr_manager','=', True), ('state', '=', 'verify'),
+                '&amp;',  '&amp;', ('is_an_employee','=', True), ('state', '=', 'approve'), ('rec_msg_read', '=', True),
+                '&amp;',  '&amp;', ('is_an_employee','=', True), ('state', '=', 'refuse'), ('rec_msg_read', '=', True)]"
+						string="Actions To Do" name="action_to_do" />
+					<separator />
+					<filter string="My Salary Advance" name="my_sal_adv"
+						domain="[('employee_id.user_id.id', '=', uid)]" />
+					<filter string="Draft" name="draft" domain="[('state','=', 'draft')]" />
+					<filter string="Clarification" name="clarification"
+						domain="[('state','=', 'clarify')]" />
+					<filter string="Confirm" name="confirm" domain="[('state','=', 'confirm')]" />
+					<filter string="Verify" name="verify" domain="[('state','=', 'verify')]" />
+					<filter string="Approved" name="approved" domain="[('state','=', 'approve')]" />
+					<filter string="Paid" name="paid" domain="[('state','=', 'paid')]" />
+					<filter string="Deducted" name="deduct" domain="[('state','=', 'deduct')]" />
+					<filter string="Refuse" name="refuse" domain="[('state','=', 'refuse')]" />
+					<group expand="0" string="Group By">
+						<filter name="employee" string="Employee" domain="[]"
+							context="{'group_by':'employee_id'}" />
+						<filter name="state" string="Status" domain="[]"
+							context="{'group_by':'state'}" />
+						<filter name="day" string="Day" domain="[]"
+							context="{'group_by':'date:day'}" />
+						<filter name="month" string="Month" context="{'group_by':'date:month'}" />
+						<filter name="year" string="Year" context="{'group_by':'date:year'}" />
+					</group>
+				</search>
+			</field>
+		</record>
+
+		<record id="action_advance_request" model="ir.actions.act_window">
+			<field name="name">Salary Advance Request</field>
+			<field name="type">ir.actions.act_window</field>
+			<field name="res_model">advance.request.form</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">tree,form</field>
+			<field name="context">{'readonly_by_pass': True,
+				'search_default_action_to_do':1}
+			</field>
+			<field name="domain">[]</field>
+			<field name="search_view_id" ref="view_hr_advance_request_filter" />
+		</record>
+
+		<menuitem action="action_advance_request" id="menu_hr_advance_request"
+			name="Salary Advance" parent="cw_hr_extended.hr_menu_hr_request"
+			groups="base.group_user" sequence="20" />
+
+
+
+		<record id="view_hr_payslip_form_inherit_advance" model="ir.ui.view">
+			<field name="name">hr.payslip.form.inherit.advance</field>
+			<field name="model">hr.payslip</field>
+			<field name="inherit_id" ref="hr_payroll.view_hr_payslip_form" />
+			<field name="arch" type="xml">
+				<xpath
+					expr="//sheet/notebook/page[1]/field[@name='input_line_ids']/tree/field[@name='contract_id']"
+					position="after">
+					<field name="advance_id" invisible="1" />
+				</xpath>
+			</field>
+		</record>
+
+
+	</data>
+</odoo>

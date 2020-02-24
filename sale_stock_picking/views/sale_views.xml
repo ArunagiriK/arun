@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<odoo>
+    <data>
+<!--
+            Sale Order  Views 
+-->
+        <record id="sale_line_inherit_view_form" model="ir.ui.view">
+            <field name="model">sale.order</field>
+            <field name="inherit_id" ref="sale.view_order_form"/>
+            <field name="arch" type="xml">
+                 <xpath expr="//button[@name='print_quotation']" position="after">
+                        <button name="action_picking" string="Inventory Picking" type="object" states="draft" class="btn-primary"/>
+                 </xpath>
+                 <xpath expr="/form/sheet/notebook/page/field[@name='order_line']/tree/field[@name='product_uom_qty']" position="after">
+<!--
+                        <field name="done_quantity"/>
+-->
+                        <field name="done_product"/>
+                 </xpath>
+                
+<!--
+               <xpaَth expr="/form/sheet/notebook/page/field[@name='order_line']/tree/field[@name='product_uom_qty']" posiَtion="aَtَtribuَtes">
+                     <attribute name="decoration-info">"done_product==True"</attribute>
+                </xpaَth>
+-->
+
+
+               
+
+                 <xpath expr="//notebook/page[@name='order_lines']/field[@name='order_line']/tree/field[@name='price_subtotal']"
+                       position="after">
+                    <button name="%(product_substitution.action_view_product_substitution_wiz)d" attrs="{'invisible':[('done_product','=',True)]}" string="Substitute Products" type="action" icon='fa-bars'/>
+                </xpath>
+                
+                
+            </field>
+        </record>
+
+    </data>
+</odoo>

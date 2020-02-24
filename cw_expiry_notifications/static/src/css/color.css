@@ -1,0 +1,160 @@
+.red {
+	width: 100%;
+    /* min-height: 10px; */
+    height:100%;
+    background-color: red;
+    color:#fff;
+}
+
+.red-blink {
+	-webkit-animation-name: red_blinker;
+	-webkit-animation-duration: 2s;
+	-webkit-animation-timing-function: linear;
+	-webkit-animation-iteration-count: infinite;
+	-moz-animation-name: red_blinker;
+	-moz-animation-duration: 2s;
+	-moz-animation-timing-function: linear;
+	-moz-animation-iteration-count: infinite;
+	animation-name: red_blinker;
+	animation-duration: 2s;
+	animation-timing-function: linear;
+	animation-iteration-count: infinite;
+	
+	width: 100%;
+    /* min-height: 10px; */
+    height:100%;
+    background-color: red;
+    color:#fff;
+}
+
+@-moz-keyframes red_blinker {  
+    0% { opacity: 1.0; background-color: red;}
+    50% { opacity: 0.0; background-color: #729fcf;}
+    100% { opacity: 1.0; background-color: red;}
+}
+
+@-webkit-keyframes red_blinker {  
+    0% { opacity: 1.0; background-color: red;}
+    50% { opacity: 0.0; background-color: #729fcf;}
+    100% { opacity: 1.0; background-color: red;}
+}
+
+@keyframes red_blinker {  
+    0% { opacity: 1.0; background-color: red;}
+    50% { opacity: 0.0; background-color: #729fcf;}
+    100% { opacity: 1.0; background-color: red;}
+}
+
+.green {
+	width: 100%;
+    /* min-height: 10px; */
+    height:100%;
+    background-color: green;
+    color:#fff;
+}
+
+.green-blink {
+	-webkit-animation-name: green_blinker;
+	-webkit-animation-duration: 1s;
+	-webkit-animation-timing-function: linear;
+	-webkit-animation-iteration-count: infinite;
+	-moz-animation-name: green_blinker;
+	-moz-animation-duration: 1s;
+	-moz-animation-timing-function: linear;
+	-moz-animation-iteration-count: infinite;
+	animation-name: green_blinker;
+	animation-duration: 1s;
+	animation-timing-function: linear;
+	animation-iteration-count: infinite;
+	
+	width: 100%;
+    /* min-height: 10px; */
+    height:100%;
+    background-color: green;
+    color:#fff;
+}
+
+@-moz-keyframes green_blinker {  
+    0% { opacity: 1.0; background-color: green;}
+    50% { opacity: 0.0; background-color: #c17d11;}
+    100% { opacity: 1.0; background-color: green;}
+}
+
+@-webkit-keyframes green_blinker {  
+    0% { opacity: 1.0; background-color: green;}
+    50% { opacity: 0.0; background-color: #c17d11;}
+    100% { opacity: 1.0; background-color: green;}
+}
+
+@keyframes green_blinker {  
+    0% { opacity: 1.0; background-color: green;}
+    50% { opacity: 0.0; background-color: #c17d11;}
+    100% { opacity: 1.0; background-color: green;}
+}
+
+
+.no-padding {
+    padding: 0 ! important;
+}
+
+.no-margin {
+    margin: 0 ! important;
+}
+
+.openerp .profile_update .oe_form_char_content,.openerp .profile_update .oe_form_field_date,.openerp .profile_update .oe_form_uri,.openerp .profile_update .oe_form_text_content{
+	color:blue;
+}
+
+.openerp .profile_update .fa {
+	color: initial;
+}
+
+.openerp .o_kanban_view .oe_kanban_employee_layout{
+	margin:10px;
+}
+
+.openerp .o_kanban_view .o_kanban_record.oe_kanban_employee_layout,.color-bottom-block{
+	background-color: #531979;
+	background: -webkit-linear-gradient(left, #452668, #93268B);
+	background: -o-linear-gradient(right, #452668, #93268B);
+	background: -moz-linear-gradient(right, #452668, #93268B);
+	background: linear-gradient(to right, #452668, #93268B);
+	color:#FFFFFF;	
+}
+
+.openerp .o_kanban_view .o_kanban_record .color-top-block{
+	background-color: #FFFFFF;
+}
+
+.openerp .o_kanban_view .o_kanban_record .color-middle-block,.color-green-1,.color-green-2,.color-green-3{
+	height: 12px;
+}
+
+.openerp .o_kanban_view .o_kanban_record .color-middle-block .color-green-1{
+	background-color: #3DA33D;
+}
+.openerp .o_kanban_view .o_kanban_record .color-middle-block .color-green-2{
+	background-color: #8FC23F;
+}
+.openerp .o_kanban_view .o_kanban_record .color-middle-block .color-green-3{
+	background-color: #B9D439;
+}
+
+.openerp .o_kanban_view .o_kanban_record .color-bottom-block{
+	padding:5px;
+}
+
+.openerp .o_kanban_view .o_kanban_record .o_kanban_button > button, .o_kanban_view .o_kanban_record .o_kanban_button > a {
+    /* right: 18px; */
+}
+
+
+
+
+
+
+
+
+
+
+

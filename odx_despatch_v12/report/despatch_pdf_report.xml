@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+   <template id="report_despatch">
+      <t t-call="report.external_layout">
+         <t t-call="report.html_container">
+            
+               <div class="page">
+                  <div class="row">
+                     <br/><br/>
+                     <div class="col-xs-12">
+                        <div class="col-xs-4">
+                           To:...................................................................................................................................................................
+                        </div>
+                        <div class="col-xs-4">
+                           <center>
+                              <b>
+                              <h5 style="color:#fff;background-color:#000;">
+                                 TRANSPORTATION DELIVERY NOTE
+                              </h5>
+                              </b>
+                           </center><br/>
+                           <center><b><h5>OUTWARD GATE PASS</h5></b></center><br/>
+                        </div>
+                        <div class="col-xs-4">
+                           Date:
+                           <span style="float:right;" t-esc="info['date']"></span><br/>
+                           Veh. No:<span style="float:right;" t-esc="info['veh_no']">
+                        </span><br/>
+                           Driver Name:<span style="float:right;"  t-esc="info['driver']">
+                        </span>
+                        <br/>
+                        </div>
+                     </div>
+                           <table class="table table-condensed" style="width:100%;border:1px solid #000;border-collapse: collapse;">
+                              <colgroup>
+                                 <col width='10%' />
+                                 <col width='15%' />
+                                 <col width='40%' />
+                                 <col width='20%' />
+                                 <col width='15%' />
+                              </colgroup>
+                              <thead>
+                                 <tr style="border:1px solid #000;border-collapse: collapse;">
+                                    <th class="text-center" style="border:1px solid #000;border-collapse: collapse;">SL.No</th>
+                                    <th class="text-center" style="border:1px solid #000;border-collapse: collapse;">Invoice No.</th>
+                                    <th class="text-center" style="border:1px solid #000;border-collapse: collapse;">Customer Name</th>
+                                    <th class="text-center" style="border:1px solid #000;border-collapse: collapse;">Item Description</th>
+                                    <th class="text-center" style="border:1px solid #000;border-collapse: collapse;">No. of cartons/ Unit</th>                                    
+                                 </tr>
+                              </thead>
+                              <tbody>
+                                 <t t-set="total_cartons" t-value="0"/>
+                                 <t t-foreach="Lines" t-as="despatch">
+                                    <tr style="border:1px solid #000;border-collapse: collapse;">
+                                       <td style="border:1px solid #000;border-collapse: collapse;">
+                                          <t t-esc="despatch_index + 1"/>
+                                       </td>
+                                       <td style="border:1px solid #000;border-collapse: collapse;">
+                                          <t t-esc="despatch['invoiceId']"/>
+                                       </td>
+                                       <td style="border:1px solid #000;border-collapse: collapse;">
+                                          <t t-esc="despatch['pname']"/>
+                                          <t t-esc="despatch['pstreet']"/>
+                                          <t t-esc="despatch['pcity']"/>
+                                       </td>
+                                       <td style="border:1px solid #000;border-collapse: collapse;">
+                                          <t t-esc="despatch['description']"/>
+                                       </td>
+                                       <td style="border:1px solid #000;border-collapse: collapse;">
+                                          <t t-esc="despatch['carton_no']"/>
+                                          <t t-set="total_cartons" t-value="total_cartons + despatch['noof_cartons']"/>
+                                       </td>
+                                    </tr>
+                                 </t>
+                                 <tr>
+                                    <td colspan="4" style="border:1px solid #000;border-collapse: collapse;">
+                                       <span style="float:right;"><b>Total Cartons/ Unit</b></span>
+                                    </td>
+                                    <td style="border:1px solid #000;border-collapse: collapse;">
+                                       <span t-esc="total_cartons"/>
+                                    </td>
+                                 </tr>
+                              </tbody>
+
+                           </table>
+                  <br/><br/><br/>
+                  </div>
+
+                  <div class="row">
+                     <div class="col-xs-2">
+                        <span>
+                           __________
+                        </span><br/>
+                        <center>MANAGER</center>
+                     </div>
+                     <div class="col-xs-2">
+                        <span>
+                           __________
+                        </span><br/>
+                        <center>SECURITY</center>
+                     </div>
+                     <div class="col-xs-2">
+                        <span>
+                           __________
+                        </span><br/>
+                        <center>DRIVER</center>
+                     </div>
+                     <div class="col-xs-6" style="border:1px solid #000;">
+                        <span>Date:</span>
+                        <span style="float:right;font-size:10px;">
+                           Received goods with good condition
+                        </span><br/>
+                        <span>Receivers Name:</span>
+                        <span style="float:right;"></span><br/>
+                        <span>Receivers Signature:</span>
+                        <span style="float:right;"></span>
+                     </div>
+
+
+
+                  </div>
+               </div>
+         </t>
+      </t>
+   </template>
+</odoo>

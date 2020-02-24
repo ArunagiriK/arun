@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+	<data>
+
+
+
+		<!-- <report id="report_settlement_id" model="employee.settlement" file="erada_customizations.report_settlement" 
+			name="erada_customizations.report_settlement_document" report_type="qweb-pdf" 
+			string="Settlement / Report"/> -->
+
+		<record id="view_hr_employee_settlement_form" model="ir.ui.view">
+			<field name="name">hr.gratutity.form</field>
+			<field name="model">hr.gratutity</field>
+			<field name="arch" type="xml">
+				<form string="Settlement">
+					<header>
+						<button class="oe_highlight" name="compute_settlement"
+							states="draft" string="Compute" type="object" />
+						<button class="oe_highlight" name="hr_confirm_settlement"
+							states="draft" string="Confirm" type="object" groups="hr.group_hr_user" />
+						<button class="oe_highlight"
+							confirm="Are you sure? this will set the employee to inactive state."
+							name="hr_validate_settlement" states="confirm" string="Confirm"
+							type="object" groups="hr.group_hr_manager" />
+						<button string="Refuse" name="action_refuse" states="confirm"
+							groups="hr.group_hr_manager" type="object" class="oe_highlight" />
+						<button name="action_set_to_draft" string="Set To Draft"
+							type="object" states="refuse" groups="hr.group_hr_user" />
+						<field name="state" statusbar_visible="draft,confirm,validate"
+							widget="statusbar" />
+					</header>
+					<sheet>
+						<group col="4">
+							<label for="date_from" string="Period" />
+							<div>
+								<field class="oe_inline" name="date_from" required="1" />
+								-
+								<field class="oe_inline" name="date_to" required="1" />
+							</div>
+							<!--CHANGED AS BELOW MIGHT NEED TO REVERT BACK <field domain="[('on_hold','=',True)]" 
+								name="employee_id" required="1"/> --><!-- ('salary_transfer','=',False) -->
+							<field name="employee_id" required="1" />
+							<field name="gratuity_rule_id" />
+							<field name="type" />
+						</group>
+						<notebook>
+							<page string="Lines">
+								<field name="payment_lines">
+									<tree editable="bottom" string="Lines">
+										<field name="name" />
+										<field name="code" />
+										<field name="total" />
+									</tree>
+								</field>
+								<group class="oe_subtotal_footer oe_right" colspan="2"
+									name="sale_total">
+									<div class="oe_subtotal_footer_separator oe_inline">
+										<label for="amount_total" />
+										<button class="oe_edit_only oe_link" name="button_dummy"
+											states="draft,confirmed" string="(update)" type="object" />
+									</div>
+									<field class="oe_subtotal_footer_separator" name="amount_total"
+										nolabel="1" widget="monetary" />
+								</group>
+							</page>
+						</notebook>
+					</sheet>
+					<div class="oe_chatter">
+						<field name="message_follower_ids" widget="mail_followers" />
+						<field name="message_ids" widget="mail_thread" />
+					</div>
+				</form>
+			</field>
+		</record>
+		<record id="view_hr_employee_settlement_tree" model="ir.ui.view">
+			<field name="name">hr.gratutity.tree</field>
+			<field name="model">hr.gratutity</field>
+			<field name="arch" type="xml">
+				<tree string="settlement">
+					<field name="date_from" />
+					<field name="date_to" />
+					<field name="employee_id" />
+					<field name="state" />
+				</tree>
+			</field>
+		</record>
+
+		<record id="view_gratuity_rule_form" model="ir.ui.view">
+			<field name="name">hr.gratutity.form</field>
+			<field name="model">hr.gratuity.rule</field>
+			<field name="arch" type="xml">
+				<form string="Gratuity Rule">
+					<sheet>
+						<group col="2">
+							<field name="name" />
+						</group>
+						<notebook>
+							<page string="Gratuity Lines">
+								<field name="line_ids">
+									<tree string="Gratuity Rule" editable="bottom">
+										<field name="code" />
+										<field name="name" />
+										<field name="sequence" />
+										<field name="year_from" />
+										<field name="year_to" />
+										<field name="days" />
+									</tree>
+								</field>
+							</page>
+						</notebook>
+					</sheet>
+				</form>
+			</field>
+		</record>
+
+		<record id="view_gratuity_rule_tree" model="ir.ui.view">
+			<field name="name">gratuity.rule.tree</field>
+			<field name="model">hr.gratuity.rule</field>
+			<field name="arch" type="xml">
+				<tree string="Gratuity Rule">
+					<field name="name" />
+				</tree>
+			</field>
+		</record>
+
+		<record id="id_hr_employee_settlement_action" model="ir.actions.act_window">
+			<field name="name">Employee settlement</field>
+			<field name="type">ir.actions.act_window</field>
+			<field name="res_model">hr.gratutity</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">tree,form</field>
+			<field name="domain">[]</field>
+		</record>
+
+		<record id="id_gratuity_rule_action" model="ir.actions.act_window">
+			<field name="name">Gratuity Rule</field>
+			<field name="type">ir.actions.act_window</field>
+			<field name="res_model">hr.gratuity.rule</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">tree,form</field>
+			<field name="domain">[]</field>
+		</record>
+
+		<menuitem id="menu_hr_settlement" parent="hr.menu_hr_root"
+			name="Employee Settlement" sequence="10" groups="hr.group_hr_user" />
+		<menuitem action="id_hr_employee_settlement_action" id="id_hr_employee_settlement_action_id"
+			parent="menu_hr_settlement" sequence="10" />
+		<menuitem action="id_gratuity_rule_action" id="menu_gratuity_rule"
+			parent="menu_hr_settlement" sequence="20" groups="hr.group_hr_user" />
+
+	</data>
+</odoo>

@@ -1,0 +1,292 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+<!--	<data noupdate="1">-->
+<!--		<record forcecreate="True" id="base.decimal_global"-->
+<!--			model="decimal.precision">-->
+<!--			<field name="name">Global</field>-->
+<!--			<field name="digits" eval="3" />-->
+<!--		</record>-->
+<!--	</data>-->
+	<data>
+
+		<!-- Account Tax Group -->
+		<record id="account.tax_group_taxes" model="account.tax.group">
+			<field name="name">Tax 5%</field>
+		</record>
+
+		<record id="tax_group_0" model="account.tax.group">
+			<field name="name">Tax 0%</field>
+			<field name="type">zero</field>
+		</record>
+
+		<record id="tax_group_exempt" model="account.tax.group">
+			<field name="name">Tax Exempt</field>
+			<field name="type">exempt</field>
+		</record>
+
+		<record id="tax_group_reverse" model="account.tax.group">
+			<field name="name">Tax Reverse</field>
+			<field name="type">reverse</field>
+		</record>
+
+
+		<record id="sale_tax_template_0" model="account.tax.template">
+			<field name="chart_template_id"
+				ref="l10n_ae.uae_chart_template_standard" />
+			<field name="name">Output VAT 0%</field>
+			<field name="description">VAT 0%</field>
+			<field name="amount_type">percent</field>
+			<field name="amount">0.00</field>
+			<field name="type_tax_use">sale</field>
+			<field name="tax_group_id" ref="tax_group_0" />
+			<field name="account_id" ref="l10n_ae.uae_account_3785" />
+			<field name="refund_account_id" ref="l10n_ae.uae_account_3785" />
+		</record>
+
+		<record id="purchase_tax_template_0"
+			model="account.tax.template">
+			<field name="chart_template_id"
+				ref="l10n_ae.uae_chart_template_standard" />
+			<field name="name">Input VAT 0%</field>
+			<field name="description">VAT 0%</field>
+			<field name="amount_type">percent</field>
+			<field name="amount">0.00</field>
+			<field name="type_tax_use">purchase</field>
+			<field name="tax_group_id" ref="tax_group_0" />
+			<field name="account_id" ref="l10n_ae.uae_account_3726" />
+			<field name="refund_account_id" ref="l10n_ae.uae_account_3726" />
+		</record>
+
+
+		<record id="sale_tax_template_E" model="account.tax.template">
+			<field name="chart_template_id"
+				ref="l10n_ae.uae_chart_template_standard" />
+			<field name="name">Output VAT Exempt</field>
+			<field name="description">VAT Exempt</field>
+			<field name="amount_type">percent</field>
+			<field name="amount">0.00</field>
+			<field name="type_tax_use">sale</field>
+			<field name="tax_group_id" ref="tax_group_exempt" />
+			<field name="account_id" ref="l10n_ae.uae_account_3785" />
+			<field name="refund_account_id" ref="l10n_ae.uae_account_3785" />
+		</record>
+
+		<record id="purchase_tax_template_E"
+			model="account.tax.template">
+			<field name="chart_template_id"
+				ref="l10n_ae.uae_chart_template_standard" />
+			<field name="name">Input VAT Exempt</field>
+			<field name="description">VAT Exempt</field>
+			<field name="amount_type">percent</field>
+			<field name="amount">0.00</field>
+			<field name="type_tax_use">purchase</field>
+			<field name="tax_group_id" ref="tax_group_exempt" />
+			<field name="account_id" ref="l10n_ae.uae_account_3726" />
+			<field name="refund_account_id" ref="l10n_ae.uae_account_3726" />
+		</record>
+
+		<record id="l10n_ae.sale_tax_template"
+			model="account.tax.template">
+			<field name="name">Output VAT 5%</field>
+			<field name="amount">5</field>
+			<field name="description">VAT 5%</field>
+		</record>
+
+		<record id="l10n_ae.purchase_tax_template"
+			model="account.tax.template">
+			<field name="name">Input VAT 5%</field>
+			<field name="amount">5</field>
+			<field name="description">VAT 5%</field>
+		</record>
+
+		<record id="sale_tax_template_reverse"
+			model="account.tax.template">
+			<field name="chart_template_id"
+				ref="l10n_ae.uae_chart_template_standard" />
+			<field name="name">Reverse Output VAT 5%</field>
+			<field name="description">Reverse VAT 0%</field>
+			<field name="amount_type">percent</field>
+			<field name="amount">-5.00</field>
+			<field name="type_tax_use">sale</field>
+			<field name="tax_group_id" ref="tax_group_reverse" />
+			<field name="account_id" ref="l10n_ae.uae_account_3785" />
+			<field name="refund_account_id" ref="l10n_ae.uae_account_3785" />
+		</record>
+
+		<record id="purchase_tax_template_reverse"
+			model="account.tax.template">
+			<field name="chart_template_id"
+				ref="l10n_ae.uae_chart_template_standard" />
+			<field name="name">Reverse Input VAT 0%</field>
+			<field name="description">Reverse VAT 0%</field>
+			<field name="amount_type">percent</field>
+			<field name="amount">5.00</field>
+			<field name="type_tax_use">purchase</field>
+			<field name="tax_group_id" ref="tax_group_reverse" />
+			<field name="account_id" ref="l10n_ae.uae_account_3726" />
+			<field name="refund_account_id" ref="l10n_ae.uae_account_3726" />
+		</record>
+
+		<record id="country_group_foreign_countries"
+			model="res.country.group">
+			<field name="name">Foreign Countries</field>
+			<!-- <field name="country_ids" eval="[(6,0,[ ref('base.at'),ref('base.be'),ref('base.bg'),ref('base.hr'),ref('base.cy'), 
+				ref('base.cz'),ref('base.dk'),ref('base.ee'),ref('base.fi'),ref('base.fr'), 
+				ref('base.de'),ref('base.gr'),ref('base.hu'),ref('base.ie'),ref('base.it'), 
+				ref('base.lv'),ref('base.lt'),ref('base.lu'),ref('base.mt'),ref('base.nl'), 
+				ref('base.pl'),ref('base.pt'),ref('base.ro'),ref('base.sk'),ref('base.si'), 
+				ref('base.es'),ref('base.se'),ref('base.uk')])]"/> -->
+		</record>
+
+
+		<record model="account.fiscal.position.template"
+			id="fp_temp_gcc_vat">
+			<field name="chart_template_id"
+				ref="l10n_ae.uae_chart_template_standard" />
+			<field name="name">GCC Vat Registered</field>
+			<field name="tax_type">gcc_vat</field>
+		</record>
+
+		<record id="tax_fp_temp_gcc_vat_0"
+			model="account.fiscal.position.tax.template">
+			<field name="position_id" ref="fp_temp_gcc_vat" />
+			<field name="tax_src_id" ref="l10n_ae.purchase_tax_template" />
+			<field name="tax_dest_id" ref="purchase_tax_template_reverse" />
+		</record>
+
+		<record id="tax_fp_temp_gcc_vat_1"
+			model="account.fiscal.position.tax.template">
+			<field name="position_id" ref="fp_temp_gcc_vat" />
+			<field name="tax_src_id" ref="l10n_ae.purchase_tax_template" />
+			<field name="tax_dest_id" ref="sale_tax_template_reverse" />
+		</record>
+
+		<record id="tax_fp_temp_gcc_vat_2"
+			model="account.fiscal.position.tax.template">
+			<field name="position_id" ref="fp_temp_gcc_vat" />
+			<field name="tax_src_id" ref="l10n_ae.sale_tax_template" />
+			<field name="tax_dest_id" ref="sale_tax_template_E" />
+		</record>
+
+
+		<record model="account.fiscal.position.template"
+			id="fp_temp_non_gcc_vat">
+			<field name="chart_template_id"
+				ref="l10n_ae.uae_chart_template_standard" />
+			<field name="name">Non GCC Vat Registered</field>
+			<field name="tax_type">non_gcc_vat</field>
+		</record>
+
+		<record id="tax_fp_temp_non_gcc_vat_0"
+			model="account.fiscal.position.tax.template">
+			<field name="position_id" ref="fp_temp_non_gcc_vat" />
+			<field name="tax_src_id" ref="l10n_ae.purchase_tax_template" />
+			<field name="tax_dest_id" ref="purchase_tax_template_reverse" />
+		</record>
+
+		<record id="tax_fp_temp_non_gcc_vat_1"
+			model="account.fiscal.position.tax.template">
+			<field name="position_id" ref="fp_temp_non_gcc_vat" />
+			<field name="tax_src_id" ref="l10n_ae.purchase_tax_template" />
+			<field name="tax_dest_id" ref="sale_tax_template_reverse" />
+		</record>
+
+		<record id="tax_fp_temp_non_gcc_vat_2"
+			model="account.fiscal.position.tax.template">
+			<field name="position_id" ref="fp_temp_non_gcc_vat" />
+			<field name="tax_src_id" ref="l10n_ae.sale_tax_template" />
+			<field name="tax_dest_id" ref="sale_tax_template_E" />
+		</record>
+
+
+		<record model="account.fiscal.position.template"
+			id="fp_temp_non_gcc">
+			<field name="chart_template_id"
+				ref="l10n_ae.uae_chart_template_standard" />
+			<field name="name">Non GCC</field>
+			<field name="tax_type">non_gcc</field>
+		</record>
+
+		<record id="tax_fp_temp_non_gcc_0"
+			model="account.fiscal.position.tax.template">
+			<field name="position_id" ref="fp_temp_non_gcc" />
+			<field name="tax_src_id" ref="l10n_ae.purchase_tax_template" />
+			<field name="tax_dest_id" ref="purchase_tax_template_reverse" />
+		</record>
+
+		<record id="tax_fp_temp_non_gcc_1"
+			model="account.fiscal.position.tax.template">
+			<field name="position_id" ref="fp_temp_non_gcc" />
+			<field name="tax_src_id" ref="l10n_ae.purchase_tax_template" />
+			<field name="tax_dest_id" ref="sale_tax_template_reverse" />
+		</record>
+
+		<record id="tax_fp_temp_non_gcc_2"
+			model="account.fiscal.position.tax.template">
+			<field name="position_id" ref="fp_temp_non_gcc" />
+			<field name="tax_src_id" ref="l10n_ae.sale_tax_template" />
+			<field name="tax_dest_id" ref="sale_tax_template_E" />
+		</record>
+
+
+		<record model="account.fiscal.position.template"
+			id="fp_temp_vat_des">
+			<field name="chart_template_id"
+				ref="l10n_ae.uae_chart_template_standard" />
+			<field name="name">Vat Registered - Designated Zone</field>
+			<field name="tax_type">vat_des</field>
+		</record>
+
+		<record id="tax_fp_temp_vat_des_0"
+			model="account.fiscal.position.tax.template">
+			<field name="position_id" ref="fp_temp_vat_des" />
+			<field name="tax_src_id" ref="l10n_ae.purchase_tax_template" />
+			<field name="tax_dest_id" ref="purchase_tax_template_reverse" />
+		</record>
+
+		<record id="tax_fp_temp_vat_des_1"
+			model="account.fiscal.position.tax.template">
+			<field name="position_id" ref="fp_temp_vat_des" />
+			<field name="tax_src_id" ref="l10n_ae.purchase_tax_template" />
+			<field name="tax_dest_id" ref="sale_tax_template_reverse" />
+		</record>
+
+		<record id="tax_fp_temp_vat_des_2"
+			model="account.fiscal.position.tax.template">
+			<field name="position_id" ref="fp_temp_vat_des" />
+			<field name="tax_src_id" ref="l10n_ae.sale_tax_template" />
+			<field name="tax_dest_id" ref="sale_tax_template_E" />
+		</record>
+
+
+		<record model="account.fiscal.position.template"
+			id="fp_temp_non_vat_des">
+			<field name="chart_template_id"
+				ref="l10n_ae.uae_chart_template_standard" />
+			<field name="name">Non Vat Registered - Designated Zone</field>
+			<field name="tax_type">non_vat_des</field>
+		</record>
+
+		<record id="tax_fp_temp_non_vat_des_0"
+			model="account.fiscal.position.tax.template">
+			<field name="position_id" ref="fp_temp_non_vat_des" />
+			<field name="tax_src_id" ref="l10n_ae.purchase_tax_template" />
+			<field name="tax_dest_id" ref="purchase_tax_template_reverse" />
+		</record>
+
+		<record id="tax_fp_temp_non_vat_des_1"
+			model="account.fiscal.position.tax.template">
+			<field name="position_id" ref="fp_temp_non_vat_des" />
+			<field name="tax_src_id" ref="l10n_ae.purchase_tax_template" />
+			<field name="tax_dest_id" ref="sale_tax_template_reverse" />
+		</record>
+
+		<record id="tax_fp_temp_non_vat_des_2"
+			model="account.fiscal.position.tax.template">
+			<field name="position_id" ref="fp_temp_non_vat_des" />
+			<field name="tax_src_id" ref="l10n_ae.sale_tax_template" />
+			<field name="tax_dest_id" ref="sale_tax_template_E" />
+		</record>
+
+	</data>
+</openerp>

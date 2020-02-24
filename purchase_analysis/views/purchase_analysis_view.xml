@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+         <record model="ir.ui.view" id="purchase_analysis_tree_view">
+            <field name="name">purchase.analysis.tree</field>
+            <field name="model">purchase.analysis</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="name" />
+                    <field name="analysis_period_from" />
+                    <field name="analysis_period_to" />
+                    <field name="projected_period_from" />
+                    <field name="projected_period_to" />
+                    <field name="by_vendor" />
+                    <field name="vendor_ids" widget="many2many_tags"/>
+                    <field name="product_ids" widget="many2many_tags"/>
+                    <field name="product_category_ids" widget="many2many_tags"/>
+                </tree>
+            </field>
+        </record>
+        <record model="ir.ui.view" id="purchase_analysis_form_view">
+            <field name="name">purchase.analysis.form</field>
+            <field name="model">purchase.analysis</field>
+            <field name="arch" type="xml">
+                <form>
+                    <header>
+                        <button name="compute_analysis_line" string="Compute Analysis Line" type="object" class="oe_highlight"/>
+                        <button name="create_po" string="Create PO" type="object" class="oe_highlight"/>
+                        <button name="action_pivot_view"  string="Pivot View"  type="object" class="oe_highlight"/>
+                    </header>
+                    <sheet>
+                        <div class="oe_button_box" name="button_box">
+                            <button name="action_view_purchase_order" type="object" class="oe_stat_button"
+                                    attrs="{'invisible': [('purchase_order_count', '=', 0)]}" icon="fa-pencil-square-o">
+                                <field name="purchase_order_count" widget="statinfo"/>
+                            </button>
+                        </div>
+                        <group>
+                            <group>
+                                <field name="name"/>
+                            </group>
+                            <group> </group>
+                            <group>
+                                    <label for="analysis_period_from" string="Analysis Period"/>
+                                    <div class="o_row">
+                                        <field name="analysis_period_from" placeholder="From" /> -
+                                        <field name="analysis_period_to" placeholder="To"/>
+                                    </div>
+                            </group>
+                            <group>
+                                <label for="projected_period_from" string="Projected Period"/>
+                                <div class="o_row">
+                                    <field name="projected_period_from" placeholder="From"/> -
+                                    <field name="projected_period_to" placeholder="To"/>
+                                </div>
+                            </group>
+                            <group>
+                                <field name="product_ids" widget="many2many_tags"/>
+                                <field name="product_category_ids" widget="many2many_tags"/>
+                                <field name="product_variant_attribute_ids" widget="many2many_tags"/>
+                                <field name="product_brand_ids" widget="many2many_tags"/>
+                            </group>
+                           <group>
+                               <field name="by_vendor" />
+                               <field name="vendor_ids" attrs="{'invisible':[('by_vendor', '=', False)] ,
+                                        'required': [('by_vendor', '=', True)],}" widget="many2many_tags"/>
+                               <field name="seller_all_lines" />
+                               <field name="purchase_order_ids" invisible="1"/>
+                           </group>
+                        </group>
+                        <notebook>
+                            <page string="Analysis Lines">
+                                <field name="analysis_lines_ids">
+                                    <tree editable="bottom" create="0" >
+                                        <field name="product_id"/>
+                                        <field name="product_description"/>
+                                        <field name="product_category"/>
+                                        <field name="Variant_attribute01"/>
+                                        <field name="Variant_attribute_value"/>
+                                        <field name="stock_in_hand"/>
+                                        <field name="average_daily_sale_current"/>
+                                        <field name="average_daily_sale_projected"/>
+                                        <field name="days_in_stock"/>
+                                        <field name="delivery_lead_days"/>
+                                        <field name="next_procurement_date"/>
+                                        <field name="stock_in_hand_projected_date"/>
+                                        <field name="procurement_qty"/>
+                                        <field name="include_in_po"/>
+                                        <field name="vendor" invisible="1"/>
+                                        <field name="unit_price" invisible="1"/>
+                                        <field name="product_unit_of_measure" invisible="1"/>
+                                        <field name="po_status"/>
+                                        <field name="product_brand" invisible="1"/>
+                                    </tree>
+                                </field>
+                            </page>
+                        </notebook>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+        <record id="purchase_analysis_line_pivot" model="ir.ui.view">
+            <field name="name">purchase.analysis.line.pivot</field>
+            <field name="model">purchase.analysis.line</field>
+            <field name="arch" type="xml">
+                <pivot>
+                    <field name="product_id" type="row"/>
+                    <field name="product_category"/>
+                    <field name="Variant_attribute01"/>
+                    <field name="average_daily_sale_current" type="measure"/>
+                    <field name="days_in_stock" type="measure"/>
+                    <field name="average_daily_sale_projected" type="measure"/>
+                    <field name="delivery_lead_days" type="measure"/>
+                    <field name="stock_in_hand_projected_date" type="measure"/>
+                    <field name="procurement_qty" type="measure"/>
+                </pivot>
+            </field>
+        </record>
+        <record model="ir.actions.act_window" id="purchase_analysis_action">
+            <field name="name">Purchase Analysis</field>
+            <field name="res_model">purchase.analysis</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">Create the first item
+                </p>
+            </field>
+        </record>
+        <menuitem id="menu_purchase_analysis" parent="purchase.menu_procurement_management" action="purchase_analysis_action" sequence="14" name="Purchase Analysis"/>
+    </data>
+</odoo>

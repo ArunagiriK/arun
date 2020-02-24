@@ -1,0 +1,8 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+
+access_hr_advance_category_employee,hr.advance.category.employee,model_advance_category,base.group_user,1,0,0,0
+access_hr_advance_category_user,hr.advance.category.user,model_advance_category,hr.group_hr_user,1,1,1,1
+
+access_hr_advance_request_form_employee,hr.advance.request.form.employee,model_advance_request_form,base.group_user,1,1,1,1
+access_hr_advance_deduction_line_employee,hr.advance.deduction.line.employee,model_advance_deduction_line,base.group_user,1,1,1,1
+

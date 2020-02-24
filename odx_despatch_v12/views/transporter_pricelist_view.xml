@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+    
+    
+    <record model="ir.ui.view" id="transporter_pricelist_tree">
+        <field name="name">transporter.pricelist</field>
+        <field name="model">od.transporter.pricelist</field>
+        <field name="arch" type="xml">
+            <tree editable="top">
+                   <field name="name" invisible="1"/>
+                  <field name="transporter_id" required="1"/> 
+                   <field name="state_id" required="1"/>
+                  <field name="od_cartonsize_id" required="1"/> 
+                    <field name="unit_price" required="1"/>    
+            </tree>
+       </field>
+    </record>
+ 
+<record model="ir.actions.act_window" id="action_transporter_pricelist">
+        <field name="name">Transporter Pricelist</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">od.transporter.pricelist</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree</field>
+         <field name="help" type="html">
+          <p class="oe_view_nocontent_create">
+            Click to add new Transporter Pricelist. 
+          </p>
+        </field>
+    </record>
+
+<menuitem id="menuaction_action_transporter_pricelist" name="Transporter Pricelist" action="action_transporter_pricelist" parent="sale.menu_sale_config"/>
+
+
+
+ </data>
+
+
+</odoo>

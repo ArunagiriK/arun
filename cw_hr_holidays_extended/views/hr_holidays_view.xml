@@ -1,0 +1,528 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<data>
+
+		<record id="view_hr_annual_leave_rule_tree" model="ir.ui.view">
+			<field name="name">hr.annual.leave.rule.tree</field>
+			<field name="model">hr.annual.leave.rule</field>
+			<field name="arch" type="xml">
+				<tree string="Annual Leave Rule" editable="bottom">
+					<field name="sequence" widget="handle" />
+					<field name="name" />
+					<field name="year_from" />
+					<field name="year_to" />
+					<field name="days" />
+				</tree>
+			</field>
+		</record>
+
+		<record id="view_hr_annual_leave_rule_form" model="ir.ui.view">
+			<field name="name">hr.annual.leave.rule.form</field>
+			<field name="model">hr.annual.leave.rule</field>
+			<field name="arch" type="xml">
+				<form string="Annual Leave Rule">
+					<sheet>
+						<group>
+							<group>
+								<field name="name" />
+								<field name="year_from" />
+								<field name="days" />
+							</group>
+							<group>
+								<field name="sequence" />
+								<field name="year_to" />
+							</group>
+						</group>
+					</sheet>
+				</form>
+			</field>
+		</record>
+
+		<record id="view_company_form_inherit_extended" model="ir.ui.view">
+			<field name="name">res.company.form.inherit.extended</field>
+			<field name="model">res.company</field>
+			<field name="inherit_id" ref="base.view_company_form" />
+			<field name="arch" type="xml">
+				<data>
+					<xpath expr="//notebook/page[@name='holiday_expiration']"
+						position="inside">
+						<group name="company" string="Company Dates">
+							<group>
+								<field name="company_month_start" />
+								<field name="company_day_start" />
+								<field name="curr_year_company_start_date" groups="base.group_no_one" />
+							</group>
+						</group>
+					</xpath>
+					<xpath expr="//notebook/page[@name='holiday_expiration']"
+						position="attributes">
+						<attribute name="string">Holiday</attribute>
+					</xpath>
+				</data>
+			</field>
+		</record>
+
+		<record id="resource_calendar_form_inherit_extended" model="ir.ui.view">
+			<field name="name">resource.calendar.form.inherit.extended</field>
+			<field name="model">resource.calendar</field>
+			<field name="inherit_id" ref="resource.resource_calendar_form" />
+			<field name="arch" type="xml">
+				<data>
+<!--
+					<xpath expr="//field[@name='attendance_ids']" position="replace" />
+-->
+					<xpath expr="//field[@name='global_leave_ids']" position="replace">
+                            <field name="global_leave_ids" context="{'default_calendar_id': id}" />
+                    </xpath>
+<!--
+					<xpath expr="//sheet" position="inside">
+						<notebook>
+							<page string="Working Hours">
+								<field name="attendance_ids" />
+							</page>
+							<page string="Global Leaves">
+								<field name="global_leave_ids" context="{'default_calendar_id': id}" />
+							</page>
+						</notebook>
+					</xpath>
+-->
+				</data>
+			</field>
+		</record>
+
+
+		<record id="edit_holiday_type_form_inherit_extended" model="ir.ui.view">
+			<field name="name">hr.leave.type.form.inherit.extended</field>
+			<field name="model">hr.leave.type</field>
+			<field name="inherit_id" ref="hr_holidays.edit_holiday_status_form" />
+			<field name="arch" type="xml">
+				<data>
+					<xpath expr="//field[@name='name']" position="before">
+						<field name="code" />
+					</xpath>
+					<xpath expr="//field[@name='exclude_rest_days']" position="replace" />
+					<xpath expr="//field[@name='exclude_public_holidays']" position="replace" />
+					<xpath expr="//form/sheet" position="inside">
+						<notebook>
+							<page name="configuration" string="Configurations">
+								<group name="general_setting" string="General Settings">
+									<group>
+                                        <field name="type" />
+										<field name="days" attrs="{'invisible': ['|',('type', '=', 'annual'), ('apply_annual', '!=', 'self')]}" />
+										<!-- <field name="carry_forward" attrs="{'invisible': [('type', 
+											'!=', 'annual')]}" /> -->
+										<field name="department_ids" widget="many2many_tags"
+											attrs="{'invisible': [('type', '!=', 'study')]}" />
+										<field name="job_ids" widget="many2many_tags"
+											attrs="{'invisible': [('type', '!=', 'study')]}" />
+										<field name="gender" />
+										<field name="country_id" />
+										<field name="religion_id" />
+										<field name="marital" />
+										<field name="exclude_leave_frst_yr" />	
+										<field name="enable_per_service" />
+										<field name="no_per_service" attrs="{'invisible': [('enable_per_service', '=', False)], 'required': [('enable_per_service', '=', True)]}" />									
+										<field name="auto_allocate" attrs="{'invisible': [('technical', '=', True)]}" />
+									</group>
+									<group>
+										<field name="exclude_probation" />
+										<field name="exclude_rest_days" />
+										<field name="exclude_public_holidays" />
+										<field name="need_attachment" />										
+										<field name="limit_over_holidays" />										
+										<field name="limit_days_type" />	
+										<field name="limit_future_dates" />
+										<field name="limit_future_type"
+											attrs="{'invisible': [('limit_future_dates', '=', False)], 'required': [('limit_future_dates', '=', True)]}" />
+										<field name="limit_future_value"
+											attrs="{'invisible': [('limit_future_dates', '=', False)], 'required': [('limit_future_dates', '=', True)]}" />
+										<field name="technical" />
+									</group>
+								</group>
+								<group name="auto_allocate" string="Auto Allocation"
+									attrs="{'invisible': ['|', ('auto_allocate', '=', False), ('technical', '=', True)]}">
+									<group>
+										<field name="expire_on" />
+										<field name="var_base"
+											attrs="{'invisible': [('expire_on', '!=', 'var')]}" />
+										<field name="expire_type"
+											attrs="{'invisible': [('expire_on', '!=', 'var')], 'required': [('expire_on', '=', 'var')]}" />
+										<field name="expire_value"
+											attrs="{'invisible': [('expire_on', '!=', 'var')], 'required': [('expire_on', '=', 'var')]}" />
+									</group>
+									<group>
+										<field name="prorated" />
+										<field name="exclude_future_holidays" attrs="{'invisible': [('prorated', '=', False)]}" />
+										<field name="exclude_annual_leave_frst_yr" attrs="{'invisible': [('type', '!=', 'annual')]}" />
+										<field name="apply_annual" attrs="{'invisible': [('type', '!=', 'annual')], 'required': [('type', '=', 'annual')]}" />
+										<field name="annual_leave_rules"
+											attrs="{'invisible': ['|', ('type', '!=', 'annual'), ('apply_annual', '!=', 'annual_rule')]}"
+											widget="many2many_tags" />
+									</group>
+								</group>
+							</page>
+						</notebook>
+					</xpath>
+				</data>
+			</field>
+		</record>
+
+
+		<record id="hr_contract_view_form_inherit_extended" model="ir.ui.view">
+			<field name="name">hr.contract.form.inherit.extended</field>
+			<field name="model">hr.contract</field>
+			<field name="inherit_id" ref="hr_contract.hr_contract_view_form" />
+			<field name="arch" type="xml">
+				<data>
+					<xpath expr="//notebook/page[2]" position="after">
+						<page string="Leaves">
+							<group >
+								<group>
+									<field name="hr_holiday_status_ids" widget="many2many_tags" />
+								</group>
+							</group>
+                            <group>
+									<field name="annual_leave_days" groups="hr.group_hr_user" />
+									<field name="annual_days" groups="hr.group_hr_user" />
+                            </group>
+							<field name="leave_alloc_lines">
+								context="{'default_employee_id': employee_id, 
+											'default_contract_id': active_id,
+											'default_type': 'add', 
+											'default_holiday_type': 'employee',
+											'form_view_ref': 'hr_holidays.hr_leave_allocation_view_form', 
+											'tree_view_ref': 'hr_holidays.hr_leave_allocation_view_tree_my'}">
+								<tree string="Allocation Requests" create="false">
+									<field name="employee_id" />
+									<field name="holiday_type" />
+									<field name="category_id" />
+									<field name="holiday_status_id" />
+									<field name="name" />
+									<field name="number_of_days" string="Allocated Days" sum="Remaining Days" />
+									<field name="date_from" />
+									<field name="date_to" />
+									<field name="state" />
+									<field name="message_needaction" invisible="1" />
+								</tree>
+							</field>
+						</page>
+					</xpath>
+				</data>
+			</field>
+		</record>
+
+		<record id="view_department_form_inherit_holidays" model="ir.ui.view">
+			<field name="name">hr.department.form.inherit.holidays</field>
+			<field name="model">hr.department</field>
+			<field name="inherit_id" ref="hr.view_department_form" />
+			<field name="arch" type="xml">
+				<data>
+					<xpath expr="//field[@name='exclude_annual_leave']" position="after">
+						<field name="overlapping_leaves" />
+					</xpath>
+				</data>
+			</field>
+		</record>
+
+		<record id="edit_holiday_new_inherit_extended" model="ir.ui.view">
+			<field name="name">Leave Request Extended</field>
+			<field name="model">hr.leave</field>
+			<field name="inherit_id" ref="hr_holidays.hr_leave_view_form" />
+			<field name="arch" type="xml">
+				<data>
+					
+					<xpath expr="//header" position="replace">
+						<header>
+							<button string="Clarification"
+								name="%(cw_common_clarify.action_common_clarify_wiz)d" states="confirm,verify,validate1"
+								groups="base.group_user" type="action" class="oe_highlight"
+								context="{'default_employee_id': employee_id, 'default_state': state}" />
+							<button string="Update Clarification"
+								name="%(cw_common_clarify.action_common_clarify_update_wiz)d"
+								attrs="{'invisible': ['|', ('state', 'not in', ('clarify')), ('is_latest_clarif_respond_user', '=', False)]}"
+								groups="base.group_user" type="action" class="oe_highlight"
+								context="{'default_clarif_id': latest_clarif_record, 'default_return_mode': latest_clarif_return_mode, 'default_return_state': latest_clarif_return_state}" />
+
+							<button string="Confirm" name="action_confirm"
+								attrs="{'invisible': ['|', ('state', 'not in', ('draft')), ('is_an_employee', '=', False)]}"
+								type="object" class="oe_highlight" />
+							<button string="Verify" name="action_verify"
+								attrs="{'invisible': ['|', ('state', 'not in', ('confirm')), ('is_a_coach', '=', False)]}"
+								type="object" groups="cw_hr_extended.group_emp_coach" class="oe_highlight" />
+							<button string="Validate" name="action_approve"
+								attrs="{'invisible': ['|', ('state', 'not in', ('verify')), ('is_a_manager', '=', False)]}"
+								type="object" groups="cw_hr_extended.group_emp_manager" class="oe_highlight" />
+							<button string="Approve" name="action_validate"
+								attrs="{'invisible': ['|', ('state', 'not in', ('validate1')), ('is_a_hr_manager', '=', False)]}"
+								type="object" groups="hr_holidays.group_hr_holidays_manager"
+								class="oe_highlight" />
+							<button string="Refuse" name="action_refuse" states="confirm"
+								type="object" groups="cw_hr_extended.group_emp_coach" />
+							<button string="Refuse" name="action_refuse" states="verify"
+								type="object" groups="cw_hr_extended.group_emp_manager" />
+							<button string="Refuse" name="action_refuse" states="validate1"
+								type="object" groups="hr_holidays.group_hr_holidays_manager" />
+							<button string="Refuse" name="action_refuse"
+								attrs="{'invisible': ['|', ('expired', '=', True), ('state', '!=', 'validate')]}"
+								type="object" groups="hr_holidays.group_hr_holidays_manager" />
+							<button string="Reset to Draft" name="action_draft" type="object"
+								attrs="{'invisible': ['|', ('can_reset', '=', False), ('state', 'not in', ['confirm', 'refuse'])]}" />
+							<field name="state" widget="statusbar" statusbar_visible="draft,confirm,verify,validate" />
+						</header>
+					</xpath>
+					<field name="department_id" position="after">
+						<field name="contract_id" readonly="1"
+							groups="hr_holidays.group_hr_holidays_user" />
+						<field name="waiting_list_no" readonly="1" />							
+					</field>
+<!--
+					<field name="date_from" position="attributes">
+						<attribute name="widget">date</attribute>
+					</field>
+					<field name="date_to" position="attributes">
+						<attribute name="widget">date</attribute>
+					</field>
+					<field name="number_of_days_temp" position="attributes">
+						<attribute name="readonly">1</attribute>
+					</field>
+-->
+					<field name="holiday_status_id" position="attributes">					
+                    	<attribute name="options">{"no_create": True}</attribute>
+						<attribute name="context">{'employee_id':employee_id, 'enable_prorated': True}</attribute>
+					</field>
+					<field name="employee_id" position="attributes">					
+                    	<attribute name="options">{"no_create": True}</attribute>
+                    </field>
+					<xpath expr="//notebook" position="inside">
+						<page string="Clarification">
+							<field name="clarify_line_ids"
+								context="{'tree_view_ref': 'cw_common_clarify.view_common_clarify_line_tree'}" />
+							<group string="Latest Clarification Details" groups="base.group_no_one">
+								<group>
+									<field name="latest_clarif_record" readonly="1" />
+									<field name="latest_clarif_return_mode" readonly="1" />
+								</group>
+								<group>
+									<field name="latest_clarif_return_state" readonly="1" />
+									<field name="latest_clarif_respond_uid" readonly="1" />
+									<field name="is_latest_clarif_respond_user" readonly="1" />
+									<field name="is_an_employee" readonly="1" />
+									<field name="is_a_coach" readonly="1" />
+									<field name="is_a_manager" readonly="1" />
+									<field name="is_a_hr_user" readonly="1" />
+									<field name="is_a_hr_manager" readonly="1" />
+									<field name="rec_msg_read" readonly="1" />
+								</group>
+							</group>
+						</page>
+					</xpath>
+					<xpath expr="//sheet/group/group[1]" position="inside">
+<!--
+						<field name="half_day" attrs="{'invisible': [('type', '=', 'add')]}" />
+						<field name="number_of_days" groups="base.group_no_one" />
+-->
+						<field name="prorated_days" />
+						<field name="future_prorated_days" groups="base.group_no_one"  />	
+						<field name="remaining_prorated_days" groups="base.group_no_one"  />
+						<field name="virtual_prorated_days" groups="base.group_no_one" />	
+						<field name="dateto_prorated_days" groups="base.group_no_one"/>				
+					</xpath>
+				</data>
+			</field>
+		</record>
+
+<!--
+		<record id="edit_holiday_new_inherit_extended_groups" model="ir.ui.view">
+			<field name="name">Leave Request Extended Groups</field>
+			<field name="model">hr.holidays</field>
+			<field name="inherit_id" ref="hr_holidays.edit_holiday_new" />
+			<field name="groups_id" eval="[(4,ref('hr.group_hr_user'))]" />
+			<field name="arch" type="xml">
+				<data>
+					<field name="number_of_days_temp" position="attributes">
+						<attribute name="readonly">0</attribute>
+					</field>
+				</data>
+			</field>
+		</record>
+-->
+
+
+<!--
+		<record id="view_holiday_simple_inherit_extended" model="ir.ui.view">
+			<field name="name">hr.holidays.report_tree.extended</field>
+			<field name="model">hr.holidays</field>
+			<field name="inherit_id" ref="hr_holidays.view_holiday_simple" />
+			<field name="arch" type="xml">
+				<data>
+					<field name="date_from" position="attributes">
+						<attribute name="widget">date</attribute>
+					</field>
+					<field name="date_to" position="attributes">
+						<attribute name="widget">date</attribute>
+					</field>
+					<field name="number_of_days" position="before">
+						<field name="half_day" />
+					</field>                 
+				</data>
+			</field>
+		</record>
+-->
+
+
+<!--
+		<record id="view_holiday_inherit_extended" model="ir.ui.view">
+			<field name="name">hr.holidays.tree.extended</field>
+			<field name="model">hr.holidays</field>
+			<field name="inherit_id" ref="hr_holidays.view_holiday" />
+			<field name="arch" type="xml">
+				<data>
+					<field name="date_from" position="attributes">
+						<attribute name="widget">date</attribute>
+					</field>
+					<field name="date_to" position="attributes">
+						<attribute name="widget">date</attribute>
+					</field>
+					<field name="number_of_days" position="before">
+						<field name="half_day" />
+					</field>
+				</data>
+			</field>
+		</record>
+-->
+
+
+<!--
+		<record id="view_holiday_allocation_tree_inherit_extended"
+			model="ir.ui.view">
+			<field name="name">hr.holidays.allocation.tree.extended</field>
+			<field name="model">hr.holidays</field>
+			<field name="inherit_id" ref="hr_holidays.view_holiday_allocation_tree" />
+			<field name="arch" type="xml">
+				<data>
+					<field name="date_from" position="attributes">
+						<attribute name="widget">date</attribute>
+					</field>
+					<field name="date_to" position="attributes">
+						<attribute name="widget">date</attribute>
+					</field>
+					<field name="number_of_days" position="before">
+						<field name="half_day" />
+					</field>
+				</data>
+			</field>
+		</record>
+-->
+
+
+<!--
+		<record id="view_holiday_employee_inherit_extended" model="ir.ui.view">
+			<field name="name">hr.holidays.report_employee_tree.extended</field>
+			<field name="model">hr.holidays</field>
+			<field name="inherit_id" ref="hr_holidays.view_holiday_employee" />
+			<field name="arch" type="xml">
+				<data>
+					<field name="number_of_days" position="before">
+						<field name="half_day" />
+					</field>
+				</data>
+			</field>
+		</record>
+-->
+
+
+		<record model="ir.ui.view" id="view_hr_holidays_filter_inherit_extended">
+			<field name="name">hr.leave.filter.inherit.extended</field>
+			<field name="model">hr.leave</field>
+			<field name="inherit_id" ref="hr_holidays.view_hr_holidays_filter" />
+			<field name="arch" type="xml">
+				<data>
+					<xpath expr="//field[@name='name']" position="after">
+						<filter
+							domain="['|',
+                '|',
+                '|',
+                '|',
+                '|',
+                '&amp;', ('is_an_employee','=', True), ('state', 'in', ['draft', 'clarify']),
+                '&amp;', ('is_a_coach','=', True), ('state', '=', 'confirm'),
+                '&amp;', ('is_a_manager','=', True), ('state', '=', 'verify'),
+                '&amp;', ('is_a_hr_manager','=', True), ('state', '=', 'validate1'),
+                '&amp;',  '&amp;', ('is_an_employee','=', True), ('state', '=', 'validate'), ('rec_msg_read', '=', True),
+                '&amp;',  '&amp;', ('is_an_employee','=', True), ('state', '=', 'refuse'), ('rec_msg_read', '=', True)]"
+							string="Actions To Do" name="action_to_do" />
+						<separator />
+					</xpath>
+					<xpath expr="//filter[@name='approve']" position="replace">
+						<filter domain="[('state','=', 'validate1')]" string="Validated Leaves"
+							name="approve" />
+					</xpath>
+					<xpath expr="//filter[@name='validated']" position="after">
+						<filter domain="[('state','=', 'refuse')]" string="Refused Leaves"
+							name="refused" />
+					</xpath>
+					<xpath expr="//filter[@name='todo']" position="attributes">
+						<attribute name="string">Payslip To Do</attribute>
+					</xpath>
+					<xpath expr="//filter[@name='year']" position="replace">
+						<filter
+							domain="['|','|',
+                          '&amp;',('date_from', '&lt;=', datetime.datetime.now().replace(hour=0, minute=0, second=0)),('date_to', '&gt;=', datetime.datetime.now().replace(hour=0, minute=0, second=0)),
+						  '&amp;',('date_from', '&lt;=', datetime.datetime.now().replace(hour=23, minute=59, second=59)),('date_to', '&gt;=', datetime.datetime.now().replace(hour=23, minute=59, second=59)), 
+						  '&amp;',('date_from', '&gt;=', datetime.datetime.now().replace(hour=0, minute=0, second=0)),('date_to', '&lt;=', datetime.datetime.now().replace(hour=23, minute=59, second=59))]"
+							string="Today Leaves" name="today_leave_request" />
+						<separator />
+						<filter string="Current Year" name="year"
+							domain="['|', ('date_from', '=', False), '&amp;',('date_from','&lt;=', time.strftime('%%Y-12-31')),('date_from','&gt;=',time.strftime('%%Y-01-01'))]" />
+						<separator />
+						<filter string="Previous Month" name="prev_month"
+							domain="['|', ('date_from', '=', False), '&amp;',('date_from','&lt;=', time.strftime('%%Y-%%m-01')),('date_from','&gt;=', (context_today()-relativedelta(months=1)).strftime('%%Y-%%m-01'))]" />
+
+						<filter string="Current Month" name="current_month"
+							domain="['|', ('date_from', '=', False), '&amp;',('date_from','&lt;=', time.strftime('%%Y-%%m-31')),('date_from','&gt;=',time.strftime('%%Y-%%m-01'))]" />
+
+						<filter string="Next Month" name="next_month"
+							domain="['|', ('date_from', '=', False), '&amp;',('date_from','&lt;=', (context_today()+relativedelta(months=2)).strftime('%%Y-%%m-01')),('date_from','&gt;=', (context_today()+relativedelta(months=1)).strftime('%%Y-%%m-01'))]" />
+
+
+					</xpath>
+					<xpath expr="//filter[@name='group_date_from']" position="after">
+						<filter name="groupby_year" context="{'group_by': 'date_from:year'}"
+							string="Year" />
+					</xpath>
+					<xpath expr="//filter[@name='group_employee']" position="after">
+						<filter name="group_department" string="Department"
+							context="{'group_by':'department_id'}" />
+					</xpath>
+				</data>
+			</field>
+		</record>	
+
+<!--
+        <record id="action_server_holiday_recompute" model="ir.actions.server">
+			<field name="name">Recompute</field>
+            <field name="type">ir.actions.server</field>
+			<field name="model_id" ref="hr_holidays.model_hr_holidays" />
+            <field name="state">code</field>
+            <field name="code">
+            if records:
+                records.recompute_given_fields()
+            </field>
+  
+            <field name="condition">True</field>
+        </record>
+-->
+
+<!--
+        <record id="action_holiday_recompute" model="ir.values">
+			<field name="name">Recompute</field>
+			<field name="model_id" ref="hr_holidays.model_hr_holidays" />
+			<field name="model">hr.holidays</field>
+            <field name="value" eval="'ir.actions.server,%d'%action_server_holiday_recompute"/>
+            <field name="key">action</field>
+            <field name="key2">client_action_multi</field>
+        </record>
+-->
+
+	</data>
+</odoo>

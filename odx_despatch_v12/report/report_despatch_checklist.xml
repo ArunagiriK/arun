@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+   <template id="report_despatch_checklist">
+      <t t-call="report.external_layout">
+         <t t-call="report.html_container">
+               <div class="page">
+                  <div class="row">
+                     <br/><br/>
+                     <div class="col-xs-12">
+                         <div class="col-xs-4">
+                           To: <span t-esc="docs[0]['od_transporter_id']['name']"></span>
+                        </div>
+                        <div class="col-xs-4">
+                           <center>
+                              <b>
+                              <h4 style="color:#fff;background-color:#000;">
+                                 TRANSPORTATION DELIVERY NOTE
+                              </h4>
+                              </b>
+                           </center><br/>
+                           <center><b><h4>OUTWARD GATE PASS</h4></b></center><br/>
+                        </div>
+                       
+                        <div class="col-xs-4">
+                           Date:
+                           <span style="float:right;" t-esc="docs
+                              [0]['od_despatch_date']"></span><br/>
+                           Veh. No:<span style="float:right;" t-esc="docs[0]['od_fleet_id']['name']">
+                        </span><br/>
+                           Driver Name:<span style="float:right;"  t-esc="docs[0]['od_driver_id']['name']">
+                        </span>
+                        <br/>
+                        </div>
+                     </div>
+                     <t t-foreach="docs" t-as="info">
+                           <table class="table table-condensed" style="width:100%;border:1px solid #000;border-collapse: collapse;">
+                              <colgroup>
+                                 <col width='10%'/>
+                                 <col width='15%'/>
+                                 <col width='40%'/>
+                                 <col width='20%'/>
+                                 <col width='15%'/>
+                              </colgroup>
+                              <thead>
+                                 <tr style="border:1px solid #000;border-collapse: collapse;">
+                                    <th class="text-center" style="border:1px solid #000;border-collapse: collapse;">SL.No</th>
+                                    <th class="text-center" style="border:1px solid #000;border-collapse: collapse;">Invoice No.</th>
+                                    <th class="text-center" style="border:1px solid #000;border-collapse: collapse;">Customer Name</th>
+                                    <th class="text-center" style="border:1px solid #000;border-collapse: collapse;">Item Description</th>
+                                    <th class="text-center" style="border:1px solid #000;border-collapse: collapse;">Total cartons</th>                                    
+                                 </tr>
+                              </thead>
+                              <tbody>
+                                 <t t-set="total_cartons" t-value="0"/>
+                                 <!-- <t t-foreach="info.checklist_line" t-as="despatch"> -->
+                                    <tr style="border:1px solid #000;border-collapse: collapse;">
+                                       <td class="text-center" style="border:1px solid #000;border-collapse: collapse;">
+                                          <!-- <t t-esc="despatch_index + 1"/> -->
+                                          <span>1</span>
+                                       </td>
+                                       <td style="border:1px solid #000;border-collapse: collapse;">
+                                          <!-- <t t-if="despatch['invoice_id']">
+                                             <t t-esc="info.checklist_line[0]['invoice_id']['number']"/>
+                                          </t> -->
+                                          <t t-foreach="info.checklist_line" t-as="line">
+                                          <span t-esc="','.join(map(lambda x: x.number,line.invoice_id))"/>
+                                       </t>
+                                       </td>
+                                       <td style="border:1px solid #000;border-collapse: collapse;">
+                                          <t t-esc="info.checklist_line[0]['partner_id']['name']"/>
+                                          <t t-esc="info.checklist_line[0]['partner_id']['street2']"/>
+                                          <t t-esc="info.checklist_line[0]['partner_id']['city']"/>
+                                       </td>
+                                       <td style="border:1px solid #000;border-collapse: collapse;">
+                                          <t t-esc="info.checklist_line[0]['tranfer_ref']"/>
+                                       </td>
+                                       <td style="border:1px solid #000;border-collapse: collapse;">
+                                          <!-- <t t-set="total_cartons" t-value="total_cartons + line['no_of_carton']"/>
+                                          <span t-esc="total_cartons"/> -->
+                                          <t t-esc="sum(line.no_of_carton for line in info.checklist_line) " />
+                                       <!-- </t> -->
+
+                                       </td>
+                                    </tr>
+                                 <!-- </t> -->
+                                 <!-- <tr>
+                                    <td colspan="4" style="border:1px solid #000;border-collapse: collapse;">
+                                       <span style="float:right;"><b>Total Cartons/ Unit</b></span>
+                                    </td>
+                                    <td style="border:1px solid #000;border-collapse: collapse;">
+                                       
+                                    </td>
+                                 </tr> -->
+                              </tbody>
+
+                           </table>
+                        
+                  <br/><br/><br/>
+                  </t>
+                  </div>
+
+                  <div class="row">
+                     <div class="col-xs-2">
+                        <span>
+                           _____________
+                        </span><br/>
+                        <center>MANAGER</center>
+                     </div>
+                     <div class="col-xs-2">
+                        <span>
+                           _____________
+                        </span><br/>
+                        <center>SECURITY</center>
+                     </div>
+                     <div class="col-xs-2">
+                        <span>
+                           _____________
+                        </span><br/>
+                        <center>DRIVER</center>
+                     </div>
+                     <div class="col-xs-6" style="border:1px solid #000;">
+                        <span>Date:</span>
+                        <span style="float:right;font-size:10px;">
+                           Received goods with good condition
+                        </span><br/>
+                        <span>Receivers Name:</span>
+                        <span style="float:right;"/><br/>
+                        <span>Receivers Signature:</span>
+                        <span style="float:right;"/>
+                     </div>
+
+
+
+                  </div>
+            
+               </div>
+            </t>
+         </t>
+   </template>
+   <!-- <template id="report_despatch_checklist">
+    <t t-call="report.html_container">
+        <t t-foreach="docs" t-as="info">
+            <t t-call="orchid_bfly_v10.report_despatch_checklist_document"/>
+        </t>
+    </t>
+   </template> -->
+</odoo>

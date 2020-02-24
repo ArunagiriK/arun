@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="view_account_template_xml" model="ir.ui.view">
+            <field name="name">account.template.form</field>
+            <field name="model">account.template.wizard</field>
+            <field name="arch" type="xml">
+                <form>
+                    <sheet>
+                        <group col="2" colspan="2" name="Child Company COA">
+                            <field name="company_id"/>
+                            <field name="company_ids" widget="many2many_tags"/>
+                            <field name="chart_template_id"/>
+                        </group>
+                    </sheet>
+                    <footer>
+                            <button string="Update" name="account_chart" type="object" class="btn-primary"/>
+                            <button string="Cancel" class="btn-secondary" special="cancel"/>
+                    </footer>
+                </form>
+            </field>
+            </record>
+        
+      <record id="action_view_account_repayment" model="ir.actions.act_window">
+            <field name="name">Chart of Account For Child Company</field>
+            <field name="res_model">account.template.wizard</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="view_account_template_xml"/>
+            <field name="target">new</field>
+       </record>
+    
+    <menuitem name="Generate Child Company chart of account" action="action_view_account_repayment"
+            id="account_template_wizard_menu"
+            parent="account.menu_finance_entries_generate_entries" sequence="111"/>
+    </data>
+</odoo>

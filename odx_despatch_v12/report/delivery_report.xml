@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<data>
+		 <record model="ir.ui.view" id="view_delivery_account_invoiceexpo_tree">
+            <field name="name">od.despatch.tree</field>
+            <field name="model">od.despatch</field>
+            <field name="arch" type="xml">
+                <tree string="Delivery Report" >
+                			<field name="date_invoice" readonly="1"/>
+                     <field name="partner_id" readonly="1"/>
+                       <field name="name" string="Ref" readonly="1"/>
+                     <field name="od_desc" string="Despatch Description" readonly="1"/>
+                      <field name="number" string="Invoice" readonly="1"/>
+                     <field name="user_id" readonly="1"/>
+                     <field name="od_driver_id" readonly="1"/>
+                     <field name="od_fleet_id" readonly="1"/>
+                    <field name="od_transporter_id" readonly="1"/>
+                    <field name="od_carton_no" readonly="1"/>
+                    <field name="od_trans_ref" readonly="1"/>
+                    <field name="od_despatch_date" readonly="1"/>
+                    <field name="od_delivery_date" readonly="1"/>
+                     
+                </tree>
+            </field>
+        </record>
+
+
+
+        <record id="view_desliery_accoun_exp_search" model="ir.ui.view">
+        <field name="name">od.despatch.search</field>
+        <field name="model">od.despatch</field>
+        <field name="arch" type="xml">
+            <search string="Despatch Report">
+               
+                <group expand="0" string="Extended Filters">
+                    <field name="partner_id" />
+                    <field name="user_id" />
+                    <field name="od_journal_id" />
+                    <field name="od_transporter_id" />
+                    <field name="od_state_id" />
+                    <field name="od_driver_id" />
+                </group>
+                <group expand="1" string="Group By">
+                    <filter string="Partner" name="group_partner_id" context="{'group_by':'partner_id'}"/>
+                    <filter string="Despatch Date" name="despatch_date" context="{'group_by':'od_despatch_date'}"/>
+                    <filter string="Salesperson" name="user_id" context="{'group_by':'user_id'}"/>
+                    <filter string="SalesType" name="od_journal_id" context="{'group_by':'od_journal_id'}"/>
+                    <filter string="Transporter" name="od_transporter_id" context="{'group_by':'od_transporter_id'}"/>
+                    <filter string="Destination" context="{'group_by':'od_state_id'}"/>
+                    <filter string="Driver" context="{'group_by':'od_driver_id'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_delivery_inv_report" model="ir.actions.act_window">
+        <field name="name">Delivery Report</field>
+        <field name="res_model">od.despatch</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree</field>
+        <field name="search_view_id" ref="view_desliery_accoun_exp_search"/>
+        <field name="view_id" ref="view_delivery_account_invoiceexpo_tree"/>
+        <field name="help"></field>
+    </record>
+
+   
+    <menuitem  action="action_delivery_inv_report" id="od_delivery_menu_export" parent="sale.menu_sale_report" />
+	
+	</data>
+
+
+</odoo>

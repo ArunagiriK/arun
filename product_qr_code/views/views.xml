@@ -1,0 +1,73 @@
+<?xml version="1.0"?>
+<odoo>
+    <data>
+        <record id="product_variant_easy_edit_view_qr_code" model="ir.ui.view">
+            <field name="name">product.product.product.view.form.easy.qr.code</field>
+            <field name="model">product.product</field>
+            <field name="inherit_id" ref="product.product_variant_easy_edit_view"/>
+            <field name="arch" type="xml">
+                <field name="barcode" position="before">
+                    <field name='qr_code' readonly="1" force_save="1"/>
+                </field>
+                <field name="barcode" position="attributes">
+                    <attribute name='invisible'>True</attribute>
+                </field>
+            </field>
+        </record>
+        <record model="ir.ui.view" id="product_normal_form_view">
+            <field name="name">product.product.view.form.easy</field>
+            <field name="model">product.product</field>
+            <field name="inherit_id" ref="product.product_normal_form_view"/>
+            <field name="arch" type="xml">
+                <field name="barcode" position="before">
+                    <field name='qr_code' readonly="1" force_save="1"/>
+                </field>
+                <field name="barcode" position="attributes">
+                    <attribute name='invisible'>True</attribute>
+                </field>
+            </field>
+        </record>
+        <template id="report_simple_label" inherit_id="product.report_simple_label">
+            <xpath expr="//t[@t-else='']" position="after">
+                <t t-if="product.qr_code">
+                    <tr style="width: 3in;">
+                        <td style="text-align: center; vertical-align: middle;" class="col-5" >
+                            <img t-att-src="'/report/barcode/?type=%s&amp;value=%s&amp;width=%s&amp;height=%s' % ('QR',product.qr_code, 150, 150)" style="width:150px;height:150px;"/>
+                        </td>
+                    </tr>
+                </t>
+            </xpath>
+        </template>
+        <record model="ir.ui.view" id="product_template_barcode_customization">
+            <field name="name">product.customise.barcode.form</field>
+            <field name="model">product.template</field>
+            <field name="inherit_id" ref="product.product_template_only_form_view"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='barcode']" position="replace">
+                    <field name="barcode"/>
+                </xpath>
+            </field>
+        </record>
+
+        <report
+            id="product.report_product_product_barcode"
+            string="Product Barcode (PDF)"
+            model="product.product"
+            report_type="qweb-pdf"
+            name="product.report_productbarcode"
+            file="product.report_productbarcode"
+            print_report_name="'Products barcode - %s' % (object.name)"
+            menu="False"
+        />
+
+        <report
+            id="product.report_product_template_barcode"
+            string="Product Barcode (PDF)"
+            model="product.template"
+            report_type="qweb-pdf"
+            name="product.report_productbarcode"
+            file="product.report_productbarcode"
+            print_report_name="'Products barcode - %s' % (object.name)"
+        />
+    </data>
+</odoo>

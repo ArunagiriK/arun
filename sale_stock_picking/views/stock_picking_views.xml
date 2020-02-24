@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!--
+            Stock Picking  Views 
+        -->
+        <record id="view_picking_inherit_form" model="ir.ui.view">
+            <field name="model">stock.picking</field>
+            <field name="inherit_id" ref="stock.view_picking_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='state']" position="replace">
+                    <field name="state" widget="statusbar" statusbar_visible="draft,confirmed,partially_available,pending,confirm,assigned,done" />
+                </xpath>
+                <xpath expr="//button[@name='action_cancel']" position="before">
+                    <button name="action_pending" attrs="{'invisible': ['|', '|',('state', 'in', ('partially_available'),('state', '!=', 'done')),('show_validate', '=', False),('purchase_id', '!=', False)]}" string="Pending" type="object" class="oe_highlight" groups="stock.group_stock_user"/>
+                </xpath>
+                <xpath expr="//field[@name='company_id']" position="after">
+                    <field name="purchase_id" invisible="1"/>
+                    <field name="stock_sale" invisible="1"/>
+                </xpath>
+                
+<!--
+                <xpath expr="//page[@name='accounting']" position="attributes">
+                    <attribute name="string">Accounting</attribute>
+                </xpath>
+-->             
+<!--
+                <xpath expr="//button[@name='button_validate'][1]" position="attributes">
+                    <attribute name="states">assigned</attribute>
+                </xpath>
+-->
+                <xpath expr="//button[@name='button_validate'][2]" position="attributes">
+                <attribute name="states">pending,confirm</attribute>
+
+<!--
+                  <button name="button_validate" states="waiting,pending,confirm,confirmed" string="Validate2" type="object" attrs="{'invisible': [('stock_sale', '!=', False)]}"  groups="stock.group_stock_user" class="oe_highlight"/>
+-->
+                </xpath>
+                <xpath expr="//button[@name='button_validate']" position="before">
+                    <button name="action_sale_confirm" attrs="{'invisible': ['|', '|',('state', 'in', ('partially_available'),('state', '=', 'done')),('show_validate', '=', False),('purchase_id', '!=', False)]}" string="Confirm" type="object" class="oe_highlight" groups="stock.group_stock_user"/>
+                </xpath>
+            </field>
+        </record>
+        
+    </data>
+</odoo>

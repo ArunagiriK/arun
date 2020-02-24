@@ -1,0 +1,343 @@
+<?xml version="1.0" ?>
+<odoo>
+
+    <data noupdate="0">
+    	 
+        <record id="email_bfly_daily_report" model="mail.template">
+            <field name="name">Butterfly Daily Sales Report</field>
+            <field name="email_from">${user.email}</field>
+            <!-- <field name="email_to">lal@kreoltrade.net,kreol@kreoltrade.net,rajeev@kreoltrade.net,nandu@kreoltrade.net,sudhi@kreoltrade.net,baiju@kreoltrade.net</field>-->
+            <field name="email_to">lal@kreoltrade.net,kreol@kreoltrade.net,vijayan@kreoltrade.net</field>
+            <field name="email_cc">karthik@kreoltrade.net,vinod@kreoltrade.net,vinodvs@kreoltrade.net,jinesh@kreoltrade.net,
+ subin@kreoltrade.net,rijin@kreoltrade.net,
+ jijin@kreoltrade.net,james@kreoltrade.net,shameer@kreoltrade.net,
+ ajith@kreoltrade.net,guthus@kreoltrade.net,bipinraj@kreoltrade.net,
+ libeesh@kreoltrade.net,sakthi@kreoltrade.net,john@kreoltrade.net,minoj@kreoltrade.net,
+ jishor@kreoltrade.net,kannan@kreoltrade.net,sureshan@kreoltrade.net,sevi@kreoltrade.net,
+ rajesh@kreoltrade.net,sooraj@kreoltrade.net,sudheesh.badra@gmail.com,
+ midhunparappur@gmail.com,jojijosephne@yahoo.com,shinosh@kreoltrade.net,
+ suvil@kreoltrade.net,salgi@kreoltrade.net,subin@kreoltrade.net,libeeshms@gmail.com,
+ bipinraj@kreoltrade.net,denny@kreoltrade.net,jishor@kreoltrade.net,jithin@kreoltrade.net,piyush@kreoltrade.net,minoj@kreoltrade.net</field>
+            <field name="subject">Butterfly Daily Sales Report  as on ${ctx["data"]["date_to"]}</field>
+            <field name="auto_delete" eval="True"/>
+            <field name="model_id" ref="base.model_res_users"/>
+           
+            <field name="body_html"><![CDATA[
+
+% macro sale_groupwise_total(values,detail,categ):
+                
+                <table cellspacing="1" border="1" cellpadding="4">
+                <tr style="color:blue;">
+                    <th>Category</th>
+                    <th>Sales of  The Day</th>
+                    <th>Gross Sales</th>
+                    <th>Sales Return</th>
+                    <th>Net Sales</th>
+                </tr>
+                        % for data in values:
+                        % if data.get('od_total_col','') == 1:
+                    <tr style="font-weight: bold;">
+                        <td>${data.get('category','')}</td>                       
+                        <td align="right">${data.get('day_sale','')}</td>
+                        <td align="right">${data.get('amount','')}</td>
+                        <td align="right">${data.get('sales_return','')}</td>
+                        <td align="right">${data.get('net_sales','')}</td>
+                    </tr>
+                        % endif
+
+                   
+
+                        % endfor
+
+                
+
+
+
+                    <tr style="color:blue;font-weight: bold;">
+                        <td>Total</td>
+                        <td align="right">${detail.get('day_sale',0.0)}</td>                    
+                        <td align="right">${detail.get('amount',0.0)}</td>
+                        <td align="right">${detail.get('sales_return',0.0)}</td>
+                        <td align="right">${detail.get('net_sales',0.0)}</td>
+    
+                    </tr>
+
+                   
+
+                </table>
+
+% endmacro
+
+ % macro sale_groupwise(values,detail,categ):
+ 				
+                <table cellspacing="1" border="1" cellpadding="4">
+                <tr style="color:blue;">
+                    <th>Category</th>
+                    <th>Group</th>
+                    <th>Sales of  The Day</th>
+                    <th>Gross Sales</th>
+                    <th>Sales Return</th>
+                    <th>Net Sales</th>
+                    <th>Sales Target</th>
+                    <th>Sales Achieved %</th>
+                    <th>Excess / Short from Target</th>
+                    <th>Bal.Sales Req.Per day</th>
+                   
+                </tr>
+                        % for data in values:
+                    % if data.get('od_total_col','') == 0:
+                    <tr>
+                        <td>${data.get('category','')}</td>
+                        <td>${data.get('group','')}</td>                        
+                        <td align="right">${data.get('day_sale','')}</td>
+                        <td align="right">${data.get('amount','')}</td>
+                        <td align="right">${data.get('sales_return','')}</td>
+                        <td align="right">${data.get('net_sales','')}</td>
+                        <td align="right">${data.get('divsion_target','')}</td>
+                        <td align="right">${data.get('sale_ach','')}</td>
+                        <td align="right">${data.get('ex_sht','')}</td>
+                        <td align="right">${data.get('bal_req','')}</td>
+                       
+                    </tr>
+                    % endif
+                    % if data.get('od_total_col','') == 1:
+                    <tr style="color:blue;font-weight: bold;">
+                        <td>${data.get('category','')}</td>
+                        <td>${data.get('group','')}</td>                        
+                        <td align="right">${data.get('day_sale','')}</td>
+                        <td align="right">${data.get('amount','')}</td>
+                        <td align="right">${data.get('sales_return','')}</td>
+                        <td align="right">${data.get('net_sales','')}</td>
+                        <td align="right"></td>
+                        <td align="right"></td>
+                        <td align="right"></td>
+                        <td align="right"></td>
+                       
+                    </tr>
+                    % endif
+
+                   
+
+                         % endfor
+
+                
+
+
+
+                    <tr style="color:blue;font-weight: bold;">
+                    <td colspan="2">Total</td>
+                    
+                    <td align="right">${detail.get('day_sale',0.0)}</td>                    
+                    <td align="right">${detail.get('amount',0.0)}</td>
+                     <td align="right">${detail.get('sales_return',0.0)}</td>
+                     <td align="right">${detail.get('net_sales',0.0)}</td>
+                    <td></td>
+                     <td></td>
+                      <td></td>
+                       <td></td>
+                    </tr>
+
+                   
+
+                </table>
+
+                % endmacro
+
+
+
+             
+             % macro sale_userwise(values,detail,categ):
+ 					
+                <table cellspacing="1" border="1" cellpadding="4">
+                <tr style="color:blue;">
+                    <th>Salesman</th>
+                    <th>Category</th>
+                    <th>Area</th>
+                    <th>Sales of  The Day</th>
+                    <th>Gross Sales</th>
+                    <th>Sales Return</th>
+                    <th>Net Sales</th>
+                    <th>Sales Target</th>
+                    <th>Sales Achieved %</th>
+                    <th>Excess / Short from Target</th>
+                    <th>Bal.Sales Req.Per day</th>
+                   
+                </tr>
+                    % for data in values:
+                        % if data.get('od_total_col','') == 0:
+                    <tr>
+                        <td>${data.get('user','')}</td>
+                        <td>${data.get('category','')}</td>
+                        <td>${data.get('area','')}</td>
+                        <td align="right">${data.get('day_sale','')}</td>
+                        <td align="right">${data.get('amount','')}</td>
+                        <td align="right">${data.get('sales_return','')}</td>
+                        <td align="right">${data.get('net_sales','')}</td>
+                        <td align="right">${data.get('sale_target','')}</td>
+                        <td align="right">${data.get('sale_ach','')}</td>
+                        <td align="right">${data.get('ex_sht','')}</td>
+                        <td align="right">${data.get('bal_req','')}</td>    
+                    </tr>
+                        % endif
+                        % if data.get('od_total_col','') == 1:
+                    <tr style="color:blue;font-weight: bold;">
+                        <td>${data.get('category','')}</td>
+                        <td>${data.get('group','')}</td>
+                        <td align="right"></td>                      
+                        <td align="right">${data.get('day_sale','')}</td>
+                        <td align="right">${data.get('amount','')}</td>
+                        <td align="right">${data.get('sales_return','')}</td>
+                        <td align="right">${data.get('net_sales','')}</td>
+                        <td align="right"></td>
+                        <td align="right"></td>
+                        <td align="right"></td>
+                        <td align="right"></td>  
+                    </tr>
+                        % endif
+                    % endfor
+                  <tr style="color:blue;font-weight: bold;">
+                  	<td>Total</td>
+                  	<td></td>
+                  	<td></td>
+                  	<td align="right">${detail.get('day_sale',0.0)}</td>
+                    <td align="right">${detail.get('amount',0.0)}</td>
+                     <td align="right">${detail.get('sales_return',0.0)}</td>
+                     <td align="right">${detail.get('net_sales',0.0)}</td>
+                    <td></td>
+                     <td></td>
+                      <td></td>
+                       <td></td>
+                    </tr> 
+                </table>
+                % endmacro
+                
+                 % macro invoice_detail(values,total):
+ 					
+                <table cellspacing="1" border="1" cellpadding="4">
+                <tr style="color:blue;">
+                    <th>Invoice Date</th>
+                    <th>Customer</th>
+                    <th>Number</th>
+                    <th>Salesperson</th>
+                    <th>Total</th>
+                   
+                  
+                   
+                </tr>
+                        % for data in values:
+                    <tr>
+                        <td>${data.get('date_invoice','')}</td>
+                        <td>${data.get('partner','')}</td>
+                        <td>${data.get('number','')}</td>
+                        <td>${data.get('user','')}</td>
+                        <td align="right">${data.get('day_sale','')}</td>
+                       
+                       
+                       
+                    </tr>
+
+                % endfor
+                	<tr style="color:blue;font-weight: bold;">
+                		<td>Total</td>
+                		<td></td>
+                		<td></td>
+                		<td></td>
+                		<td align="right">${total}</td>
+                		
+                	</tr>
+                </table>
+                % endmacro
+                
+                
+                 % macro invoice_ret_detail(values,total):
+ 					
+                <table cellspacing="1" border="1" cellpadding="4">
+                <tr style="color:blue;">
+                    <th>Invoice Date</th>
+                    <th>Customer</th>
+                    <th>Number</th>
+                    <th>Salesperson</th>
+                    <th>Total</th>
+                   
+                  
+                   
+                </tr>
+                        % for data in values:
+                    <tr>
+                        <td>${data.get('date_invoice','')}</td>
+                        <td>${data.get('partner','')}</td>
+                        <td>${data.get('number','')}</td>
+                        <td>${data.get('user','')}</td>
+                        <td align="right">${data.get('day_return','')}</td>
+                       
+                       
+                       
+                    </tr>
+
+                % endfor
+                	<tr style="color:blue;font-weight: bold;">
+                		<td>Total</td>
+                		<td></td>
+                		<td></td>
+                		<td></td>
+                		<td align="right">${total}</td>
+                		
+                	</tr>
+                </table>
+                % endmacro
+                
+             
+             
+             
+             
+
+<p>Dear All,
+
+
+
+
+
+<h3>Sales Value up to  ${ctx["data"]["prev_date"]}                                -  ${ctx["data"]["prev_day_sale_value"]}  </h3>
+<h3>Sales Value as on ${ctx["data"]["date_to"]}                                	  -  ${ctx["data"]["day_sale_value"]} 	</h3>
+<h3>Total Sales Value up to ${ctx["data"]["date_to"]}                             -  ${ctx["data"]["total_sale_value"]} </h3>
+
+<h2>Total ${ctx["data"]["days"]} Days @ Invoice Value Dhs.  ${ctx["data"]["sales_per_day"]} per day  </h2>
+<br/>
+
+<h2><u>Category Wise - Sales Summary up to ${ctx["data"]["date_to"]} </u></h2>
+  <br/> 
+        ${sale_groupwise_total(ctx["data"]['group_wise'],ctx["data"]['group_wise_sum'],ctx["data"]['cat_wise_sum'])}
+
+<h2><u>Group Wise - Sales Summary up to ${ctx["data"]["date_to"]} </u></h2>
+  <br/>              
+                ${sale_groupwise(ctx["data"]['group_wise'],ctx["data"]['group_wise_sum'],ctx["data"]['cat_wise_sum'])}
+
+   <br/>  
+ <h2> <u>Salesman Wise - Sales Summary up to ${ctx["data"]["date_to"]} </u>  </h2>
+ 			 <br/>
+ 			 ${sale_userwise(ctx["data"]['user_wise'],ctx["data"]['user_wise_sum'],ctx["data"]['cat_wise_sum'])}
+
+<br/>
+<h2><u>Invoice details  as on ${ctx["data"]["date_to"]}</u></h2>
+ <br/>   
+ ${invoice_detail(ctx["data"]['day_sale'],ctx["data"]['day_sale_value'])}
+ <br/>
+
+ <h2><u>Sales Return details as on ${ctx["data"]["date_to"]}</u></h2>
+ <br/>   
+  ${invoice_ret_detail(ctx["data"]['day_return'],ctx["data"]['day_return_value'])}
+ 
+            
+                Thanks,
+                </p>
+                <pre>
+                --
+                Butterfly Auto Generated Email
+                </pre>
+
+]]></field>
+        </record>
+        
+    
+    </data>
+ </odoo>

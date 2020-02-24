@@ -1,0 +1,5 @@
+1. Create below account:
+	1. VAT Receivable Under (TAX RECEIVABLES-ASSET)
+	2. VAT PAYABLE Under (Liability)
+	
+Assign these two accounts in TAXES:Invoice Tax Account and Refund TAX account

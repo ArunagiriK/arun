@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+   <template id="report_export_invoice">
+      <t t-call="report.external_layout">
+         <t t-call="report.html_container">
+            
+               <div class="page">
+                  <div class="row"  t-foreach="customers" t-as="customer">
+                     
+
+                     <t t-set="total_qty" t-value="0"/>
+                     <t t-set="total_rate" t-value="0"/>
+                     <t t-set="total_amount" t-value="0"/>
+                     <br/><br/>
+                     <center><h4>EXPORT INVOICE</h4></center>
+                     <div class="col-xs-12" style="border-right:1px solid #000;border-left:1px solid #000;border-top:1px solid #000;">
+                        <div class="col-xs-6" style="border-right:1px solid #000;">
+                           <b><u>CONSIGNED TO</u></b><br/>
+                           <span t-esc="customer['partner']"/><br/>
+                           <span>Tel : </span><span t-esc="customer['tel']"/><br/>
+                           <span>Fax : </span><span t-esc="customer['fax']"/><br/>
+                           <span>Del.Loc.:</span><span t-esc="customer['del_loc']"/>
+
+                        </div>
+                        <div class="col-xs-6">
+                           <br/><br/>
+                           <span>Inv. No : </span><span t-esc="customer['inv_no']"/><br/>
+                           <span>Date : </span><span t-esc="customer['date']"/><br/>
+                           <span>LPO No.:</span><span t-esc="customer['lpo_no']"/><br/>
+                           <span>Total Ctns. : </span><span t-esc="customer['total_crtns']"/><br/>
+                           <span>Salesman : </span><span t-esc="customer['sales_man']"/><br/>                           
+                           <span>Currency : </span><span t-esc="customer['currency_id']"/><br/>                           
+                        </div>
+                        
+                     </div>
+                           <table class="table table-condensed" style="width:100%;border:1px solid #000;border-collapse: collapse;">
+                              <colgroup>
+                                 <col width='10%' />
+                                 <col width='15%' />
+                                 <col width='40%' />
+                                 <col width='10%' />
+                                 <col width='10%' />
+                                 <col width='15%' />
+                              </colgroup>
+                              <thead>
+                                 <tr style="border:1px solid #000;border-collapse: collapse;">
+                                    <th class="text-center" style="border:1px solid #000;border-collapse: collapse;">SL.No</th>
+                                    <th class="text-center" style="border:1px solid #000;border-collapse: collapse;">Article No.</th>
+                                    <th class="text-center" style="border:1px solid #000;border-collapse: collapse;">Item Description</th>
+                                     <th class="text-center" style="border:1px solid #000;border-collapse: collapse;">Country</th>
+                                    <th class="text-center" style="border:1px solid #000;border-collapse: collapse;">Carton</th>
+                                    <th class="text-center" style="border:1px solid #000;border-collapse: collapse;">Quantity</th>
+                                    <th class="text-center" style="border:1px solid #000;border-collapse: collapse;">Rate</th>
+                                    <th class="text-center" style="border:1px solid #000;border-collapse: collapse;">Amount</th>                                    
+                                 </tr>
+                              </thead>
+                              <tbody>
+                                 
+                                 <t t-foreach="customer['invoice_line']" t-as="line">
+                                    <tr style="border:1px solid #000;border-collapse: collapse;">
+                                       <td style="border:1px solid #000;border-collapse: collapse;">
+                                          <t t-esc="line_index + 1"/>
+                                       </td>
+                                       <td style="border:1px solid #000;border-collapse: collapse;">
+                                          <t t-esc="line['article']"/>
+                                       </td>
+                                       
+                                        
+                                       <td style="border:1px solid #000;border-collapse: collapse;">
+                                          <t t-esc="line['description']"/>
+                                       </td>
+                                        <td style="border:1px solid #000;border-collapse: collapse;">
+                                          <t t-esc="line['country']"/>
+                                       </td>
+                                        <td style="border:1px solid #000;border-collapse: collapse;">
+                                          <t t-esc="line['carton']"/>
+                                       </td>
+                                       <td style="border:1px solid #000;border-collapse: collapse;">
+                                          <t t-esc="line['quantity']"/>
+                                          <t t-set="total_qty" t-value="total_qty + line['quantity']"/>
+                                       </td>
+                                       <td style="border:1px solid #000;border-collapse: collapse;">
+                                          <t t-esc="line['rate']"/>
+                                          <t t-set="total_rate" t-value="total_rate + line['rate']"/>
+                                       </td>
+                                       <td style="border:1px solid #000;border-collapse: collapse;">
+                                          <t t-esc="line['amount']"/>
+                                          <t t-set="total_amount" t-value="total_amount + line['amount']"/>
+                                       </td>
+                                    </tr>
+                                 </t>
+                                 <!-- <tr>
+                                    <td colspan="3" style="border:1px solid #000;border-collapse: collapse;">
+                                       <span style="float:right;"><b>Total</b></span>
+                                    </td>
+                                    <td style="border:1px solid #000;border-collapse: collapse;">
+                                       <span t-esc="total_qty"/>
+                                    </td>
+                                    <td style="border:1px solid #000;border-collapse: collapse;">
+                                       <span t-esc="total_rate"/>
+                                    </td>
+                                    <td style="border:1px solid #000;border-collapse: collapse;">
+                                       <span t-esc="total_amount"/>
+                                    </td>
+                                 </tr> -->
+                              </tbody>
+
+                           </table>
+                  <br/><br/><br/>
+                  <div>
+                        <span>Amt. in Words:</span><span t-esc="total_amount" t-esc-options='{"widget": "num2words","case":"capital"}'/>
+                        &amp;nbsp;&amp;nbsp;&amp;nbsp;<span t-esc="customer['currency_id']"/>&amp;nbsp; Only
+                        <span style="float:right;" t-esc="total_amount"/><br/><br/>
+                        <span style="float:right;">For BUTTERFLY L.L.C</span>
+                     </div>
+                  </div>
+
+                  
+               </div>
+         </t>
+      </t>
+   </template>
+</odoo>

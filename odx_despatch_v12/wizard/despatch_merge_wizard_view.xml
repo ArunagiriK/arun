@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+        <record id="od_despatch_merge_wizard_form" model="ir.ui.view">
+            <field name="name">despatch.entry.merge</field>
+            <field name="model">despatch.entry.merge</field>
+            <field name="arch" type="xml">
+                <form string="Merge Despatch" >
+                    <group>
+                    	<group>
+                    	    <field name="transporter_id" readonly="1"/>
+                            <field name="amount" readonly="1"/>
+                    	</group>
+                        <group>
+                    		<field name="despatch_journal_id"/>
+                    		<field name="debit_account_id"/>
+                    		<field name="credit_account_id"/>
+                        </group>
+                    </group>
+                <footer>
+                    <button string="Generate Despatch Entry" name="generate_despatch_entry" type="object" class="oe_highlight"/>
+                    <button string="Cancel" class="btn-secondary" special="cancel"/>
+                </footer>
+                </form>
+            </field>
+        </record>
+    </data>
+</odoo>

@@ -1,0 +1,33 @@
+<odoo>
+  <data>    
+
+    <record model="ir.ui.view" id="wiz_list">
+      <field name="name">Despatch</field>
+      <field name="model">od.despatch.wizard</field>
+      <field name="arch" type="xml">
+        <form>
+          <group>
+            <field name="date_from"/>
+            <field name="date_to"/>
+            <footer>
+              <button name="od_gen" type="object" string="Generate"/>
+            </footer>
+          </group>
+        </form>
+      </field>
+    </record> 
+
+  
+
+    <record id="od_despatch_wiz_action" model="ir.actions.act_window">
+      <field name="name">Despatch</field>
+      <field name="res_model">od.despatch.wizard</field>
+      <field name="view_mode">form</field>
+      <field name="target">new</field>
+    </record>
+
+    <menuitem id="od_despatch_wiz_menu" parent="sale.menu_sale_report"
+    action="od_despatch_wiz_action"/>
+    
+  </data>
+</odoo>

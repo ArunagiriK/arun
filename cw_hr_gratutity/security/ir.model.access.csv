@@ -1,0 +1,9 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_hr_gratutity_emp,hr.gratutity.emp,model_hr_gratutity,base.group_user,1,0,0,0
+access_hr_gratutity_user,hr.gratutity.user,model_hr_gratutity,hr.group_hr_user,1,1,1,1
+access_hr_gratutity_line_emp,hr.gratutity.line.emp,model_hr_gratutity_line,base.group_user,1,0,0,0
+access_hr_gratutity_line_user,hr.gratutity.line.user,model_hr_gratutity_line,hr.group_hr_user,1,1,1,1
+access_hr_gratutity_rule_emp,hr.gratutity.rule.emp,model_hr_gratuity_rule,base.group_user,1,0,0,0
+access_hr_gratutity_rule_user,hr.gratutity.rule.user,model_hr_gratuity_rule,hr.group_hr_user,1,1,1,1
+access_hr_gratutity_rule_line_emp,hr.gratutity.rule.line.emp,model_hr_gratuity_rule_line,base.group_user,1,0,0,0
+access_hr_gratutity_rule_line_user,hr.gratutity.rule.line.user,model_hr_gratuity_rule_line,hr.group_hr_user,1,1,1,1

@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<data noupdate="1">
+	</data>
+	<data>
+
+<!--
+		<record id="base.state_ae_dxb" model="res.country.state">
+			<field name="country_id" ref="base.ae" />
+			<field name="name">Dubai</field>
+			<field name="code">DXB</field>
+		</record>
+
+		<record id="base.state_ae_auh" model="res.country.state">
+			<field name="country_id" ref="base.ae" />
+			<field name="name">Abu Dhabi</field>
+			<field name="code">AUH</field>
+		</record>
+
+		<record id="res_partner_title_other" model="res.partner.title">
+			<field name="name">Other</field>
+			<field name="shortcut">Other</field>
+		</record>
+-->
+
+		<record model="res.users" id="base.user_root">
+			<field name="tz" eval="'Asia/Dubai'" />
+		</record>
+
+		<!-- Contract Types -->
+		<record id="hr_contract_type_limit" model="hr.contract.type">
+			<field name="name">Limited</field>
+			<field name="sequence">2</field>
+		</record>
+
+		<record id="hr_contract_type_unlimit" model="hr.contract.type">
+			<field name="name">Unlimited</field>
+			<field name="sequence">4</field>
+		</record>
+
+		<record id="wk_sch_timesheet_group" model="resource.calendar">
+			<field name="name">40 Hours/Week</field>
+		</record>
+
+		<record model="resource.calendar.attendance" id="calendar_attendance_mon">
+			<field name="name">Monday</field>
+			<field name="dayofweek">0</field>
+			<field name="hour_from">09</field>
+			<field name="hour_to">17</field>
+			<field name="calendar_id" ref="wk_sch_timesheet_group" />
+		</record>
+
+		<record model="resource.calendar.attendance" id="calendar_attendance_tue">
+			<field name="name">Tuesday</field>
+			<field name="dayofweek">1</field>
+			<field name="hour_from">09</field>
+			<field name="hour_to">17</field>
+			<field name="calendar_id" ref="wk_sch_timesheet_group" />
+		</record>
+
+		<record model="resource.calendar.attendance" id="calendar_attendance_wed">
+			<field name="name">Wednesday</field>
+			<field name="dayofweek">2</field>
+			<field name="hour_from">09</field>
+			<field name="hour_to">17</field>
+			<field name="calendar_id" ref="wk_sch_timesheet_group" />
+		</record>
+
+		<record model="resource.calendar.attendance" id="calendar_attendance_thu">
+			<field name="name">Thursday</field>
+			<field name="dayofweek">3</field>
+			<field name="hour_from">09</field>
+			<field name="hour_to">17</field>
+			<field name="calendar_id" ref="wk_sch_timesheet_group" />
+		</record>
+
+		<record model="resource.calendar.attendance" id="calendar_attendance_sun">
+			<field name="name">Sunday</field>
+			<field name="dayofweek">6</field>
+			<field name="hour_from">09</field>
+			<field name="hour_to">17</field>
+			<field name="calendar_id" ref="wk_sch_timesheet_group" />
+		</record>
+
+	</data>
+</odoo>

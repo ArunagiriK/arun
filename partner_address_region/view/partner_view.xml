@@ -1,0 +1,111 @@
+<odoo>
+
+   <!-- Region -->
+        <record id="view_country_region_tree" model="ir.ui.view">
+            <field name="name">res.country.region.tree</field>
+            <field name="model">res.country.region</field>
+            <field name="arch" type="xml">
+                <tree string="Region">
+                    <field name="name"/>
+                    <field name="code"/>
+                    <field name="country_id"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="view_country_region_form" model="ir.ui.view">
+            <field name="name">res.country.region.form</field>
+            <field name="model">res.country.region</field>
+            <field name="arch" type="xml">
+                <form string="Region">
+                    <group>
+                        <field name="name"/>
+                        <field name="code"/>
+                        <field name="country_id" options='{"no_open": True}'/>
+                    </group>
+                </form>
+            </field>
+        </record>
+
+        <record id="action_country_region" model="ir.actions.act_window">
+            <field name="name">Regions</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">res.country.region</field>
+            <field name="view_type">form</field>
+            <field name="view_id" ref="view_country_region_tree"/>
+            <field name="help">Create Region. Each region is attached to one country.</field>
+        </record>
+
+  <!--  State-->
+
+  <record id="view_country_state_form" model="ir.ui.view">
+      <field name="name">res.country.state.form</field>
+      <field name="model">res.country.state</field>
+      <field name="inherit_id" ref="base.view_country_state_form"/>
+      <field name="arch" type="xml">
+          <field name="code" position="after">
+              <field name="region_id"/>
+          </field>
+      </field>
+  </record>
+
+  <record id="view_country_state_tree" model="ir.ui.view">
+      <field name="name">res.country.state.tree</field>
+      <field name="model">res.country.state</field>
+      <field name="inherit_id" ref="base.view_country_state_tree"/>
+      <field name="arch" type="xml">
+          <field name="code" position="after">
+              <field name="region_id"/>
+          </field>
+      </field>
+  </record>
+
+<!--  Partner-->
+
+
+  <record id="view_partner_form" model="ir.ui.view">
+      <field name="name">Address Change</field>
+      <field name="model">res.partner</field>
+      <field name="inherit_id" ref="base.view_partner_form"/>
+      <field name="arch" type="xml">
+          <xpath expr="//div[@class='o_address_format']" position="attributes">
+            <attribute name="invisible">1</attribute>
+          </xpath>
+          <xpath expr="//div[@class='o_address_format']" position="before">
+              <div class="o_address_format">
+                <field name="country_id" placeholder="Country" class="o_address_country"
+                       options='{"no_open": True, "no_create": True}'/>
+                <field name="region_id" class="o_address_country" context="{'default_country_id': country_id}"
+                       placeholder="Region" options='{"no_open": True}'/>
+                <field name="state_id" class="o_address_state" placeholder="State/Emirate" options='{"no_open": True}'/>
+                <field name="zip" placeholder="ZIP" class="o_address_zip"/>
+                <field name="city" placeholder="City" class="o_address_city"/>
+                <field name="street2" placeholder="Street 2..." class="o_address_street"/>
+                <field name="street" placeholder="Street..." class="o_address_street"/>
+              </div>
+          </xpath>
+          <xpath expr='//field[@name="child_ids"]' position="attributes">
+              <attribute name="context">{'default_parent_id': active_id,
+                  'default_street': street, 'default_street2': street2,
+                  'default_region_id': region_id, 'default_city': city, 'default_state_id':
+                  state_id, 'default_zip': zip, 'default_country_id': country_id,
+                  'default_supplier': supplier, 'default_customer': customer,
+                  'default_lang': lang,}
+              </attribute>
+        </xpath>
+        <xpath expr="/form//field[@name='child_ids']/form//field[@name='country_id']"
+               position="before">
+          <field name="region_id" class="o_address_country"
+                       placeholder="Region" options='{"no_open": True}'/>
+        </xpath>
+        <xpath expr="/form//field[@name='child_ids']/kanban/field[@name='country_id']"
+               position="before">
+          <field name="region_id"/>
+        </xpath>
+      </field>
+    </record>
+
+
+
+
+</odoo>

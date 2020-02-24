@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+	<data>
+	
+    	<record model="ir.ui.view" id="res_partner_bfly_10_form_view3">
+             <field name="name">res.partner.form</field>
+             <field name="model">res.partner</field>
+             <field name="type">form</field>
+             <field name="inherit_id" ref="base.view_partner_form"/>
+             <field name="arch" type="xml">
+                 <field name="user_id" position="after">
+                   	<field name="od_sale_target" />
+                    <field name="od_invoice_print" />
+                 </field>
+                 <field name="property_account_payable_id" position="after">
+                   <field name="od_journal_id"/>
+                 </field>
+             </field>
+         </record>
+
+
+        <!--Partner Area Form-->
+    <record id="od_partner_area_form" model="ir.ui.view">
+        <field name="name">Od Partner Area Form</field>
+        <field name="model">orchid.partner.area</field>
+        <field name="arch" type="xml">
+            <form string="Partner Area">
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="name" required="1"/>
+                            <field name="seq" />
+                            <notebook>
+                              <page string="Target">
+                                    <field name="salesman_line">
+                                        <tree editable="top">
+                                            <field name="od_salesman_id"/>
+                                            <field name="od_target" />
+                                        </tree>
+                                    </field>
+                              </page>
+                            </notebook>
+                        </group>
+                        <group>
+                        </group>
+                    </group>
+                    <div class="oe_clear"/>
+                    <field name="description" class="oe_inline" placeholder="Description....."/>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!--Partner Group Form-->
+    <record id="od_partner_group_form" model="ir.ui.view">
+        <field name="name">Od Partner Group Form</field>
+        <field name="model">orchid.partner.group</field>
+        <field name="arch" type="xml">
+            <form string="Partner Group">
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="name" required="1"/>
+                            <field name="od_target" />
+                            <field name="od_code"/>
+                        </group>
+                        <group>
+                        </group>
+                    </group>
+                    <div class="oe_clear"/>
+                    <field name="description" class="oe_inline" placeholder="Description....."/>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+
+    </data>
+</odoo>

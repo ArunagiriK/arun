@@ -1,0 +1,47 @@
+<odoo>
+     <record model="ir.ui.view" id="product_customise_form_partner_term">
+        <field name="name">product.customise.partner.term</field>
+        <field name="model">product.template</field>
+        <field name="inherit_id" ref="product.product_template_only_form_view"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='barcode']" position="after">
+                <field name="is_term_product"/>
+            </xpath>
+            <xpath expr="//div[@name='standard_price_uom']" position="after">
+                <label for="landed_cost" string='Average Landed Cost' groups="base.group_user" attrs="{'invisible': [('product_variant_count', '&gt;', 1), ('is_product_variant', '=', False)]}"/>
+                <div name="landed_price" groups="base.group_user" attrs="{'invisible': [('product_variant_count', '&gt;', 1), ('is_product_variant', '=', False)]}">
+                    <field name="landed_cost"/>
+                </div>
+            </xpath>
+            <xpath expr="//field[@name='property_account_expense_id']" position="attributes">
+                <attribute name="attrs">{'required': [('is_term_product', '=', True)]}</attribute>
+            </xpath>
+            <xpath expr="//field[@name='property_account_income_id']" position="attributes">
+                <attribute name="attrs">{'required': [('is_term_product', '=', True)]}</attribute>
+            </xpath>
+        </field>
+    </record>
+    <record id="product_product_customise_form_partner_term" model="ir.ui.view">
+        <field name="name">product.product.customise.partner.term</field>
+        <field name="model">product.product</field>
+        <field name="inherit_id" ref="product.product_normal_form_view"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='barcode']" position="after">
+                <field name="is_term_product"/>
+            </xpath>
+            <xpath expr="//div[@name='standard_price_uom']" position="after">
+                <label for="landed_cost" string='Average Landed Cost' groups="base.group_user" attrs="{'invisible': [('product_variant_count', '&gt;', 1), ('is_product_variant', '=', False)]}"/>
+                <div name="landed_price" groups="base.group_user" attrs="{'invisible': [('product_variant_count', '&gt;', 1), ('is_product_variant', '=', False)]}">
+                    <field name="landed_cost"/>
+                </div>
+            </xpath>
+            <xpath expr="//field[@name='property_account_expense_id']" position="attributes">
+                <attribute name="attrs">{'required': [('is_term_product', '=', True)]}</attribute>
+            </xpath>
+            <xpath expr="//field[@name='property_account_income_id']" position="attributes">
+                <attribute name="attrs">{'required': [('is_term_product', '=', True)]}</attribute>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>

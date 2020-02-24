@@ -1,0 +1,8 @@
+id,name,model_id/id,group_id/id,perm_read,perm_write,perm_create,perm_unlink
+access_account_period_billing,access_account_period_billing,model_account_period,account.group_account_invoice,1,0,0,0
+access_account_period_advisor,access_account_period_advisor,model_account_period,account.group_account_manager,1,1,1,1
+access_account_period_user,access_account_period_user,model_account_period,account.group_account_user,1,1,1,1
+,,,,,,,
+access_account_fiscalyear_billing,access_account_fiscalyear_billing,model_account_fiscalyear,account.group_account_invoice,1,0,0,0
+access_account_fiscalyear_advisor,access_account_fiscalyear_advisor,model_account_fiscalyear,account.group_account_manager,1,1,1,1
+access_account_fiscalyear_user,access_account_fiscalyear_user,model_account_fiscalyear,account.group_account_user,1,1,1,1

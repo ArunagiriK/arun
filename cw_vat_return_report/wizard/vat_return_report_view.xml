@@ -1,0 +1,51 @@
+<?xml version="1.0"?>
+<odoo>
+	<data>
+		<!-- <report id="account_vat_return_xlsx" model="account.vat.return.report.wizard"
+			string="Vat Return Report XLSX" report_type="xlsx"
+			name="cw_vat_return_report.vat_return_report_xlsx" file="cw_vat_return_report.vat_return_report_xlsx"
+			attachment_use="False" print_report_name="(object.report_id.report_name)" /> -->
+
+		<record id="vat_return_report_form" model="ir.ui.view">
+			<field name="name">vat_return_report_form</field>
+			<field name="model">account.vat.return.report.wizard</field>
+			<field name="arch" type="xml">
+				<form string="Account Vat Return Report">
+					<separator string="VAT RETURN REPORT" />
+					<group colspan="4" col="4">
+						<field name="company_id" required="1" />
+						<field name="date_range_id" />
+						<field name="from_date" required="1" />
+						<field name="to_date" required="1" />
+						<field name="target_move" required="1" />
+					</group>
+					<footer>
+						<button class="oe_highlight" name="export_account_vat_return_report"
+							string="XLS Report" type="object" />				
+                        <field name="excel_file" filename="file_name"/>
+                        <field name ="file_name" invisible="1"/>
+						or
+						<button string="Cancel" class="oe_link" special="cancel" />
+					</footer>
+				</form>
+			</field>
+		</record>
+
+		<record id="action_vat_return_report" model="ir.actions.act_window">
+			<field name="name">Vat Return Report</field>
+			<field name="res_model">account.vat.return.report.wizard</field>
+			<field name="type">ir.actions.act_window</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">form</field>
+			<field name="view_id" ref="vat_return_report_form" />
+			<field name="context">{}</field>
+			<field name="target">new</field>
+		</record>
+
+
+		<menuitem action="action_vat_return_report" id="menu_vat_return_report"
+			parent="account.account_reports_management_menu" sequence="25" />
+
+
+	</data>
+</odoo>

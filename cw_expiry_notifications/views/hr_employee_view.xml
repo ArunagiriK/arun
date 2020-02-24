@@ -1,0 +1,32 @@
+<?xml version="1.0"?>
+<odoo>
+	<data>
+		<record id="view_employee_expiry_form" model="ir.ui.view">
+			<field name="name">hr.employee.expiry.form</field>
+			<field name="model">hr.employee</field>
+			<field name="inherit_id" ref="hr.view_employee_form" />
+			<field name="arch" type="xml">
+				<xpath
+					expr="//page[@name='personal_information']/group"
+					position="inside">
+					<group string="Certificate" name="certificate">
+						<field name="emirate_id" />
+						<field name="emirate_expire" />
+						<field name="healthcard_id" />
+						<field name="healthcard_expire" />
+						<field name="fire_safety_id" />
+						<field name="fire_safety_expire" />
+						<field name="hazmat_id" />
+						<field name="hazmat_expire" />
+					</group>
+				</xpath>
+				<xpath
+					expr="//page[@name='personal_information']//field[@name='passport_id']"
+					position="after">
+					<field name="passport_expire" groups="hr.group_hr_user" />
+				</xpath>
+
+			</field>
+		</record>
+	</data>
+</odoo>

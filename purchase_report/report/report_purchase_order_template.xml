@@ -1,0 +1,310 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="report_purchaseorder_document1" >
+            <xpath expr="//t[@t-call='web.external_layout']" position="replace">
+                <t t-call="web.external_layout">
+                    <t t-set="o" t-value="o.with_context(lang=o.partner_id.lang)"/>
+<!--
+                    <t t-set="address">
+                        <div t-field="o.partner_id" t-options='{"widget": "contact", "fields": ["address", "name", "phone"], "no_marker": True, "phone_icons": True}'/>
+                        <p t-if="o.partner_id.vat"><t t-esc="o.company_id.country_id.vat_label or 'Tax ID'"/>: <span t-field="o.partner_id.vat"/></p>
+                    </t>
+-->
+                    <t t-if="o.dest_address_id">
+                        <t t-set="information_block">
+                            <strong>Shipping address:</strong>
+                            <div t-if="o.dest_address_id">
+                                <div t-field="o.dest_address_id"
+                                    t-options='{"widget": "contact", "fields": ["address", "name", "phone"], "no_marker": True, "phone_icons": True}' name="purchase_shipping_address"/>
+                            </div>
+
+
+                        </t>
+                    </t>
+
+                    <xpath expr="//div[@class='header']" position="replace">
+                        <div class="header">
+                          <div class="row">
+                                <div class="col-xs-2" style="text-align:left;padding-top:25px">
+                                        <img t-att-src="'data:image/png;base64,% s' %o.company_id.logo"/>
+                                </div>
+                                <div class="col-xs-10" style="text-align:right;">
+                                        <div style="font-weight:700;font-size:22px;text-align:center;">
+                                            <strong>
+                                                <span style="font-size:18px;"/><strong><span t-field="o.company_id.name"/></strong>
+                                            </strong>
+                                        </div>
+                                        <div style="font-size:15px; text-align:center">
+                                            <span t-field="o.company_id.street"/><br/>
+                                        </div>
+                                        <div style="font-size:15px; text-align:center">
+                                            <span t-field="o.company_id.street2"/><br/>
+                                            <span t-field="o.company_id.city"/><br/>
+                                            <span t-field="o.company_id.state_id.name"/> - <span t-field="o.company_id.zip"/>
+                                        </div>
+                                </div>
+                        </div>
+                        </div>
+                    </xpath>
+
+                    <h2 class="text-center" t-if="o.state == 'draft'">Request for Quotation #<span t-field="o.name"/></h2>
+                    <h2 class="text-center" t-if="o.state in ['sent', 'to approve']">Purchase Order #<span t-field="o.name"/></h2>
+                    <h2 class="text-center" t-if="o.state in ['purchase', 'done']">Purchase Order Confirmation #<span t-field="o.name"/></h2>
+                    <h2 class="text-center" t-if="o.state == 'cancel'">Cancelled Purchase Order #<span t-field="o.name"/></h2>
+                      <br/> 
+                      <br/> 
+                    
+<!--
+                    <div class="row" >
+                        <div class="col-xs-8">
+                            <strong>Brand:</strong>
+                        </div>
+                        <div class="col-xs-9">
+                            <p t-field="o.product_brand_id.name" class="m-0"/>
+                        </div>
+                    </div><br/><br/>
+-->
+<!--
+                    <div class="row" >
+                        <div class="col-xs-12" align="center">
+                          <span><strong>Product Information</strong></span>
+                        </div>
+                    </div> 
+                 <div class="row" style="border-top:1px solid #cec9c9;padding:0px;">
+                        <div class="col-xs-4">
+                            <span><strong>Type</strong></span>
+                            <p t-foreach="o.product_information_ids" t-as="prod_value">
+                             <span><t t-esc = "prod_value.product_info_id.name"> </t></span>
+                            </p>
+                        </div>
+                        <div class="col-xs-8" align="right" style="width:65%">
+                            <span><strong>Value</strong></span>
+                            <p t-foreach="o.product_information_ids" t-as="prod_value">
+                             <span><t t-esc = "prod_value.name"> </t></span>
+                            </p>
+                            
+                        </div>
+                    </div>
+-->
+    
+                    
+                    <div class="page">
+                        <style>
+								.table-condensed1 {
+                                    width:100%;
+                                    text-align:center;
+                                    border:1px solid black;
+									padding: 5px;
+                                    font-size:12px;
+                                    }
+                                .result1 {
+                                    text-align:center;
+                                    border-top:1px solid black;
+									border-right:1px solid black;
+									padding: 5px;
+                                    font-size:12px
+                                    }
+								.result2 td{
+									padding:5px;
+									}
+							</style>
+                        <div class="oe_structure"/>
+                    <div class="row" >
+                        <div class="col-4">
+                            <strong>Brand:</strong>
+                        </div>
+                        <div class="col-1" style="text-align:left;">
+                            <p t-field="o.product_brand_id.name" class="m-0"/>
+                        </div>
+                    </div><br/><br/>
+                    <table class="table-condensed1" style="margin-top:15px">
+                        <tr class="result2">
+                            <td style="background-color: #D3D3D3;border-right:1px solid black;text-align:left;"><strong>Our Order Reference</strong></td>
+                            <td style="background-color: #D3D3D3;border-right:1px solid black;text-align:left;"><strong>Your Order Reference</strong></td>
+                            <td style="background-color: #D3D3D3;border-right:1px solid black;text-align:left;"><strong>Order Date</strong></td>
+                        </tr>
+                        <tbody class="invoice_tbody">
+                            <td class="result1" style="text-align:left;">
+                                    <span t-field="o.name" />
+                            </td>
+                            <td class="result1" style="text-align:left;">
+                                    <span t-field="o.partner_ref" />
+                            </td>
+                            <td class="result1" style="text-align:left;">
+                                    <span t-field="o.date_order" />
+                            </td>
+                        </tbody>
+                    </table>
+                    
+<!--
+                     <div id="informations" class="row mt32 mb32">
+                            <div t-if="o.name" class="col-3 bm-2">
+                                <strong>Our Order Reference:</strong>
+                                <p t-field="o.name" class="m-0"/>
+                            </div>
+                            <div t-if="o.partner_ref" class="col-3 bm-2">
+                                <strong>Your Order Reference:</strong>
+                                <p t-field="o.partner_ref" class="m-0"/>
+                            </div>
+                            <div t-if="o.date_order" class="col-3 bm-2">
+                                <strong>Order Date:</strong>
+                                <p t-field="o.date_order" class="m-0"/>
+                            </div>
+                    </div>
+-->
+                    
+                    
+                    
+                    <table class="table-condensed1" style="margin-top:15px">
+                        <tr class="result2">
+                            <td style="background-color: #D3D3D3;border-right:1px solid black;text-align:left;"><strong>Information Type</strong></td>
+                            <td style="background-color: #D3D3D3;border-right:1px solid black;text-align:left;"><strong>Value</strong></td>
+                        </tr>
+                        <tbody class="invoice_tbody">
+                            <tr t-foreach="o.product_information_purchase_line_ids" t-as="l">
+                                <td class="result1" style="text-align:left;">
+                                    <span t-field="l.product_info_id.name" />
+                                </td>
+                                <td class="result1" style="text-align:left;">
+                                    <span t-field="l.name" />
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <table class="table-condensed1" style="margin-top:15px">
+                        <tr class="result2">
+                            <td style="background-color: #D3D3D3;border-right:1px solid black;"><strong>Brand</strong></td>
+                            <td style="background-color: #D3D3D3;border-right:1px solid black;"><strong>Description</strong></td>
+                            <td style="background-color: #D3D3D3;border-right:1px solid black;"><strong>Taxes</strong></td>
+                            <td style="background-color: #D3D3D3;border-right:1px solid black;"><strong>Variants</strong></td>
+                            <td style="background-color: #D3D3D3;border-right:1px solid black;"><strong>Date Req</strong></td>
+                            <td style="background-color: #D3D3D3;border-right:1px solid black;"><strong>Qty</strong></td>
+                            <td style="background-color: #D3D3D3;border-right:1px solid black;"><strong>Unit Price</strong></td>
+                            <td style="background-color: #D3D3D3;border-right:1px solid black;"><strong>Amount</strong></td>
+                        </tr>
+                        <tbody class="invoice_tbody">
+                            <tr t-foreach="o.order_line" t-as="line">
+                                <td class="result1" style="text-align:left;">
+                                    <span t-field="line.product_brand_id.name" />
+                                </td>
+                                <td class="result1" style="text-align:left;">
+                                    <span t-field="line.name" />
+                                </td>
+                                <td class="result1" style="text-align:left;">
+                                    <span t-esc="', '.join(map(lambda x: x.name, line.taxes_id))"/>
+                                </td>
+                                <td class="result1" style="text-align:left;">
+                                    <t t-foreach="line.attribute_value_ids" t-as="attrib_value">
+                                            <span t-esc=" '%s: %s' % (attrib_value.attribute_id.name, attrib_value.name)"/>
+                                    </t>
+                                </td>
+                                <td class="result1" style="text-align:left;">
+                                    <span t-field="line.date_planned"/>
+                                </td>
+                                <td class="result1" style="text-align:left;">
+                                    <span t-field="line.product_qty"/>
+                                    <span t-field="line.product_uom.name" groups="uom.group_uom"/>
+                                </td>
+                                <td class="result1" style="text-align:left;">
+                                    <span t-field="line.price_unit"/>
+                                </td>
+                                <td class="result1" style="text-align:left;">
+                                    <span t-field="line.price_subtotal" t-options='{"widget": "monetary", "display_currency": o.currency_id}'/>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                       
+<!--
+                        <table class="table table-sm o_main_table">
+                            <thead>
+                                <tr>
+                                    <th><strong>Brand</strong></th>
+                                    <th><strong>Description</strong></th>
+                                    <th><strong>Taxes</strong></th>
+                                    <th><strong>Variants</strong></th>
+                                    <th class="text-center"><strong>Date Req.</strong></th>
+                                    <th class="text-right"><strong>Qty</strong></th>
+                                    <th class="text-right"><strong>Unit Price</strong></th>
+                                    <th class="text-right"><strong>Amount</strong></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr t-foreach="o.order_line" t-as="line">
+                                    <td>
+                                        <span t-field="line.product_brand_id.name"/>
+                                    </td>
+                                    <td>
+                                        <span t-field="line.name"/>
+                                    </td>
+                                    <td>
+                                        <span t-esc="', '.join(map(lambda x: x.name, line.taxes_id))"/>
+                                    </td>
+                                    <td>
+                                        <t t-foreach="line.attribute_value_ids" t-as="attrib_value">
+                                            <span t-esc=" '%s: %s' % (attrib_value.attribute_id.name, attrib_value.name)"/>
+                                        </t>
+                                    </td>
+                                    <td class="text-center">
+                                        <span t-field="line.date_planned"/>
+                                    </td>
+                                    <td class="text-right">
+                                        <span t-field="line.product_qty"/>
+                                        <span t-field="line.product_uom.name" groups="uom.group_uom"/>
+                                    </td>
+                                    <td class="text-right">
+                                        <span t-field="line.price_unit"/>
+                                    </td>
+                                    <td class="text-right">
+                                        <span t-field="line.price_subtotal"
+                                            t-options='{"widget": "monetary", "display_currency": o.currency_id}'/>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+-->
+
+                        <div id="total" class="row justify-content-end">
+                            <div class="col-4">
+                                <table class="table-condensed1" style="margin-top:15px">
+                                    <tr class="result2">
+                                        <td style="background-color: #D3D3D3;border-right:1px solid black;"><strong>Subtotal</strong></td>
+                                        <td class="result1" style="text-align:right;">
+                                            <span t-field="o.amount_untaxed"
+                                                t-options='{"widget": "monetary", "display_currency": o.currency_id}'/>
+                                        </td>
+                                    </tr>
+                                    <tr class="border-black o_total">
+                                        <td style="background-color: #D3D3D3;border-right:1px solid black;">Taxes</td>
+                                        <td class="result1" style="text-align:right;">
+                                            <span t-field="o.amount_tax"
+                                                t-options='{"widget": "monetary", "display_currency": o.currency_id}'/>
+                                        </td>
+                                    </tr>
+                                    <tr class="border-black o_total">
+                                        <td><strong>Total</strong></td>
+                                        <td class="result1" style="text-align:right;">
+                                            <span t-field="o.amount_total"
+                                                t-options='{"widget": "monetary", "display_currency": o.currency_id}'/>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+
+                        <p t-field="o.notes"/>
+                        <div class="oe_structure"/>
+                    </div>
+                </t>
+        </xpath>
+    </template>
+
+    <template id="report_purchasequotation_new">
+    <t t-call="web.html_container">
+        <t t-foreach="docs" t-as="o">
+            <t t-call="purchase_report.report_purchaseorder_document1" t-lang="o.partner_id.lang"/>
+        </t>
+    </t>
+</template>
+
+</odoo>

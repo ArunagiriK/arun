@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<data>
+		 <!-- <record model="ir.ui.view" id="view_despatch_account_invoice_summary_tree">
+            <field name="name">account.invoice.despatch</field>
+            <field name="model">account.invoice</field>
+            <field name="arch" type="xml">
+                <tree string="Despatch Summary" >
+                     <field name="od_despatch_date" readonly="1"/>
+                     <field name="partner_id" readonly="1"/>
+                      <field name="name" string="Ref" readonly="1"/>
+                     <field name="number" string="Invoice" readonly="1"/>
+                     <field name="user_id" readonly="1"/>
+                     <field name="od_desc" readonly="1"/>
+                    <field name="od_driver_id" readonly="1"/>
+                    <field name="od_delivery_assis_ids" readonly="1"/>
+                </tree>
+            </field>
+        </record>
+
+
+
+        <record id="view_despatch_account_search" model="ir.ui.view">
+        <field name="name">despatch.report</field>
+        <field name="model">account.invoice</field>
+        <field name="arch" type="xml">
+            <search string="Despatch Report">
+               
+                <group expand="0" string="Extended Filters">
+                    <field name="partner_id" />
+                    <field name="user_id" />
+                    <field name="journal_id" />
+                    <field name="od_transporter_id" />
+                    <field name="od_state_id" />
+                    <field name="od_driver_id" />
+                </group>
+                <group expand="1" string="Group By">
+                     <filter string="Despatch Date" name="despatch_date" context="{'group_by':'od_despatch_date'}"/>
+                    <filter string="Partner" name="group_partner_id" context="{'group_by':'partner_id'}"/>
+                    <filter string="Salesperson" name="user_id" context="{'group_by':'user_id'}"/>
+                    <filter string="SalesType" name="journal_id" context="{'group_by':'journal_id'}"/>
+                    <filter string="Transporter" name="od_transporter_id" context="{'group_by':'od_transporter_id'}"/>
+                    <filter string="Destination" context="{'group_by':'od_state_id'}"/>
+                    <filter string="Driver" context="{'group_by':'od_driver_id'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_despatch_summary_report" model="ir.actions.act_window">
+        <field name="name">Local Delivery</field>
+        <field name="res_model">account.invoice</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree</field>
+        <field name="priority" eval="51"/>
+        <field name="search_view_id" ref="view_despatch_account_search"/>
+        <field name="view_id" ref="view_despatch_account_invoice_summary_tree"/>
+        <field name="help"></field>
+    </record>
+
+     <menuitem name="Despatch Summary" id="od_despatch_menu_gen" parent="sales_team.menu_sale_report" sequence="10"/> -->
+
+     <record model="ir.ui.view" id="view_despatch_account_invoice_summary_tree">
+            <field name="name">od.despatch.tree</field>
+            <field name="model">od.despatch</field>
+            <field name="arch" type="xml">
+                <tree string="Despatch Summary" create="false" edit="false">
+                     <field name="od_despatch_date" readonly="1"/>
+                     <field name="partner_id" readonly="1"/>
+                      <field name="name" string="Ref" readonly="1"/>
+                     <field name="number" string="Invoice" readonly="1"/>
+                     <field name="user_id" readonly="1"/>
+                     <field name="od_desc" readonly="1"/>
+                    <field name="od_driver_id" readonly="1"/>
+                    <field name="od_delivery_assis_ids" readonly="1"/>
+                </tree>
+            </field>
+        </record>
+
+
+
+        <record id="view_despatch_account_search" model="ir.ui.view">
+        <field name="name">od.despatch.report</field>
+        <field name="model">od.despatch</field>
+        <field name="arch" type="xml">
+            <search string="Despatch Report">
+               
+                <group expand="0" string="Extended Filters">
+                    <field name="partner_id" />
+                    <field name="user_id" />
+                    <field name="od_journal_id" />
+                    <field name="od_transporter_id" />
+                    <field name="od_state_id" />
+                    <field name="od_driver_id" />
+                </group>
+                <group expand="1" string="Group By">
+                     <filter string="Despatch Date" name="despatch_date" context="{'group_by':'od_despatch_date'}"/>
+                    <filter string="Partner" name="group_partner_id" context="{'group_by':'partner_id'}"/>
+                    <filter string="Salesperson" name="user_id" context="{'group_by':'user_id'}"/>
+                    <filter string="SalesType" name="od_journal_id" context="{'group_by':'od_journal_id'}"/>
+                    <filter string="Transporter" name="od_transporter_id" context="{'group_by':'od_transporter_id'}"/>
+                    <filter string="Destination" context="{'group_by':'od_state_id'}"/>
+                    <filter string="Driver" context="{'group_by':'od_driver_id'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_despatch_summary_report" model="ir.actions.act_window">
+        <field name="name">Local Delivery</field>
+        <field name="res_model">od.despatch</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree</field>
+        <field name="priority" eval="51"/>
+        <field name="search_view_id" ref="view_despatch_account_search"/>
+        <field name="view_id" ref="view_despatch_account_invoice_summary_tree"/>
+        <field name="help"></field>
+    </record>
+
+     <menuitem name="Despatch Summary" id="od_despatch_menu_gen" parent="sale.menu_sale_report" sequence="10"/>
+
+
+    <menuitem name="Local Delivery" action="action_despatch_summary_report" id="od_despatch_menu_local" parent="od_despatch_menu_gen" />
+	
+	</data>
+
+
+</odoo>

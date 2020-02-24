@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="bank_facility_view_form" model="ir.ui.view">
+            <field name="name">bank.facility.form</field>
+			<field name="model">bank.facility</field>
+			<field name="arch" type="xml">
+                 <form string="Bank Facility">
+<!--
+                    <header>
+                        <button name="action_done" class="oe_highlight" states="draft" string="Confirm" type="object"/>
+                        <button name="action_draft" class="oe_highlight" states="cancelled" string="Set To Draft" type="object"/>
+                        <field name="state" widget="statusbar" statusbar_visible="draft,posted,cancelled"/>
+                    </header>
+-->
+                        <sheet>
+                            <group col="4" colspan="2">
+                                <field name="name" />
+                                <field name="company_id" />
+                                <field name="journal_id" />
+                                <field name="faciltiy_type"/>
+                                <field name="facility_interest_charges" attrs="{'invisible':[('faciltiy_type','!=', 'od')]}"/>
+                                <field name="facility_account_payable" attrs="{'invisible':[('faciltiy_type','!=', 'od')]}"/>
+                                <field name="amount" attrs="{'invisible':[('faciltiy_type','!=', 'od')]}"/>
+                                <field name="interest_percentage" attrs="{'invisible':[('faciltiy_type','!=', 'od')]}"/>
+                                <field name="charges_details" />
+<!--
+                                <field name="move_id"/>
+-->
+                                <field name="interest_details" attrs="{'invisible':[('faciltiy_type','=', 'od')]}"/>
+                                <field name="payment_type" widget='radio' attrs="{'invisible':[('faciltiy_type','=', 'od')]}"/>
+                            </group>
+                        </sheet>
+                 </form>
+            </field>
+        </record>
+        
+        <record id="bank_facility_view_search" model="ir.ui.view">
+                <field name="name">bank.facility.search</field>
+                <field name="model">bank.facility</field>
+                <field name="arch" type="xml">
+                    <search string="Bank Facility">
+                        <field name="name"/>
+                    </search>
+                </field>
+        </record>
+        
+        <record id="bank_facility_view_tree" model="ir.ui.view">
+                <field name="name">bank.facility.tree</field>
+                <field name="model">bank.facility</field>
+                <field name="arch" type="xml">
+                    <tree string="Bank Facility">
+                          <field name="name"/>
+                           <field name="amount"/>
+                           <field name="interest_percentage"/>
+                           <field name="journal_id"/>
+                           <field name="company_id"/>
+                           <field name="new_account_type"/>
+                           <field name="charges_details"/>
+                    </tree>
+                </field>
+        </record>
+        
+        <record model="ir.actions.act_window" id="action_bank_facility_view">
+                <field name="name">Bank Facility</field>
+                <field name="type">ir.actions.act_window</field>
+                <field name="res_model">bank.facility</field>
+                <field name="view_type">form</field>
+                <field name="view_mode">tree,form</field>
+        </record>
+
+
+    </data>
+</odoo>

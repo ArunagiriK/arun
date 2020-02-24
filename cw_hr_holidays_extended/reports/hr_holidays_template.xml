@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<template id="report_holidayssummary" inherit_id="hr_holidays.report_holidayssummary">
+		<xpath expr="//h3[contains(@class,'text-center mb32')]"
+			position="replace">
+			<h3 class="text-center mb32">
+				Analyze from
+				<u>
+					<t t-esc="info['start_date']" />
+				</u>
+				to
+				<u>
+					<t t-esc="info['end_date']" />
+				</u>
+				of the
+				<u>
+					<t t-esc="info['holiday_type']" />
+				</u>
+				Leaves.
+			</h3>
+		</xpath>
+	</template>
+</odoo>

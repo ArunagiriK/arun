@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+         <record id="email_bfly_despatch_report" model="mail.template">
+            <field name="name">Despatch Report Email</field>
+            <field name="email_from">${user.email}</field>
+            <field name="email_to">${ctx['email_to']}</field>
+            <field name="email_cc">${ctx['email_cc']}</field>
+            <field name="subject">Butterfly Despatch Report From ${ctx["date_from"]} to  ${ctx["date_to"]}</field>
+            <field name="auto_delete" eval="True"/>
+            <field name="model_id" ref="base.model_res_users"/>
+            <field name="lang">${user.lang}</field>
+            <field name="body_html"><![CDATA[
+<p>Dear All,
+ % macro order_summary(values):
+ 					
+                <table cellspacing="1" border="1" cellpadding="4">
+                <tr>
+                    <th>Despatch Date</th>
+                    <th>Name</th>
+                    <th>Bill No</th>
+                    <th>Salesman</th>
+                    <th>Ref No.</th>
+                    <th>Total Carton</th>
+                    <th>Item Description</th>
+                     <th>Invoice Link</th>
+                  
+                    
+                </tr>
+                        % for data in values:
+                    <tr>
+                        <td>${data.get('despatch_date','')}</td>
+                        <td>${data.get('partner','')}</td>
+                        <td>${data.get('bill','')}</td>
+                        <td>${data.get('user','')}</td>
+                        <td>${data.get('ref','')}</td>
+                         <td>${data.get('carton','')}</td>
+                          <td>${data.get('desc','')}</td>
+                             <td>${data.get('link','')}</td>
+                       
+                       
+                    </tr>
+
+                % endfor
+                </table>
+                % endmacro
+                
+               
+
+                <h2>Kindly find below the Dispatch Report </h2>
+                ${order_summary(ctx["data"])}
+                 
+                <p>
+                Thanks,
+                </p>
+                <pre>
+                --
+                Butterfly Auto Generated Email
+                </pre>
+
+]]></field>
+        </record>
+
+    <record id="email_bfly_despatch_checklist_report" model="mail.template">
+            <field name="name">Despatch Check List Report Email</field>
+            <field name="email_from">${user.email}</field>
+            <field name="email_to">${ctx['email_to']}</field>
+            <field name="email_cc">${ctx['email_cc']},rijin@kreoltrade.net,jijin@kreoltrade.net,guthus@kreoltrade.net,bipinraj@kreoltrade.net,john@kreoltrade.net, jishor@kreoltrade.net, kannan@kreoltrade.net, sureshan@kreoltrade.net, sevi@kreoltrade.net, sooraj@kreoltrade.net, shinosh@kreoltrade.net, denny@kreoltrade.net, jithin@kreoltrade.net, kreol@kreoltrade.net, rajeev@kreoltrade.net
+            </field>
+            <field name="subject">Butterfly Despatch Report </field>
+            <field name="auto_delete" eval="True"/>
+            <field name="model_id" ref="base.model_res_users"/>
+            <field name="lang">${user.lang}</field>
+            <field name="body_html"><![CDATA[
+
+ % macro order_summary(values):
+                    
+                <table cellspacing="1" border="1" cellpadding="4">
+                    <tr>
+                        <th>Despatch Date</th>
+                        <th>Name</th>
+                        <th>Invoice No</th>
+                        <th>LPO NO</th>
+                        <th>Salesman</th>
+                        <th>Total Carton</th>
+                        <th>Item Description</th>
+                        <th>Driver/Transporter</th>
+                    </tr>
+                    <tr>
+                        <td>${values.get('despatch_date','')}</td>
+                        <td>${values.get('partner_id','')}</td>
+                        <td>${values.get('invoice','')}</td>
+                        <td>${values.get('reference','')}</td>
+                        <td>${values.get('salesman','')}</td>
+                        <td>${values.get('total_carton','')}</td>
+                        <td>${values.get('despatch_desc','')}</td>
+                        <td>${values.get('filter','')}</td>
+                    </tr>
+                </table>
+                % endmacro
+                
+               <p>Dear All,
+
+                <h2>Kindly find below Dispatch Details As on ${ctx["cur_date"]}  </h2>
+                ${order_summary(ctx["data"])}
+                
+                Thanks,
+                </p>
+                <pre>
+                --
+                Butterfly Auto Generated Email
+                </pre>
+                 
+               
+
+]]></field>
+        </record>
+    </data>
+</odoo>

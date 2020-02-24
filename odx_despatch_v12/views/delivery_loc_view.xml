@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+    <record model="ir.ui.view" id="od_delivery_loc_tree">
+        <field name="name">od.delivery.loc</field>
+        <field name="model">od.delivery.loc</field>
+        <field name="arch" type="xml">
+            <tree>
+                  <field name="name"/>
+            </tree>
+       </field>
+    </record>
+  <record model="ir.ui.view" id="od_delivery_loc_form">
+        <field name="name">od.delivery.loc</field>
+        <field name="model">od.delivery.loc</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                  <group>
+                      <group>
+                         <label for="name" class="oe_edit_only"/>
+                         <h2><field name="name" required="1"/></h2>
+                      </group>
+                      <group></group>
+                  </group>
+       </sheet>
+    </form>
+  </field>
+ </record>
+<record model="ir.actions.act_window" id="action_od_delivery_loc_form">
+        <field name="name">Delivery Location</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">od.delivery.loc</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+         <field name="help" type="html">
+          <p class="oe_view_nocontent_create">
+            Click to add new Delivery Location. 
+          </p>
+        </field>
+    </record>
+
+<menuitem id="menuaction_od_delivery_loc_form" name="Delivery 
+Location" action="action_od_delivery_loc_form" parent="sale.menu_sale_config"/>
+
+
+
+ </data>
+
+
+</odoo>

@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record model="ir.ui.view" id="asset_categ_form_inherit">
+            <field name="name">asset.categ.form</field>
+            <field name="model">account.asset.category</field>
+            <field name="inherit_id" ref="account_asset.view_account_asset_category_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='method_time']" position="after">
+                   <field name="dep_percent" attrs="{'required': [('method_time', '=', 'perc')], 'invisible': [('method_time', '!=', 'perc')]}" invisible = "1"/>
+                   <field name="dp_percent" attrs="{'required': [('method_time', '=', 'perc')], 'invisible': [('method_time', '!=', 'perc')]}"/>
+                </xpath>
+                <xpath expr="//field[@name='method']" position="attributes">
+                    <attribute name='attrs'>{'invisible': [('method_time', '=', 'perc')]}</attribute>
+                </xpath>
+                <xpath expr="//field[@name='method_progress_factor']" position="attributes">
+                    <attribute name='attrs'>{'invisible':[('method','in',['linear', 'perc'])], 'required':[('method','=','degressive')]}</attribute>
+                </xpath>
+                <xpath expr="//field[@name='method_period']" position="attributes">
+                  <attribute name='attrs'>{'readonly': [('method_time', '=', 'perc')]}</attribute>
+                </xpath>
+                <xpath expr="//field[@name='prorata']" position="attributes">
+                  <attribute name='attrs'>{'readonly': [('method_time', '=', 'perc')]}</attribute>
+                </xpath>
+            </field>
+        </record>
+        
+        <record model="ir.ui.view" id="asset_asset_form_inherit">
+            <field name="name">asset.asset.form</field>
+            <field name="model">account.asset.asset</field>
+            <field name="inherit_id" ref="account_asset.view_account_asset_asset_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='method_time']" position="after">
+                    <field name="dep_percent" attrs="{'required': [('method_time', '=', 'perc')], 'invisible': [('method_time', '!=', 'perc')]}" invisible="1"/>
+                	<field name="dp_percent" attrs="{'required': [('method_time', '=', 'perc')], 'invisible': [('method_time', '!=', 'perc')]}"/>
+                </xpath>
+                <xpath expr="//field[@name='method']" position="attributes">
+                    <attribute name='attrs'>{'invisible': ['|', ('type','=','sale'), ('method_time', '=', 'perc')]}</attribute>
+                </xpath>
+                <xpath expr="//field[@name='method_progress_factor']" position="attributes">
+                    <attribute name='attrs'>{'invisible':[('method','in',['linear', 'perc'])], 'required':[('method','=','degressive')]}</attribute>
+                </xpath>
+                <xpath expr="//field[@name='method_number']" position="attributes">
+                    <attribute name='attrs'>{'invisible':['|', ('method_time','=','end'), ('method_time', '=', 'perc')], 'required':[('method_time','=','number')]}</attribute>
+                </xpath>
+                <xpath expr="//field[@name='method_end']" position="attributes">
+                    <attribute name='attrs'>{'required': [('method_time','=','end')], 'invisible':['|', ('method_time','=','number'), ('method_time', '=', 'perc')]}</attribute>
+                </xpath>
+                <xpath expr="//field[@name='date']" position="attributes">
+                  <attribute name="string">Depreciation From</attribute>
+                </xpath>
+                <xpath expr="//field[@name='date']" position="before">
+                  <field name="actual_date" attrs="{'readonly': [('state', '!=', 'draft')]}"/>
+                </xpath>
+                <xpath expr="//field[@name='value']" position="attributes">
+                  <attribute name="string">Depreciation Value</attribute>
+                </xpath>
+                <xpath expr="//field[@name='value']" position="before">
+                  <field name="actual_value" attrs="{'readonly': [('state', '!=', 'draft')]}" required="1" />
+                </xpath>
+                <xpath expr="//form/sheet/notebook/page[2]" position="after">
+                  <page name="asset_info" string="Asset Information">
+                  	<group>
+                  		<group>
+	                  		<field name="related_product_id"/>
+                  		</group>
+                  	</group>
+                	<field name="account_info_line_ids">
+                		<tree editable="bottom">
+                			<field name="location_id" required="1" domain="[('usage','=','internal')]"/>
+	                  		<field name="user_id"/>
+	                  		<field name="serial_no"/>
+                		</tree>
+                	</field>
+                  </page>
+                  <page string="History">
+                    <field name="tracking_ids" readonly="True">
+                        <tree string="Asset History">
+                            <field name="create_date"/>
+                            <field name="field_desc"/>
+                            <field name="old_value_float"/>
+                            <field name="new_value_float"/>
+                        </tree>
+                    </field>
+                  </page>
+                </xpath>
+                <xpath expr="//field[@name='method_period']" position="attributes">
+                  <attribute name='attrs'>{'readonly': [('method_time', '=', 'perc')]}</attribute>
+                </xpath>
+                <xpath expr="//field[@name='prorata']" position="attributes">
+                  <attribute name='attrs'>{'readonly': [('method_time', '=', 'perc')]}</attribute>
+                </xpath>
+            </field>
+        </record>
+        
+         <!--  <record model="ir.ui.view" id="view_account_asset_asset_purchase_tree _inherit">
+            <field name="name">asset.asset.tree.inherit</field>
+            <field name="model">account.asset.asset</field>
+            <field name="inherit_id" ref="account_asset.view_account_asset_asset_purchase_tree"/>
+            <field name="arch" type="xml">
+            </field>
+          </record> -->
+        
+    </data>
+    
+</odoo>

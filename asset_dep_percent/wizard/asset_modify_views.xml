@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record model="ir.ui.view" id="asset_modify_form_inherit">
+        <field name="name">asset.modify.form</field>
+        <field name="model">asset.modify</field>
+        <field name="inherit_id" ref="account_asset.asset_modify_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='method_number']" position="attributes">
+                <attribute name="attrs">{'invisible': [('asset_method_time', 'in', ['end', 'perc'])]}</attribute>
+            </xpath>
+            <xpath expr="//field[@name='method_end']" position="attributes">
+                <attribute name="attrs">{'invisible': [('asset_method_time', 'in', ['number', 'perc'])]}</attribute>
+            </xpath>
+            <xpath expr="//field[@name='method_end']" position="after">
+                <field name="dep_percent" attrs="{'invisible': [('asset_method_time', '!=', 'perc')], 'required': [('asset_method_time', '=', 'perc')]}"/>
+                <field name="dep_amount" required="True"/>
+            </xpath>
+        </field>
+    </record>
+    
+</odoo>

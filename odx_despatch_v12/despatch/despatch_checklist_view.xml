@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+    
+    
+    
+            <record id="od_despatch_checklist_tree" model="ir.ui.view">
+            <field name="name">od.despatch.checklist.tree</field>
+            <field name="model">od.despatch.checklist</field>
+            <field name="arch" type="xml">
+                <tree string="Despatch Checklist" create="false">
+                    <field name="name" string="Document No"/>
+                    <field name="document_date"/>
+                    <field name="od_transport_type"/>
+                    <field name="od_state_id"/>
+                    <field name="od_transporter_id"/>
+                    <field name="od_driver_id"/>
+                    <field name="od_delivery_assis_ids"/> 
+                    <field name="od_despatch_date"/>
+                    <field name="od_mail_sent"/>
+                    <field name="state"/>
+                </tree>
+                
+        </field>
+        </record>
+    
+        <record id="od_despatch_checklist_form" model="ir.ui.view">
+            <field name="name">od.despatch.checklist</field>
+            <field name="model">od.despatch.checklist</field>
+            <field name="arch" type="xml">
+                <form string="Despatch Checklist" >
+                <header>
+                 <button name="send_report" type="object" string="Send Email" class="oe_highlight"/>   
+                <button name="posted" type="object" string="Post" attrs="{'invisible':['|',('od_transport_type','=','own'),('state','=','posted')]}"/>
+                  <field name="state" widget="statusbar" statusbar_visible="despatch,posted"/>
+                  
+                
+                </header>
+                    <group>
+                    	<group>
+                    	   <field name="name" readonly="1" string="Document No"/>
+                    		<field name="od_transport_type" widget="radio" readonly="1"/>
+                    		<field name="od_transporter_id" readonly="1"/>
+                    		
+                    		<field name="od_state_id" readonly="1" attrs="{'invisible':[('od_state_id','=',False)]}"/>
+                    		
+                    		<field name="od_driver_id" readonly="1" attrs="{'invisible':[('od_driver_id','=',False)]}"/> 
+
+                            <field name="od_despatch_desc"/>
+                            <field name="od_mail_sent"/> 
+                    	</group>
+                    	<group>
+                    	<field name="document_date" readonly="1"/>
+                    	<field name="od_delivery_assis_ids" widget="many2many_tags" readonly="1"/>
+          <field name="od_fleet_id" readonly="1" attrs="{'invisible':[('od_fleet_id','=',False)]}"/>
+          <field name="transport_charge" readonly="1"/>
+          <field name="od_journal_id" attrs="{'readonly':[('state','=','posted')]}"/>
+          <field name="expense_account_id" attrs="{'readonly':[('state','=','posted')]}"/>
+          
+          
+          
+          
+                              		<field name="od_despatch_date" attrs="{'readonly':[('state','=','posted')]}"/>
+                    	</group>
+                    </group>
+                <group>       
+                    <group>
+                           <field name="combine" attrs="{'invisible':[('combine','=',False)]}"/> 
+                    </group>
+                    
+                    <group>
+                           <field name="transporter_ref" readonly="1" attrs="{'invisible':[('combine','=',False)]}"/> 
+                            <field name="total_carton" readonly="1" attrs="{'invisible':[('combine','=',False)]}"/> 
+                          
+                    </group>
+                    </group>                    
+         
+                    
+                    <field name="checklist_line" attrs="{'readonly':[('state','=','posted')]}">
+                        <tree editable="bottom">
+
+                            <field name="partner_id" readonly="1"/> 
+                            <field name="invoice_id" readonly="1"/>                           
+                            <field name="tranfer_ref"/>
+                            
+                            <field name="transportation_charge"/>
+                            <field name="no_of_carton" sum="Total"/>                             
+                            <field name="amount" sum="Total"/> 
+      
+                        </tree>
+                    
+                    
+                    </field>
+                    
+                    
+                     <field name="checklist_so_line" readonly="1">
+                        <tree editable="bottom">
+
+                            <field name="partner_id"/> 
+                            <field name="so_id"/>                           
+                            <field name="state_id"/>
+                            <field name="client_order_ref"/>                             
+                            <field name="date"/> 
+                             <field name="requested_date"/>                             
+                            <field name="amount"/>      
+                        </tree>
+                    
+                    
+                    </field>
+                    
+                    <group>
+                           <field name="notify" readonly="1"/> 
+                    </group>                    
+
+                </form>
+            </field>
+        </record>
+        
+        
+
+        
+    <record model="ir.actions.act_window" id="od_despatch_checklist_action">
+        <field name="name">Despatch Checklist</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">od.despatch.checklist</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+         <field name="help" type="html">
+          <p class="oe_view_nocontent_create">
+          </p>
+        </field>
+    </record>
+
+    
+    
+
+    <menuitem name="Despatch Checklist" id="od_despatch_checklist_actionid" parent="sale.menu_sale_config" action="od_despatch_checklist_action" sequence="40"/>
+
+
+
+    
+   
+    
+    
+    </data>
+</odoo>

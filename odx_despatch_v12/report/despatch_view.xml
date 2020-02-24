@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    
+        <record model="ir.ui.view" id="view_despatch_graph">
+            <field name="name">despatch.report</field>
+            <field name="model">despatch.report</field>
+            <field name="arch" type="xml">
+                <graph string="Despatch Statistics">
+                    <field name="partner_id" type="row"/>
+                   
+                </graph>
+            </field>
+        </record>
+
+
+
+        <record model="ir.ui.view" id="view_despatch_tree">
+            <field name="name">despatch.report</field>
+            <field name="model">despatch.report</field>
+            <field name="arch" type="xml">
+                <tree string="Despatch Statistics">
+                    <field name="partner_id" />
+                     <field name="ref" />
+                    <field name="invoice" />
+                    <field name="user_id" />
+                    <field name="journal_id" />
+                    <field name="depatch_description" />
+                    <field name="od_carton_no" />
+                    <field name="od_transporter_id" />
+                    <field name="od_state_id" />
+                    <field name="od_driver_id" />
+                    <field name="od_despatch_date" />
+                    <field name="od_despatch_state" />
+                    
+                    <field name="type" />
+					<field name="od_transporter_inv_ref" />
+					<field name="od_transporter_inv_date" />
+					<field name="od_journal_id" />
+					<field name="od_trans_acc_id" />
+					<field name="od_fleet_id" />
+					<field name="amount" />
+
+	
+                </tree>
+            </field>
+        </record>
+
+
+
+        <record id="view_despatch_search" model="ir.ui.view">
+        <field name="name">despatch.report</field>
+        <field name="model">despatch.report</field>
+        <field name="arch" type="xml">
+            <search string="Despatch Report">
+               
+                <group expand="0" string="Extended Filters">
+                    <field name="partner_id" />
+                    <field name="user_id" />
+                    <field name="journal_id" />
+                    <field name="od_transporter_id" />
+                    <field name="od_state_id" />
+                    <field name="od_driver_id" />
+                </group>
+                <group expand="1" string="Group By">
+                    <filter string="Partner" name="group_partner_id" context="{'group_by':'partner_id'}"/>
+                    <filter string="Salesperson" name="user_id" context="{'group_by':'user_id'}"/>
+                    <filter string="SalesType" name="journal_id" context="{'group_by':'journal_id'}"/>
+                    <filter string="Transporter" name="od_transporter_id" context="{'group_by':'od_transporter_id'}"/>
+                    <filter string="Destination" context="{'group_by':'od_state_id'}"/>
+                    <filter string="Driver" context="{'group_by':'od_driver_id'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_despatch_report" model="ir.actions.act_window">
+        <field name="name">Despatch Report</field>
+        <field name="res_model">despatch.report</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">graph,tree</field>
+        <field name="view_id"></field>  <!-- force empty -->
+        <field name="help"></field>
+    </record>
+
+    
+    <menuitem name="Despatch Report" action="action_despatch_report" id="od_despatch_menu" parent="sale.menu_sale_report" sequence="10"/>
+</odoo>

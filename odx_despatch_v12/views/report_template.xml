@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>    
+        <report 
+            id="report_despatch_checklist_pdf"
+            string="Delivery Note"
+            model="od.despatch.checklist" 
+            report_type="qweb-pdf"
+            file="odx_despatch_v12.report_despatch_checklist"
+            name="odx_despatch_v12.report_despatch_checklist"/>
+    </data>
+</odoo>

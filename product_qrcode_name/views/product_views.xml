@@ -1,0 +1,39 @@
+<?xml version="1.0"?>
+<odoo>
+
+<data>
+<record model="ir.ui.view" id="product_normal_form_view">
+            <field name="name">product.product.view.form.easy</field>
+            <field name="model">product.product</field>
+            <field name="inherit_id" ref="product.product_normal_form_view"/>
+            <field name="arch" type="xml">
+                <field name="default_code" position="before">
+                    <field name="product_brand_id"/>
+                </field>
+            </field>
+        </record>
+
+  <record model="ir.ui.view" id="product_category_form_view_inherited_qr_code_name">
+			<field name="name">product.category.form.inherited_qr_code_name</field>
+			<field name="model">product.category</field>
+			<field name="inherit_id" ref="product.product_category_form_view" />
+			<field name="arch" type="xml">
+				<field name="parent_id" position="after">
+					<field name="code" />
+					<field name="qr_value" />
+				</field>
+			</field>
+  </record>
+
+    <record model="ir.ui.view" id="product_attribute_tree_view_inherited_qr_code_name">
+        <field name="name">product.attribute.tree.inherited_qr_code_name</field>
+        <field name="model">product.attribute.value</field>
+        <field name="inherit_id" ref="product.variants_tree_view" />
+        <field name="arch" type="xml">
+            <field name="name" position="after">
+                <field name="code" />
+            </field>
+       </field>
+    </record>
+</data>
+</odoo>

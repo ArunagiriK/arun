@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="view_account_fiscalyear_close_state" model="ir.ui.view">
+            <field name="name">account.fiscalyear.close.state.form</field>
+            <field name="model">account.fiscalyear.close.state</field>
+            <field name="arch" type="xml">
+                <form string="Close states of Fiscal year and periods">
+	                <group col="4">
+	                    <field name="company_id" required="1" options="{'no_create_edit': True,'no_create':True,'no_quick_create':True}"/>
+	                    <field name="fy_id"  domain="[('company_id','=',company_id),('state','=','draft'),('company_id','!=',False)]"
+	                       options="{'no_create_edit': True,'no_create':True,'no_quick_create':True}"/>
+	                </group>
+                    <footer>
+                        <button icon="terp-locked" string="Close Fiscal Year" name="data_save" type="object" class="oe_highlight"/>
+                        or
+                        <button string="Cancel" class="oe_link" special="cancel"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+        <record id="action_account_fiscalyear_close_state" model="ir.actions.act_window">
+            <field name="name">Close a Fiscal Year</field>
+            <field name="res_model">account.fiscalyear.close.state</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="view_id" ref="view_account_fiscalyear_close_state"/>
+            <field name="target">new</field>
+        </record>
+
+        <menuitem id="menu_account_end_year_treatments"
+            name="End of Period" parent="account.menu_finance_configuration"
+            sequence="25"/>
+
+        <menuitem action="action_account_fiscalyear_close_state"
+            id="menu_wizard_fy_close_state"
+            sequence="1"
+            parent="menu_account_end_year_treatments" />
+
+    </data>
+</odoo>

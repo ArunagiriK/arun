@@ -1,0 +1,13 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_od_helper_line,access_od_helper_line,model_od_helper_line,,1,1,1,1
+access_od_dispatch_info_line,access_od_dispatch_info_line_id,model_od_dispatch_info_line,,1,1,1,1
+access_partner_group,access_partner_group_id,model_orchid_partner_group,,1,1,1,1
+access_orchid_category,access_orchid_category_id,model_orchid_category,,1,1,1,1
+access_despatch_datewise,access_despatch_datewise_id,model_od_despatch_datewise,,1,1,1,1
+access_od_despatch,access_od_despatch_id,model_od_despatch,,1,1,1,1
+access_od_despatch_invoice_list,access_od_despatch_invoice_list,model_od_despatch_invoice_list,,1,1,1,1
+access_od_despatch_checklist,access_od_despatch_checklist,model_od_despatch_checklist,,1,1,1,1
+access_od_transporter_pricelist,access_od_transporter_pricelist,model_od_transporter_pricelist,,1,1,1,1
+access_od_delivery_loc,access_od_delivery_loc,model_od_delivery_loc,,1,1,1,1
+access_od_cartonsize,access_od_cartonsize,model_od_cartonsize,,1,1,1,1
+access_despatch_entry_merge,access_despatch_entry_merge_id,model_despatch_entry_merge,,1,1,1,1

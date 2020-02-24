@@ -1,0 +1,331 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<data>
+
+
+		<record id="view_hr_grade_tree" model="ir.ui.view">
+			<field name="name">hr.grade.tree</field>
+			<field name="model">hr.grade</field>
+			<field name="arch" type="xml">
+				<tree string="Grade">
+					<field name="code" />
+					<field name="name" />
+				</tree>
+			</field>
+		</record>
+
+		<record id="view_hr_grade_form" model="ir.ui.view">
+			<field name="name">hr.grade.form</field>
+			<field name="model">hr.grade</field>
+			<field name="arch" type="xml">
+				<form string="Grade">
+					<sheet>
+						<group col="4" colspan="4">
+							<field name="code" />
+							<field name="name" />
+						</group>
+					</sheet>
+				</form>
+			</field>
+		</record>
+
+		<record id="action_hr_grade" model="ir.actions.act_window">
+			<field name="name">Grade</field>
+			<field name="type">ir.actions.act_window</field>
+			<field name="res_model">hr.grade</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">tree,form</field>
+		</record>
+
+		<record id="hr_section_view_form" model="ir.ui.view">
+			<field name="name">hr.section.form</field>
+			<field name="model">hr.section</field>
+			<field name="arch" type="xml">
+				<form string="Section">
+					<group col="4">
+						<field colspan="4" name="name" />
+					</group>
+				</form>
+			</field>
+		</record>
+
+		<record id="hr_section_view_tree" model="ir.ui.view">
+			<field name="name">hr.section.tree</field>
+			<field name="model">hr.section</field>
+			<field name="arch" type="xml">
+				<tree string="Section">
+					<field name="sequence" widget="handle" />
+					<field colspan="4" name="name" />
+				</tree>
+			</field>
+		</record>
+
+		<record id="hr_section_view_search" model="ir.ui.view">
+			<field name="name">hr.section.search</field>
+			<field name="model">hr.section</field>
+			<field name="arch" type="xml">
+				<search string="Search Section">
+					<field name="name" string="Section" />
+					<field name="sequence" string="Sequence" />
+				</search>
+			</field>
+		</record>
+
+		<record id="action_hr_section" model="ir.actions.act_window">
+			<field name="name">Sections</field>
+			<field name="res_model">hr.section</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">tree,form</field>
+			<field name="search_view_id" ref="hr_section_view_search" />
+		</record>
+
+
+		<record id="view_employee_form_inherit_extended" model="ir.ui.view">
+			<field name="name">hr.employee.form.view.inherit.extended</field>
+			<field name="model">hr.employee</field>
+			<field name="inherit_id" ref="hr.view_employee_form" />
+			<field name="arch" type="xml">
+				<data>
+					<xpath expr="//field[@name='company_id']" position="attributes">
+						<attribute name="options">{'no_create': True}</attribute>
+					</xpath>
+					<xpath expr="//field[@name='work_phone']" position="after">
+						<field name="title" />
+						<field name="nick_name" />
+						<field name="on_hold" invisible="1" groups="hr.group_hr_user" />
+						<field name="last_work_date" invisible="1" groups="hr.group_hr_user" />
+					</xpath>
+					<xpath expr="//field[@name='user_id']" position="attributes">
+						<attribute name="options">{'no_create': True}</attribute>
+					</xpath>
+					<xpath expr="//field[@name='job_id']" position="after">
+						<field name="section_id" />
+						<field name="rec_current_user" invisible="1" groups="hr.group_hr_user" />
+					</xpath>
+					<xpath expr="//field[@name='birthday']" position="after">
+						<field name="age" />
+					</xpath>
+					<xpath expr="//page[@name='personal_information']" position="after">
+						<page string="Dependents" name="dependents"
+							attrs="{'invisible': [('rec_current_user', '=', False)]}">
+							<field name="employee_dependents_lines">
+								<tree editable="bottom">
+									<field name="name" />
+									<field name="relation" />
+									<field name="dob" />
+									<field name="age" readonly="1" />
+									<field name="study" />
+									<field name="mobile" />
+									<field name="health_card" />
+									<!--<field name="healthcard_expiry_date" /> -->
+									<field name="passport_no" />
+									<!--<field name="passport_expiry_date" /> -->
+									<field name="visa_no" />
+									<!--<field name="visa_expiry_date" /> -->
+									<field name="emirate_id" />
+									<!--<field name="id_card_expiry_date" /> -->
+									<!--<field name="ticket_allowed" /> -->
+								</tree>
+							</field>
+						</page>
+						<page string="Emergency Contact" name="emergency_contact"
+							attrs="{'invisible': [('rec_current_user', '=', False)]}">
+							<field name="emergency_contact_lines">
+								<tree editable="bottom">
+									<field name="name" />
+									<field name="relation" />
+									<field name="phone" />
+								</tree>
+							</field>
+						</page>
+					</xpath>
+					<xpath
+						expr="//page[@name='personal_information']//field[@name='identification_id']"
+						position="after">
+						<field name="religion_id" />
+					</xpath>
+					<xpath
+						expr="//page[@name='personal_information']//field[@name='address_home_id']"
+						position="after">
+						<field name="blood_group" />
+					</xpath>
+					<xpath expr="//page[@name='personal_information']/group"
+						position="inside">
+						<group string="Work Informations" name="work_information">
+							<field name="employee_type_id" />
+							<field name="grade_id" />
+							<field name="join_date" />
+							<field name="num_of_years" />
+							<field name="visa_no" />
+							<field name="visa_expire" />
+							<field name="visa_type_id" />
+							<field name="permit_no" />
+							<field name="current_year_anniversary_date" groups="base.group_no_one" />
+							<field name="anniversary_date" groups="base.group_no_one" />
+							<field name="first_anniversary_date" groups="base.group_no_one" />
+							<field name="last_anniversary_start_date" groups="base.group_no_one" />
+							<field name="last_anniversary_end_date" groups="base.group_no_one" />
+							<field name="last_anniversary_date" groups="base.group_no_one" />
+						</group>
+					</xpath>
+					<xpath expr="//page[@name='personal_information']" position="attributes">
+						<attribute name="groups">base.group_user</attribute>
+						<attribute name="attrs">{'invisible': [('rec_current_user', '=',
+							False)]}
+						</attribute>
+					</xpath>
+					<xpath expr="//page[@name='hr_settings']" position="attributes">
+						<attribute name="groups">base.group_user</attribute>
+						<attribute name="attrs">{'invisible': [('rec_current_user', '=',
+							False)]}
+						</attribute>
+					</xpath>
+					<xpath expr="//page[@name='hr_settings']" position="attributes">
+						<attribute name="groups">base.group_user</attribute>
+						<attribute name="attrs">{'invisible': [('rec_current_user', '=',
+							False)]}
+						</attribute>
+					</xpath>
+					<!-- <xpath expr="//field[@name='manual_attendance']" position="after"> 
+						<field name="exclude_late_signin" /> <field name="exclude_late_signout" /> 
+						<field name="exclude_absent" /> </xpath> -->
+				</data>
+			</field>
+		</record>
+
+		<record id="view_employee_form_inherit_extended_groups" model="ir.ui.view">
+			<field name="name">hr.employee.form.view.inherit.extended.groups
+			</field>
+			<field name="model">hr.employee</field>
+			<field name="inherit_id" ref="view_employee_form_inherit_extended" />
+			<field name="groups_id" eval="[(4,ref('hr.group_hr_user'))]" />
+			<field name="arch" type="xml">
+				<data>
+					<xpath expr="//page[@name='dependents']" position="attributes">
+						<attribute name="attrs">{'invisible': False}</attribute>
+					</xpath>
+					<xpath expr="//page[@name='emergency_contact']" position="attributes">
+						<attribute name="attrs">{'invisible': False}</attribute>
+					</xpath>
+					<xpath expr="//page[@name='personal_information']" position="attributes">
+						<attribute name="attrs">{'invisible': False}</attribute>
+					</xpath>
+					<xpath expr="//page[@name='hr_settings']" position="attributes">
+						<attribute name="attrs">{'invisible': False}</attribute>
+					</xpath>
+				</data>
+			</field>
+		</record>
+
+		<record id="hr_hr_employee_view_form2_inherit_extended" model="ir.ui.view">
+			<field name="name">hr.hr.employee.view.form2.inherit.extended</field>
+			<field name="model">hr.employee</field>
+			<field name="inherit_id" ref="hr_contract.hr_hr_employee_view_form2" />
+			<field name="arch" type="xml">
+				<data>
+					<xpath expr="//field[@name='manager']" position="attributes">
+						<attribute name="groups">hr.group_hr_user</attribute>
+					</xpath>
+					<xpath expr="//field[@name='manager']" position="after">
+						<field name="coach" groups="hr.group_hr_user" />
+					</xpath>
+				</data>
+			</field>
+		</record>
+
+		<record id="view_contract_form_inherit_extended" model="ir.ui.view">
+			<field name="name">hr.contract.form.view.inherit.extended</field>
+			<field name="model">hr.contract</field>
+			<field name="inherit_id" ref="hr_contract.hr_contract_view_form" />
+			<field name="arch" type="xml">
+				<data>
+<!--
+					<xpath expr="//notebook/page[2]" position="replace" />
+-->
+					<xpath expr="//notebook/page[1]" position="after">
+						<page string="Work Informations" name="work_information">
+							<group>
+								<group>
+									<field name="visa_no" />
+									<field name="visa_expire" />
+								</group>
+								<group>
+									<field name="visa_type_id" />
+									<field name="permit_no" />
+								</group>
+							</group>
+						</page>
+					</xpath>
+				</data>
+			</field>
+		</record>
+
+		<record id="view_department_form_inherit_extended" model="ir.ui.view">
+			<field name="name">hr.department.form.inherit.extended</field>
+			<field name="model">hr.department</field>
+			<field name="inherit_id" ref="hr.view_department_form" />
+			<field name="arch" type="xml">
+				<data>
+					<xpath expr="//field[@name='name']" position="before">
+						<field name="code" required="1" />
+					</xpath>
+					<xpath expr="//group" position="inside">
+						<field name="exclude_annual_leave" />
+					</xpath>
+				</data>
+			</field>
+		</record>
+
+		<record id="view_hr_job_form_inherit_extended" model="ir.ui.view">
+			<field name="name">hr.job.form.inherit.extended</field>
+			<field name="model">hr.job</field>
+			<field name="inherit_id" ref="hr.view_hr_job_form" />
+			<field name="arch" type="xml">
+				<data>
+					<xpath expr="//field[@name='department_id']" position="before">
+						<field name="code" required="1" />
+						<!-- <field name="exclude_annual_leave" /> -->
+					</xpath>
+				</data>
+			</field>
+		</record>
+
+		<record id="view_currency_form_inherit_extended" model="ir.ui.view">
+			<field name="name">res.currency.form.inherit.extended</field>
+			<field name="model">res.currency</field>
+			<field name="inherit_id" ref="base.view_currency_form" />
+			<field name="arch" type="xml">
+				<data>
+					<xpath expr="//field[@name='rate']" position="after">
+						<field name="currency_unit_label" />
+						<field name="currency_subunit_label" />
+					</xpath>
+				</data>
+			</field>
+		</record>
+
+		<menuitem id="hr_menu_hr_request" parent="hr.menu_hr_root"
+			name="Employee Requests" sequence="30" groups="base.group_user" />
+
+		<menuitem action="action_hr_grade" id="menu_hr_grade" name="Grade"
+			parent="hr.menu_hr_root" sequence="95" groups="hr.group_hr_user" />
+
+		<menuitem id="menu_hr_section" action="action_hr_section"
+			parent="hr.menu_human_resources_configuration" sequence="15"
+			groups="hr.group_hr_user" />
+
+		<record id="employee_orientation.menu_employee_orientation"
+			model="ir.ui.menu">
+			<field name="web_icon"
+				eval="'employee_orientation,static/description/orientation.png'" />
+			<field name="web_icon_data" type="base64"
+				file="employee_orientation/static/description/orientation.png" />
+		</record>
+
+
+
+
+
+
+	</data>
+</odoo>

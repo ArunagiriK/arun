@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+<!--
+    <record id="product_template_form_view" model="ir.ui.view">
+        <field name="name">product.template.form.inherit</field>
+        <field name="model">product.template</field>
+        <field name="priority">5</field>
+        <field name="inherit_id" ref="product.product_template_form_view"/>
+        <field name="arch" type="xml">
+            <field name="categ_id" position="after">
+                <field name="article_no"/>
+            </field>
+        </field>
+    </record>
+-->
+    <record id="product_information_tree_view" model="ir.ui.view">
+        <field name="name">product.information.value.tree</field>
+        <field name="model">product.information.line</field>
+        <field name="arch" type="xml">
+            <tree string="Product Information Values" editable="bottom">
+                <field name="product_info_id"/>
+                <field name="name"/>
+<!--
+                <field name="product_id"/>
+-->
+                
+            </tree>
+        </field>
+    </record>
+
+    <record id="product_information_action" model="ir.actions.act_window">
+        <field name="name">Product Information Values</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">product.information.line</field>
+        <field name="view_mode">tree</field>
+        <field name="view_type">form</field>
+    </record>
+    
+    <record model="ir.ui.view" id="edit_product_normal_form_view_form_inhirit">
+        <field name="name">product.product.information.form</field>
+        <field name="model">product.product</field>
+        <field name="inherit_id" ref="product.product_normal_form_view"/>
+        <field name="arch" type="xml">
+            <page name="sales" position="after">
+                <page name="product_information" string="Product Information">
+                    <group>
+                        <field name="product_information_ids" widget="many2many_tags"/>
+                    </group>
+                    <field name="product_information_line_ids">
+                        <tree editable="bottom">
+                            <field name="product_info_id"/>
+                            <field name="name"/>
+                        </tree>
+                    </field>
+                </page>
+            </page>
+        </field>
+    </record>
+    <menuitem action="product_information_action" id="menu_product_information_action" parent="sale.prod_config_main" sequence="13" />
+</odoo>

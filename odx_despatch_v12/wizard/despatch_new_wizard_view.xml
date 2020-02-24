@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+    
+        <record id="od_despatch_new_wizard_form" model="ir.ui.view">
+            <field name="name">od.despatch.new.wizard</field>
+            <field name="model">od.despatch.new.wizard</field>
+            <field name="arch" type="xml">
+                <form string="Despatch" >
+                    <group>
+                    	<group>
+                    	
+                    	   <field name="name" readonly="1"/>
+                    		<!-- <field name="od_transport_type" widget="radio" domain="[('id','=',parent.field_2[0][2])]"/> -->
+                            <field name="od_transport_type" widget="radio"/> 
+                    		<field name="od_transporter_id" attrs="{'invisible':[('od_transport_type','!=','third')]}"/>
+                    		
+                    		<field name="od_state_id"/>
+                    		
+                    		 <field name="od_driver_id"/> 
+                             <field name="od_despatch_desc"/>
+
+                    	</group>
+                    	<group>
+                    	 <field name="document_date" readonly="1"/>
+                    	<field name="od_delivery_assis_ids" widget="many2many_tags" attrs="{'invisible':[('od_transport_type','!=','own')]}"/>
+          <field name="od_fleet_id"/>
+          <field name="transport_charge" attrs="{'invisible':[('od_transport_type','!=','third')]}"/>
+<!--          <field name="od_journal_id" attrs="{'invisible':[('od_transport_type','!=','third')]}"/>-->
+                              		<field name="od_despatch_date"/>
+                    	</group>
+                    </group>
+                <group>       
+                    <group>
+                           <field name="combine" attrs="{'invisible':[('od_transport_type','!=','third')]}"/> 
+                    </group>
+                    
+                    <group>
+                           <field name="transporter_ref" attrs="{'invisible':[('combine','=',False)]}"/> 
+                            <field name="total_carton" attrs="{'invisible':[('combine','=',False)]}"/> 
+                           <button name="distribute" type="object" string="Distribute" attrs="{'invisible':[('combine','=',False)]}"/>
+                    </group>
+                    </group>                    
+         
+                    
+                    <field name="wizard_line" attrs="{'invisible':[('od_transport_type','!=','third')]}">
+                        <tree editable="bottom">
+
+                            <field name="partner_id" readonly="1"/> 
+                            <field name="invoice_id" readonly="1"/>                           
+                            <field name="tranfer_ref"/>
+                            
+                            <field name="transportation_charge"/>
+                            <field name="no_of_carton" sum="Total"/>                             
+                            <field name="amount" sum="Total"/> 
+      
+                        </tree>
+                    
+                    
+                    </field>
+                    
+                    <group string="Pending Dispatch for the above Customer">
+                     <field name="so_wizard_line" string="Pending">
+                        <tree editable="bottom">
+
+                            <field name="partner_id"/> 
+                            <field name="so_id"/>                           
+                            <field name="state_id"/>
+                            <field name="client_order_ref"/>                             
+                            <field name="date"/> 
+                             <field name="requested_date"/>                             
+                            <field name="amount"/>      
+                        </tree>
+                    
+                    
+                    </field>
+                </group>
+                    
+                    <group>
+                           <field name="notify"/> 
+                    </group>                    
+                                       
+                    
+
+                <footer>
+                    <button string="Despatch" name="process" type="object" class="oe_highlight"/>
+                </footer>
+                </form>
+            </field>
+        </record>
+        
+        
+        
+
+
+        <record id="od_despatch_new_wizardaction" model="ir.actions.act_window">
+            <field name="name">Despatch</field>
+            <field name="res_model">od.despatch.new.wizard</field>
+            <field name="view_mode">form</field>
+            <field name="target">new</field>
+        </record>
+
+    
+    
+
+
+
+
+
+    
+   
+    
+    
+    </data>
+</odoo>

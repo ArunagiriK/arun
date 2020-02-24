@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="invoice_form" model="ir.ui.view">
+          <field name="name">account.access.group.invoice_form</field>
+          <field name="model">account.invoice</field>
+          <field name="inherit_id" ref="account.invoice_form" />
+          <field name="arch" type="xml">
+             <xpath expr="//button[@name='action_invoice_open']" position="replace">
+                <button name="action_invoice_open" type="object" states="draft" string="Validate" class="oe_highlight" groups="account.group_account_invoice,account_group_access.group_visible_account"/>
+             </xpath>
+          </field>
+        </record>
+        
+        <record id="invoice_supplier_form" model="ir.ui.view">
+            <field name="name">account.access.group.invoice.supplier.form</field>
+            <field name="model">account.invoice</field>
+            <field name="inherit_id" ref="account.invoice_supplier_form" />
+            <field name="arch" type="xml">
+                <xpath expr="//button[@name='action_invoice_open']" position="replace">
+                    <button name="action_invoice_open" type="object" states="draft" string="Validate" class="oe_highlight" groups="account.group_account_invoice,account_group_access.group_vendor_visible_account"/>
+                </xpath>
+            </field>
+        </record>
+
+    </data>
+</odoo>

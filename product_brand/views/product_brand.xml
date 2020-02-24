@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+
+	<!-- createe form view of ProductBrand -->
+		<record id="view_product_brand_form_1" model="ir.ui.view">
+		<field name="name">product.brand.form</field>
+		<field name="model">product.brand</field>
+		<field name="type">form</field>
+		<field name="arch" type="xml">
+			<form string="Product Brand" version="10.0">
+			
+				<sheet>
+					<group>
+						<field name="name"/>
+						<field name="code"/>
+					</group>
+				</sheet>
+			</form>
+		</field>
+		</record>
+	<!-- createe tree view of ProductBrand -->
+		<record id="view_product_brand_tree_1" model="ir.ui.view">
+		<field name = "name">product.brand.tree</field>
+        <field name = "model">product.brand</field>
+        <field name="type">tree</field>
+        <field name = "arch" type = "xml">
+            <tree string="Product Brand">
+                <field name="name"/>
+                <field name="code"/>
+            </tree>
+       </field>
+	   </record>
+
+	<!-- create action of ProductBrand -->
+		<record id = "product_brand_action" model="ir.actions.act_window">
+            <field name = "name">Brand</field>
+            <field name = "res_model">product.brand</field>
+            <field name = "view_type">form</field>
+            <field name = "view_mode">tree,form</field>
+
+        </record>
+
+	<menuitem action="product_brand_action" id="menu_product_brand_action" parent="sale.prod_config_main" sequence="12" />
+    </data>
+</openerp>
+

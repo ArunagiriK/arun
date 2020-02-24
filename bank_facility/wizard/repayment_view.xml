@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_account_repayment_xml" model="ir.ui.view">
+        <field name="name">account.repayment.form</field>
+        <field name="model">account.repayment</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group col="4" colspan="4">
+                            
+                            <field name="date"/>
+                            <field name="account_payable"/>
+                     </group>
+                </sheet>
+                <footer>
+                        <button string="Update" name="action_wizard_repayment" type="object" class="btn-primary"/>
+                        <button string="Cancel" class="btn-secondary" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_view_account_repayment" model="ir.actions.act_window">
+            <field name="name">Repayment Amount</field>
+            <field name="res_model">account.repayment</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="view_account_repayment_xml"/>
+            <field name="target">new</field>
+    </record>
+
+</odoo>

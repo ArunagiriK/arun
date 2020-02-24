@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+   <record model="ir.ui.view" id="od_despatch_tree_view">
+      <field name="name">od.despatch.tree</field>
+      <field name="model">od.despatch</field>
+      <field name="type">tree</field>
+      <field name="arch" type="xml">
+         <tree string="tree_string">
+            <field name="name"/>
+         </tree>
+      </field>
+   </record>
+   <record model="ir.ui.view" id="od_despatch_form_view">
+      <field name="name">od.despatch.form</field>
+      <field name="model">od.despatch</field>
+      <field name="type">form</field>
+      <field name="arch" type="xml">
+         <form string="form_string">
+            <header>
+              <button name="od_confirm" type="object" string="Confirm"  attrs="{'invisible':[('od_despatch_state','=','despatched')]}"/>
+              <field name="od_despatch_state" widget="statusbar" nolabel="1" statusbar_visible="ready_to_dispatch,despatched"/>
+            </header>
+            <sheet>
+               <group>
+                  <group>
+                     <field name="name" />
+                     <field name="partner_id" required="1"/>
+                  </group>
+                  <group>
+                  </group>
+               </group>
+               <group>
+                  <group>
+                     <field name="od_transport_type" widget="radio" attrs="{'readonly':[('od_desp_confirm','=',True)]}" />
+                     <field name="od_transporter_id" attrs="{'readonly':['|',('od_transport_type','!=','third'),('od_desp_confirm','=',True)]}"/>
+                     <field name="od_trans_ref" attrs="{'readonly':['|',('od_transport_type','!=','third'),('od_desp_confirm','=',True)]}"/>
+                     <field name="od_transporter_inv_ref"  attrs="{'readonly':['|',('od_transport_type','!=','third'),('od_desp_confirm','=',True)]}" groups="account.group_account_manager"/>
+                     <field name="od_transporter_inv_date"  attrs="{'readonly':['|',('od_transport_type','!=','third'),('od_desp_confirm','=',True)]}" groups="account.group_account_manager"/>
+                     <field name="od_state_id" context="{'od_despatch':1}" attrs="{'readonly':[('od_desp_confirm','=',True)]}" />
+                     <field name="od_carton_no"  attrs="{'readonly':['|',('od_transport_type','!=','third'),('od_desp_confirm','=',True)]}" />
+                     <field name="no_of_carton"  attrs="{'readonly':['|',('od_transport_type','!=','third'),('od_desp_confirm','=',True)]}" />
+                     <field name="od_transit_days"  attrs="{'readonly':['|',('od_transport_type','!=','third'),('od_desp_confirm','=',True)]}"/>
+                     <field name="od_journal_id" attrs="{'readonly':['|',('od_transport_type','!=','third'),('od_desp_confirm','=',True)]}"/>
+                     <field name="od_trans_acc_id" attrs="{'readonly':['|',('od_transport_type','!=','third'),('od_desp_confirm','=',True)]}"/>
+                     <field name="od_narration" attrs="{'readonly':['|',('od_transport_type','!=','third'),('od_desp_confirm','=',True)]}"/>
+                     <field name="od_move_id" />
+                  </group>
+                  <group>
+                     <field name="od_despatch_date"  attrs="{'readonly':[('od_desp_confirm','=',True)]}"/>
+                     <!-- <field name="od_despatch_state" attrs="{'readonly':[('od_desp_confirm','=',True)]}"/> -->
+                     <field name="od_driver_id" attrs="{'readonly':[('od_desp_confirm','=',True)]}"/>
+                     <field name="od_amount" />
+                     <field name="od_delivery_date" />
+                     <field name="od_delivery_assis_ids" widget="many2many_tags" attrs="{'readonly':['|',('od_transport_type','!=','own'),('od_desp_confirm','=',True)]}"/>
+                     <field name="od_fleet_id" attrs="{'readonly':[('od_desp_confirm','=',True)]}"/>
+                     <field name="od_desp_confirm" invisible="1"/>
+                     <field name="od_stamp" />
+                     <field name="od_stamp_date" />
+                     <field name="od_attachement" filename="od_filename" />
+                     <field name="od_filename" invisible="1" />
+                     <field name="date_invoice"/>
+                     <field name="number"/>
+                     <field name="user_id"/>
+                  </group>
+                  <field name="od_desc" />
+                  <field name="od_dispatch_line" nolabel="1" attrs="{'readonly':['|',('od_transport_type','!=','third'),('od_desp_confirm','=',True)]}">
+                     <tree editable="top">
+                        <field name="cartonsize_id" />
+                        <field name="inv_id" invisible="1"/>
+                        <field name="unit_price" />
+                        <field name="no_ofcarton" />
+                        <field name="amount" />
+                        <field name="od_transporter_id" invisible="1"/>
+                        <field name="od_state_id" invisible="1"/>
+                     </tree>
+                  </field>
+               </group>
+               <field name="invoice_ids" domain="[('od_despatch_state', 'not in', ['despatched']),('partner_id','=',partner_id),('type','=','out_invoice')]"/>
+               <!-- domain="[('od_despatch_state','not in',['despatched']),('type','=','out_invoice'),('partner_id','=',partner_id.id)]"/> -->
+            </sheet>
+         </form>
+      </field>
+   </record>
+   <record model="ir.actions.act_window" id="action_od_despatch_tree_view">
+      <field name="name">Despatch</field>
+      <field name="type">ir.actions.act_window</field>
+      <field name="res_model">od.despatch</field>
+      <!-- <field name="domain">[('field_name','condition',criteria)]</field>-->
+      <field name="view_type">form</field>
+      <field name="view_mode">tree,form</field>
+      <field name="view_id" ref="od_despatch_tree_view"/>
+   </record>
+   <menuitem id="od_despatch_menu_1" name="Despatch" parent="sale.menu_sale_config" action="action_od_despatch_tree_view"/>
+</odoo>

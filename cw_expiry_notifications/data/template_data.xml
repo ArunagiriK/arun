@@ -1,0 +1,179 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<data>
+	
+		<record id="mail_template_emp_doc_exp_90" model="mail.template">
+			<field name="name">Employee Document Expiry Notification 90 days
+			</field>
+			<field name="email_from">${(object.create_uid.email and '%s &lt;%s&gt;' %
+				(object.create_uid.name, object.create_uid.email) or '')|safe}
+			</field>
+			<!-- <field name="email_from">${(user.email)|safe}</field> -->
+			<field name="email_to">${(object.employee_id and
+				object.employee_id.work_email)|safe}</field>
+			<field name="email_cc">${(object.employee_id.coach_id and
+				object.employee_id.coach_id.work_email)|safe}</field>
+			<field name="subject">IMPORTANT: ${(object.type_of_document)|safe} Expiry
+				Notification</field>
+			<field name="partner_to">${object.employee_id.user_id.partner_id.id}</field>
+			<field name="model_id"
+				ref="cw_expiry_notifications.model_hr_expiry_notification" />
+			<field name="lang">${object.create_uid.lang}</field>
+			<field name="body_html" type="xml">
+				<p>Dear ${(object.employee_id.name)},</p>
+				<p>
+					We would like to notify you that your
+					${(object.type_of_document)|safe} is about to expire in
+					approximately 90 days.
+				</p>
+				<p>You can reply to this email if you have any questions.</p>
+				<p>Thank you,</p>
+				<p>${(object.employee_id.company_id.name)}</p>
+			</field>
+		</record>
+		
+		<record id="mail_template_emp_doc_exp_30" model="mail.template">
+			<field name="name">Employee Document Expiry Notification 30 days
+			</field>
+			<field name="email_from">${(object.create_uid.email and '%s &lt;%s&gt;' %
+				(object.create_uid.name, object.create_uid.email) or '')|safe}
+			</field>
+			<!-- <field name="email_from">${(user.email)|safe}</field> -->
+			<field name="email_to">${(object.employee_id and
+				object.employee_id.work_email)|safe}</field>
+			<field name="email_cc">${(object.employee_id.coach_id and
+				object.employee_id.coach_id.work_email)|safe}</field>
+			<field name="subject">IMPORTANT: ${(object.type_of_document)|safe} Expiry
+				Notification</field>
+			<field name="partner_to">${object.employee_id.user_id.partner_id.id}</field>
+			<field name="model_id"
+				ref="cw_expiry_notifications.model_hr_expiry_notification" />
+			<field name="lang">${object.create_uid.lang}</field>
+			<field name="body_html" type="xml">
+				<p>Dear ${(object.employee_id.name)},</p>
+				<p>
+					We would like to notify you that your
+					${(object.type_of_document)|safe} is about to expire in
+					approximately 30 days.
+				</p>
+				<p>You can reply to this email if you have any questions.</p>
+				<p>Thank you,</p>
+				<p>${(object.employee_id.company_id.name)}</p>
+			</field>
+		</record>
+	
+		<record id="mail_template_emp_dep_doc_exp_90" model="mail.template">
+			<field name="name">Employee Dependent Document Expiry Notification 90 days
+			</field>
+			<field name="email_from">${(object.create_uid.email and '%s &lt;%s&gt;' %
+				(object.create_uid.name, object.create_uid.email) or '')|safe}
+			</field>
+			<!-- <field name="email_from">${(user.email)|safe}</field> -->
+			<field name="email_to">${(object.employee_id and
+				object.employee_id.work_email)|safe}</field>
+			<field name="email_cc">${(object.employee_id.coach_id and
+				object.employee_id.coach_id.work_email)|safe}</field>
+			<field name="subject">IMPORTANT: ${(object.type_of_document)|safe} Expiry
+				Notification</field>
+			<field name="partner_to">${object.employee_id.user_id.partner_id.id}</field>
+			<field name="model_id"
+				ref="cw_expiry_notifications.model_hr_expiry_notification" />
+			<field name="lang">${object.create_uid.lang}</field>
+			<field name="body_html" type="xml">
+				<p>Dear ${(object.employee_id.name)},</p>
+				<p>
+					We would like to notify you that your dependent
+					${(object.type_of_document)|safe} is about to expire in
+					approximately 90 days.
+				</p>
+				<p>You can reply to this email if you have any questions.</p>
+				<p>Thank you,</p>
+				<p>${(object.employee_id.company_id.name)}</p>
+			</field>
+		</record>
+		
+		<record id="mail_template_emp_dep_doc_exp_30" model="mail.template">
+			<field name="name">Employee Dependent Document Expiry Notification 30 days
+			</field>
+			<field name="email_from">${(object.create_uid.email and '%s &lt;%s&gt;' %
+				(object.create_uid.name, object.create_uid.email) or '')|safe}
+			</field>
+			<!-- <field name="email_from">${(user.email)|safe}</field> -->
+			<field name="email_to">${(object.employee_id and
+				object.employee_id.work_email)|safe}</field>
+			<field name="email_cc">${(object.employee_id.coach_id and
+				object.employee_id.coach_id.work_email)|safe}</field>
+			<field name="subject">IMPORTANT: ${(object.type_of_document)|safe} Expiry
+				Notification</field>
+			<field name="partner_to">${object.employee_id.user_id.partner_id.id}</field>
+			<field name="model_id"
+				ref="cw_expiry_notifications.model_hr_expiry_notification" />
+			<field name="lang">${object.create_uid.lang}</field>
+			<field name="body_html" type="xml">
+				<p>Dear ${(object.employee_id.name)},</p>
+				<p>
+					We would like to notify you that your
+					${(object.type_of_document)|safe} dependent is about to expire in
+					approximately 30 days.
+				</p>
+				<p>You can reply to this email if you have any questions.</p>
+				<p>Thank you,</p>
+				<p>${(object.employee_id.company_id.name)}</p>
+			</field>
+		</record>
+		
+	</data>
+	<data noupdate="0">
+	
+		<record forcecreate="True" id="ir_cron_scheduler_emp_notification" model="ir.cron">
+			<field name="name">Employee: Expiry Notifications</field>	
+<!--
+	        <field name="model" eval="'hr.employee'"/>
+	        <field name="function" eval="'action_schedule_emp_notification'"/>
+-->
+	        <field name="args" eval="'()'"/>			
+			<field name="user_id" ref="base.user_root" />
+			<field name="active" eval="True" />
+			<field name="interval_number">1</field>
+			<field name="interval_type">days</field>
+			<field name="numbercall">-1</field>
+			<field name="doall" eval="False" />
+            <field name="model_id" ref="model_hr_employee"/>
+            <field name="state">code</field>
+        <field name="code">model.action_schedule_emp_notification()</field>
+		</record>
+		
+<!--
+    <record model="ir.cron" id="employee_data_reminder">
+        <field name="name">Employee Document Expiration</field>
+        <field name="interval_number">1</field>
+        <field name="interval_type">days</field>
+        <field name="numbercall">-1</field>
+        <field name="doall" eval="False"/>
+        <field name="model_id" ref="model_hr_employee_document"/>
+        <field name="state">code</field>
+        <field name="code">model.mail_reminder()</field>
+    </record>
+-->
+	
+		<record forcecreate="True" id="ir_cron_scheduler_emp_dep_notification"
+			model="ir.cron">
+			<field name="name">Employee Dependents: Expiry Notifications</field>	
+<!--
+	        <field name="model" eval="'hr.dependents.line'"/>
+	        <field name="function" eval="'action_schedule_emp_dep_notification'"/>
+	        <field name="args" eval="'()'"/>
+			<field name="user_id" ref="base.user_root" />
+-->
+			<field name="active" eval="True" />
+			<field name="interval_number">1</field>
+			<field name="interval_type">days</field>
+			<field name="numbercall">-1</field>
+			<field name="doall" eval="False" />
+            <field name="model_id" ref="model_hr_dependents_line"/>
+            <field name="state">code</field>
+            <field name="code">model.action_schedule_emp_dep_notification()</field>
+		</record>
+		
+	</data>
+</odoo>

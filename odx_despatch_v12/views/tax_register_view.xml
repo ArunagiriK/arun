@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <record model="ir.ui.view" id="inherited_view_tax_register_form">
+        <field name="name">orchid.tax.register.form</field>
+        <field name="model">orchid.tax.register</field>
+        <field name="inherit_id" ref="orchid_vat_v10.view_tax_register_form"/>
+        <field name="arch" type="xml">
+            <field name="od_product" position="after">
+            	<field name="od_register"/>
+            </field>
+        </field>
+    </record>
+ </odoo>

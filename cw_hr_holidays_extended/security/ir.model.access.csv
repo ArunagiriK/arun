@@ -1,0 +1,4 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_hr_holydays_status_user,hr.holidays.status user,hr_holidays.model_hr_leave_type,hr_holidays.group_hr_holidays_user,1,1,1,1
+access_hr_annual_leave_rule_employee,hr.annual.leave.rule.employee,model_hr_annual_leave_rule,base.group_user,1,0,0,0
+access_hr_annual_leave_rule_user,hr.annual.leave.rule.user,model_hr_annual_leave_rule,hr.group_hr_user,1,1,1,1

@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+    <data>
+        <record model="ir.ui.view" id="view_add_tax_form">
+            <field name="name">add.tax.form</field>
+            <field name="model">add.tax</field>
+            <field name="arch" type="xml">
+                <form string="Add TAX">
+                    <label string="This wizard will help you to assign TAXES in products!"/>
+                    <group colspan="4" col="4">
+                        <separator string="Products"/>
+                        <field name="product_ids" colspan="4" nolabel="1"/>
+                        <field name="customer_tax"/>
+                        <field name="supplier_tax"/>
+                        <field name="company_id" options="{'no_create': True}" groups="base.group_multi_company" />
+                    </group>
+                    <footer>
+                        <button name="apply_tax" type="object" string="Apply" class="oe_highlight"/>
+                        or
+                        <button string="Cancel" class="oe_link" special="cancel"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="action_add_tax">
+            <field name="name">Add Tax</field>
+            <field name="res_model">add.tax</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="view_add_tax_form" />
+            <field name="target">new</field>
+        </record>
+
+        <!--TODO-->
+        <menuitem id="menu_add_tax" name="Add TAX"
+            parent="account.account_account_menu" action="action_add_tax"/>
+
+        <!--<menuitem id="menu_mass_object_view" action="action_mass_object_form"-->
+            <!--parent="menu_mass_editing" />-->
+    </data>
+</openerp>

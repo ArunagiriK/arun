@@ -1,0 +1,32 @@
+<odoo>
+    <record model="ir.ui.view" id="partner_terms_update">
+        <field name="name">partner.terms.update</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_partner_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//page[@name='accounting']" position="after">
+                <page string="Partner Terms">
+                    <group>
+                        <group>
+                            <field name="rebate_perc_amount"/>
+                            <field name="rebate_fixed_amount"/>
+                        </group>
+                        <field name="partner_terms_ids">
+                            <tree editable="bottom">
+                                <field name="terms_id" string="Partner Terms"/>
+                                <field name="invoice_from_date" attrs="{'required': [('frequency', '!=', 'only_once')],
+                                                                    'readonly': [('frequency', '=', 'only_once')]}"/>
+                                <field name="invoice_to_date" attrs="{'required': [('frequency', '!=', 'only_once')],
+                                                                    'readonly': [('frequency', '=', 'only_once')]}"/>
+                                <field name="execution_date" attrs="{'required': [('frequency', '=', 'only_once')],
+                                                                    'readonly': [('term_calculation_type', '=', 'on_invoice')]}"/>
+                                <field name="term_calculation_type" readonly="1" force_save="1" />
+                                <field name="frequency" readonly="1" force_save="1" invisible="1"/>
+                            </tree>
+                        </field>
+                    </group>
+                </page>
+            </xpath>
+        </field>
+    </record>
+</odoo>

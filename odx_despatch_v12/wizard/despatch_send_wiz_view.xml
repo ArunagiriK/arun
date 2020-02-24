@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+    
+        <record id="despatch_report_wiz_form" model="ir.ui.view">
+            <field name="name">despatch Report Wiz</field>
+            <field name="model">od.despatch.report.wiz</field>
+            <field name="arch" type="xml">
+                <form string="Session" >
+                    <group>
+                    	<group>
+                    		<field name="date_from" />
+                    		<field name="date_to" />
+                    	</group>
+                    	<group>
+                    	</group>
+                    </group>
+                <footer>
+                    <button string="Send Email" name="send_report" type="object" class="oe_highlight"/>
+                </footer>
+                </form>
+            </field>
+        </record>
+
+        <record id="od_despatch_report_wiz_action" model="ir.actions.act_window">
+            <field name="name">Despatch Report Send</field>
+            <field name="res_model">od.despatch.report.wiz</field>
+            <field name="view_mode">form</field>
+            <field name="target">new</field>
+        </record>
+
+        <menuitem id="od_despatch_report_wiz_menu" parent="sale.menu_sale_report"
+            action="od_despatch_report_wiz_action"/>
+    
+   
+    
+    
+    </data>
+</odoo>

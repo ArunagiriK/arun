@@ -1,0 +1,331 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<data>
+
+		<record model="ir.actions.act_window" id="action_hr_annual_leave_rule">
+			<field name="name">Annual Leave Rule</field>
+			<field name="res_model">hr.annual.leave.rule</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">tree</field>
+			<field name="view_id" ref="view_hr_annual_leave_rule_tree" />
+		</record>
+
+
+<!--
+		<record id="action_holiday_request" model="ir.actions.act_window">
+			<field name="name">Leave Request</field>
+			<field name="res_model">hr.holidays</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">tree,form,calendar,kanban</field>
+			<field name="view_id" eval="False" />
+			<field name="view_ids"
+				eval="[(5, 0, 0),
+                          (0, 0, {'view_mode': 'tree', 'view_id': ref('hr_holidays.view_holiday')}), 
+                          (0, 0, {'view_mode': 'form', 'view_id': ref('hr_holidays.edit_holiday_new')}), 
+                          (0, 0, {'view_mode': 'calendar'}), 
+                          (0, 0, {'view_mode': 'kanban'})]" />
+			<field name="context">{'default_type': 'remove', 'readonly_by_pass':
+				True}
+			</field>
+			<field name="help" type="html">
+				<p class="oe_view_nocontent_create">
+					Click here to create a new leave request.
+				</p>
+			</field>
+			<field name="domain">[('type','=','remove')]</field>
+			<field name="search_view_id" ref="hr_holidays.view_hr_holidays_filter" />
+		</record>
+-->
+
+<!--
+		<menuitem id="hr_holidays.menu_hr_holidays_configuration"
+			name="Configuration" parent="hr_holidays.menu_hr_holidays_root"
+			sequence="100" groups="hr_holidays.group_hr_holidays_manager" />
+		<menuitem id="hr_holidays.menu_hr_holidays_status_configuration"
+			name="Leave Types" parent="hr_holidays.menu_hr_holidays_configuration"
+			sequence="10" groups="hr_holidays.group_hr_holidays_manager" action="hr_holidays.open_view_holiday_status" />
+		<menuitem id="menu_hr_annual_leave_rule" name="Annual Leave Rule"
+			parent="hr_holidays.menu_hr_holidays_configuration" sequence="15"
+			groups="hr_holidays.group_hr_holidays_manager" action="action_hr_annual_leave_rule" />
+-->
+
+<!--
+		<record id="hr_holidays.menu_hr_holidays_report" model="ir.ui.menu">
+			<field name="skip_needaction" eval="True" />
+		</record>
+
+		<record id="hr_holidays.menu_hr_holidays_dashboard" model="ir.ui.menu">
+			<field name="skip_needaction" eval="True" />
+		</record>
+
+		<record id="hr_holidays.menu_open_company_allocation" model="ir.ui.menu">
+			<field name="skip_needaction" eval="True" />
+		</record>
+
+		<record id="hr_holidays.menu_hr_holidays_approvals" model="ir.ui.menu">
+			<field name="groups_id" eval="[(4,ref('hr.group_emp_coach'))]" />
+		</record>
+
+		<record id="hr_holidays.menu_open_department_leave_approve"
+			model="ir.ui.menu">
+			<field name="groups_id" eval="[(4,ref('hr.group_emp_coach'))]" />
+		</record>
+
+		<record id="hr_holidays.menu_open_department_leave_allocation_approve"
+			model="ir.ui.menu">
+			<field name="groups_id" eval="[(6,0,[ref('hr.group_hr_user')])]" />
+		</record>
+-->
+
+<!--
+		<record id="hr_holidays.action_hr_holidays_dashboard" model="ir.actions.act_window">
+			<field name="context">{'search_default_year': 1,
+				'search_default_group_employee': 1, 'readonly_by_pass': True}
+			</field>
+		</record>
+-->
+
+<!--
+		<record id="hr_holidays.open_ask_holidays" model="ir.actions.act_window">
+			<field name="domain">[
+				('type','=','remove'), 
+				('user_id', '=', uid),
+				('technical', '=', False)
+			]</field>
+			<field name="context">{
+				'default_type': 'remove',
+				'readonly_by_pass': True,
+				'search_default_my_leaves': 1,
+				'needaction_menu_ref':
+				[
+				'hr_holidays.menu_open_company_allocation',
+				]
+				}
+			</field>
+		</record>
+-->
+
+<!--
+		<record id="hr_holidays.open_employee_leaves" model="ir.actions.act_window">
+			<field name="context">{
+				'default_type': 'remove',
+				'readonly_by_pass': True,
+				'search_default_todo': 1
+				}
+			</field>
+		</record>
+-->
+
+<!--
+		<record id="hr_holidays.action_hr_available_holidays_report"
+			model="ir.actions.act_window">
+			<field name="context">{
+				'search_default_leaves':1,
+				'readonly_by_pass': True
+				}
+			</field>
+		</record>
+-->
+
+<!--
+		<record id="hr_holidays.open_company_allocation" model="ir.actions.act_window">
+			<field name="context">{
+				'search_default_group_type': 1,
+				'search_default_year': 1 ,
+				'readonly_by_pass': True,
+				'needaction_menu_ref':
+				[
+				'hr_holidays.menu_open_ask_holidays_new',
+				'hr_holidays.menu_open_allocation_holidays',
+				'hr_holidays.menu_request_approve_allocation',
+				'hr_holidays.menu_open_employee_leave',
+				]
+				}
+			</field>
+		</record>
+-->
+<!--
+
+		<record id="hr_holidays.open_allocation_holidays" model="ir.actions.act_window">
+			<field name="domain">[
+				('type','=','add'),
+				('user_id', '=', uid),
+				('technical', '=', False)
+				]
+			</field>
+			<field name="context">{
+				'default_type':'add',
+				'readonly_by_pass': True,
+				'search_default_my_leaves': 1,
+				'needaction_menu_ref':
+				[
+				'hr_holidays.menu_open_company_allocation',
+				]
+				}
+			</field>
+		</record>
+-->
+
+<!--
+		<record id="hr_holidays.open_department_holidays_approve"
+			model="ir.actions.act_window">
+			<field name="domain">[
+				('type','=','remove'),
+				('technical', '=', False),
+				'|',
+				('user_id', '!=', uid),
+				('user_id', '=', False)
+				]
+			</field>
+			<field name="context">{'readonly_by_pass': True, 'search_default_action_to_do':1}</field>
+		</record>
+-->
+
+<!--
+		<record id="hr_holidays.open_department_holidays_allocation_approve"
+			model="ir.actions.act_window">
+			<field name="domain">[
+				('type','=','add'),
+				('technical', '=', False),
+				'|',
+				('user_id', '!=', uid),
+				('user_id', '=', False)
+				]
+			</field>
+			<field name="context">{'default_type':'add', 'readonly_by_pass': True}
+			</field>
+		</record>
+-->
+
+<!--
+		<record id="hr_holidays.action_hr_holidays_dashboard" model="ir.actions.act_window">
+			<field name="context">{
+				'search_default_year': 1,
+				'search_default_group_employee': 1,
+				'readonly_by_pass': True
+				}
+			</field>
+		</record>
+
+		<record model="ir.actions.act_window" id="hr_holidays.request_approve_holidays">
+			<field name="context">{
+				'default_type': 'remove',
+				'search_default_approve':1,
+				'readonly_by_pass': True,
+				'needaction_menu_ref':
+				[
+				'hr_holidays.menu_open_ask_holidays_new',
+				'hr_holidays.menu_open_company_allocation',
+				'hr_holidays.menu_open_employee_leave',
+				]
+				}
+			</field>
+		</record>
+-->
+
+
+
+<!--
+		<record id="hr_holidays.request_approve_allocation" model="ir.actions.act_window">
+			<field name="context">{
+				'default_type': 'add',
+				'search_default_approve':1,
+				'readonly_by_pass': True,
+				'needaction_menu_ref':
+				[
+				'hr_holidays.menu_open_allocation_holidays',
+				'hr_holidays.menu_open_company_allocation'
+				]
+				}
+			</field>
+		</record>
+-->
+
+
+<!--
+		<record id="hr_holidays.act_hr_employee_holiday_request" model="ir.actions.act_window">
+			<field name="context">{
+				'readonly_by_pass': True,
+				'search_default_employee_id': [active_id],
+				'default_employee_id':
+				active_id,
+				'search_default_group_type': 1,
+				'search_default_year': 1
+				}
+			</field>
+		</record>
+-->
+
+<!--
+
+		<record id="hr_holidays.act_hr_employee_holiday_request_approved"
+			model="ir.actions.act_window">
+			<field name="context">{
+				'readonly_by_pass': True,
+				'search_default_employee_id': [active_id],
+				'search_default_validated': True,
+				'search_default_gray': True
+				}
+			</field>
+		</record>
+-->
+
+<!--
+
+		<record id="hr_holidays.hr_holidays_action_request_from_department"
+			model="ir.actions.act_window">
+			<field name="context">{
+				'readonly_by_pass': True,
+				'default_type': 'remove',
+				'search_default_department_id': [active_id],
+				'default_department_id': active_id,
+				'search_default_approve':1}
+			</field>
+		</record>
+-->
+
+<!--
+		<record id="hr_holidays.hr_holidays_action_allocation_from_department"
+			model="ir.actions.act_window">
+			<field name="context">{
+				'readonly_by_pass': True,
+				'default_type': 'add',
+				'search_default_department_id': [active_id],
+				'default_department_id': active_id,
+				'search_default_approve':1}
+			</field>
+		</record>
+-->
+
+<!--
+		<record id="hr_holidays.action_hr_holidays_leaves_analysis"
+			model="ir.actions.act_window">
+			<field name="context">{
+				'readonly_by_pass': True
+				}
+			</field>
+		</record>
+-->
+
+
+
+<!--
+		<record id="hr_holidays.action_hr_holidays_leaves_analysis_filtered"
+			model="ir.actions.act_window">
+			<field name="context">{
+				'readonly_by_pass': True
+				'search_default_department_id': [active_id],
+				'default_department_id': active_id}
+			</field>
+		</record>
+-->
+
+<!--
+		<menuitem id="hr_holidays.menu_open_company_allocation"
+            name="Leaves Summary"
+			parent="hr_holidays.menu_hr_holidays_report" sequence="6" />
+-->
+
+
+	</data>
+</odoo>

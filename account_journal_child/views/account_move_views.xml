@@ -1,0 +1,250 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+    
+     <record id="view_inherited_move_tree" model="ir.ui.view">
+            <field name="name">account.move.tree</field>
+            <field name="model">account.move</field>
+            <field name="arch" type="xml">
+                <tree decoration-info="state == 'draft'" string="Journal Entries">
+                    <field name="date"/>
+                    <field name="name"/>
+                    <field name="partner_id"/>
+                    <field name="ref"/>
+                    <field name="journal_id"/>
+                    <field name="amount" sum="Total Amount"/>
+                    <field name="state"/>
+                    <field name="currency_id" invisible="1"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="view_inherited_account_move_kanban" model="ir.ui.view">
+            <field name="name">account.move.kanban</field>
+            <field name="model">account.move</field>
+            <field name="arch" type="xml">
+                <kanban class="o_kanban_mobile">
+                    <field name="journal_id"/>
+                    <field name="ref"/>
+                    <field name="date"/>
+                    <field name="state"/>
+                    <templates>
+                        <t t-name="kanban-box">
+                            <div t-attf-class="oe_kanban_global_click">
+                                <div class="row mb4">
+                                    <div class="col-6">
+                                        <strong><span><field name="journal_id"/></span></strong>
+                                    </div>
+                                    <div class="col-6 text-right">
+                                        <strong><i class="fa fa-clock-o" aria-label="Date" role="img" title="Date"/> <t t-esc="record.date.value"/></strong>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-12">
+                                        <span><field name="ref"/></span>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-6">
+                                        <span><field name="amount" widget='monetary'/></span>
+                                        <span><field name="currency_id" invisible="1"/></span>
+                                    </div>
+                                    <div class="col-6">
+                                        <span class="float-right">
+                                            <field name="state" widget="label_selection" options="{'classes': {'draft': 'default', 'posted': 'success'}}"/>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </t>
+                    </templates>
+                </kanban>
+            </field>
+        </record>
+
+        <record id="view_inherited_move_form" model="ir.ui.view">
+            <field name="name">account.move.form</field>
+            <field name="model">account.move</field>
+            <field name="arch" type="xml">
+                <form string="Account Entry" duplicate="false">
+                    <header>
+                        <button name="action_post" states="draft" string="Post" type="object" class="oe_highlight" groups="account.group_account_invoice"/>
+                        <button name="%(account.action_view_account_move_reversal)d" states="posted" string="Reverse Entry" type="action" groups="account.group_account_invoice"/>
+                        <button name="action_duplicate" string="Duplicate" type="object" groups="account.group_account_invoice"/>
+                        <field name="state" widget="statusbar"/>
+                    </header>
+                    <sheet>
+                        <field name="tax_type_domain" invisible="1"/>
+                        <field name="id" invisible="1"/>
+                        <div class="oe_button_box">
+                            <button name="action_view_reverse_entry"
+                                type="object"
+                                class="oe_stat_button"
+                                icon="fa-refresh"
+                                attrs="{'invisible': [('reverse_entry_id', '=', False)]}"
+                                string="Reversed entry">
+                            </button>
+                            <button name="open_reconcile_view"
+                                class="oe_stat_button"
+                                icon="fa-bars"
+                                type="object"
+                                string="Reconciled entries">
+                            </button>
+                        </div>
+                    <h1>
+                        <field name="name" readonly="True" attrs="{'invisible':[('name','=','/')]}"/>
+                    </h1>
+                    <group>
+                        <group>
+                            <field name="date"/>
+                            <field name="ref" attrs="{'required': [('id', '==', False)]}"/>
+                        </group>
+                        <group>
+                            <field name="journal_id" options="{'no_open': True, 'no_create': True}" />
+                            <field name="company_id" required="1" groups="base.group_multi_company"/>
+                            <field name="amount" invisible="1"/>
+                            <field name="currency_id" invisible="1"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Journal Items">
+                            <field name="line_ids" widget="one2many_list"
+                              context="{'line_ids': line_ids, 'journal_id': journal_id }">
+                                <tree editable="bottom" string="Journal Items">
+                                    <field name="tax_line_id" invisible="1"/>
+                                    <field name="account_id" domain="[('company_id', '=', parent.company_id), ('deprecated', '=', False)]"/>
+                                    <field name="partner_id"
+                                        domain="['|', ('parent_id', '=', False), ('is_company', '=', True)]"/>
+                                    <field name="name"/>
+                                    <field name="analytic_account_id" groups="analytic.group_analytic_accounting"/>
+                                    <field name="analytic_tag_ids" groups="analytic.group_analytic_tags" widget="many2many_tags"/>
+                                    <field name="amount_currency" groups="base.group_multi_currency"/>
+                                    <field name="company_currency_id" invisible="1"/>
+                                    <field name="company_id" invisible="1"/>
+                                    <field name="currency_id" options="{'no_create': True}" groups="base.group_multi_currency"/>
+                                    <field name="debit" sum="Total Debit"/>
+                                    <field name="credit" sum="Total Credit"/>
+                                    <field name="tax_ids" string="Taxes Applied" widget="many2many_tags"
+                                           domain="[('type_tax_use', '=?', parent.tax_type_domain)]"
+                                           context="{'append_type_to_tax_name': not parent.tax_type_domain}"
+                                           options="{'no_create': True}"/>
+                                    <field name="date_maturity" required="0" invisible="context.get('view_no_maturity', False)"/>
+                                    <field name="recompute_tax_line" invisible="1" readonly="1"/>
+                                    <field name="tax_line_grouping_key" invisible="1" readonly="1"/>
+                                </tree>
+                                <!-- Form view to cover mobile use -->
+                                <form>
+                                  <group>
+                                    <field name="tax_line_id" invisible="1"/>
+                                    <field name="account_id" domain="[('company_id', '=', parent.company_id), ('deprecated', '=', False)]"/>
+                                    <field name="partner_id" domain="['|', ('parent_id', '=', False), ('is_company', '=', True)]"/>
+                                    <field name="name"/>
+                                    <field name="analytic_account_id" groups="analytic.group_analytic_accounting"/>
+                                    <field name="analytic_tag_ids" groups="analytic.group_analytic_tags" widget="many2many_tags"/>
+                                    <field name="amount_currency" groups="base.group_multi_currency"/>
+                                    <field name="company_currency_id" invisible="1"/>
+                                    <field name="company_id" invisible="1"/>
+                                    <field name="currency_id" options="{'no_create': True}" groups="base.group_multi_currency"/>
+                                    <field name="debit" sum="Total Debit"/>
+                                    <field name="credit" sum="Total Credit"/>
+                                    <field name="tax_ids" string="Taxes Applied" widget="many2many_tags" domain="[('type_tax_use', '=?', parent.tax_type_domain)]" context="{'append_type_to_tax_name': not parent.tax_type_domain}" options="{'no_create': True}"/>
+                                    <field name="date_maturity" required="0" invisible="context.get('view_no_maturity', False)"/>
+                                    <field name="recompute_tax_line" invisible="1" readonly="1"/>
+                                    <field name="tax_line_grouping_key" invisible="1" readonly="1"/>
+                                  </group>
+                                </form>
+                            </field>
+                            <field name="narration" colspan="4" placeholder="Add an internal note..." nolabel="1" height="50"/>
+                        </page>
+                        <page string="Other Info">
+                            <group>
+                                <field name="auto_reverse" attrs="{'readonly':[('reverse_entry_id', '!=', False)]}"/>
+                                <field name="reverse_date" attrs="{'invisible':[('auto_reverse', '=', False)], 'required':[('auto_reverse', '=', True)],'readonly':[('reverse_entry_id', '!=', False)]}"/>
+                                <field name="reverse_entry_id" attrs="{'invisible':True}"/>
+                            </group>
+                        </page>
+                    </notebook>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+        <record id="view_inherited_account_move_filter" model="ir.ui.view">
+            <field name="name">account.move.select</field>
+            <field name="model">account.move</field>
+            <field name="arch" type="xml">
+                <search string="Search Move">
+                    <field name="name" filter_domain="['|', ('name','ilike',self), ('ref','ilike',self)]" string="Move"/>
+                    <field name="date"/>
+                    <filter string="Unposted" name="unposted" domain="[('state','=','draft')]" help="Unposted Journal Entries"/>
+                    <filter string="Posted" name="posted" domain="[('state','=','posted')]" help="Posted Journal Entries"/>
+                    <separator/>
+                    <filter string="Sales" name="sales" domain="[('journal_id.type','=','sale')]" context="{'default_journal_type': 'sale'}"/>
+                    <filter string="Purchases" name="purchases" domain="[('journal_id.type','=','purchase')]" context="{'default_journal_type': 'purchase'}"/>
+                    <filter string="Bank Operations" name="bankoperations" domain="[('journal_id.type','=','bank')]" context="{'default_journal_type': 'bank'}"/>
+                    <filter string="Cash Operations" name="cashoperations" domain="[('journal_id.type','=','cash')]" context="{'default_journal_type': 'cash'}"/>
+                    <filter string="Miscellaneous Operations" domain="[('journal_id.type','=','general')]" name="misc_filter" context="{'default_journal_type': 'general'}"/>
+                    <separator/>
+                    <field name="partner_id"/>
+                    <field name="journal_id"/>
+                    <field name="dummy_account_id"/>
+                    <group expand="0" string="Group By">
+                        <filter string="Partner" name="partner" domain="[]" context="{'group_by':'partner_id'}"/>
+                        <filter string="Journal" name="journal" domain="[]" context="{'group_by':'journal_id'}"/>
+                        <filter string="Status" name="status" domain="[]" context="{'group_by':'state'}"/>
+                        <filter string="Date" name="date" domain="[]" context="{'group_by':'date'}" help="Journal Entries by Date"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+        <record id="action_inherited_move_journal_line" model="ir.actions.act_window">
+            <field name="name">Journal Entries Child Company</field>
+            <field name="res_model">account.move</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,kanban,form</field>
+            <field name="view_ids" eval="[(5, 0, 0),
+                          (0, 0, {'view_mode': 'tree', 'view_id': ref('view_inherited_move_tree')}),
+                          (0, 0, {'view_mode': 'kanban', 'view_id': ref('view_inherited_account_move_kanban')}),
+                          (0, 0, {'view_mode': 'form', 'view_id': ref('view_inherited_move_form')})]" />
+            <field name="search_view_id" ref="view_inherited_account_move_filter"/>
+            <field name="context">{'search_default_misc_filter':1, 'view_no_maturity': True,'child_company':'yes'}</field>
+            <field name="help" type="html">
+              <p class="o_view_nocontent_smiling_face">
+                Create a journal entry
+              </p><p>
+                A journal entry consists of several journal items, each of
+                which is either a debit or a credit transaction.
+              </p>
+            </field>
+        </record>
+        <menuitem
+            action="action_inherited_move_journal_line"
+            id="menu_action_move_journal_line_form"
+            parent="account.menu_finance_entries_accounting_entries"
+            groups="account.group_account_user"
+            sequence="1"/>
+
+        <record id="action_inherited_move_line_form" model="ir.actions.act_window">
+            <field name="name">Entries</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">account.move</field>
+            <field name="view_type">form</field>
+            <field name="view_id" ref="view_inherited_move_tree"/>
+            <field name="search_view_id" ref="view_inherited_account_move_filter"/>
+        </record>
+
+        <act_window
+            id="act_account_move_to_account_move_line_open"
+            name="Journal Items"
+            context="{'search_default_move_id': active_id, 'default_move_id': active_id}"
+            res_model="account.move.line"
+            src_model="account.move"
+            view_mode="tree"/>
+
+<!--
+    <record id="account.action_move_journal_line" model="ir.actions.act_window">
+            <field name="context">{'parent_company':'yes'}</field>
+    </record>
+-->
+
+    </data>
+</odoo>

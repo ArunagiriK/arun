@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    
+    <record id="inherited_invoice_supplier_form_bflyv10" model="ir.ui.view">
+            <field name="name">Inherited Supplier form</field>
+            <field name="model">account.invoice</field>
+            <field name="inherit_id" ref="account.invoice_supplier_form"/>
+            <field name="arch" type="xml">
+                <field name = "purchase_id" position="after">
+                  <field name = "od_permit_no"/>
+                </field>
+            </field>
+        </record>
+        
+
+     <record id="view_account_invoice_inherit_orchid" model="ir.ui.view">
+            <field name="name">Account Invoice Bfly V10</field>
+            <field name="model">account.invoice</field>
+            <field name="inherit_id" ref="account.invoice_form"/>
+            <field name="arch" type="xml">
+                <data>
+                  <field name="amount_total" position="after">
+                    <field name="local_currency"/>
+                  </field>
+                    <!-- <xpath expr="//form/sheet/field[@name='type']" position="before">
+                      <div class="oe_button_box" name="button_box">
+                        <button name="show_despatch" type="object" class="oe_stat_button" icon="fa-truck" string="Despatch">
+                        </button>
+                      </div>
+                    </xpath> -->
+                     
+                  <field name="date_invoice" position="before">
+                    <field name="od_stamp"/>
+                  </field>
+
+                  <xpath expr="//page[last()]" position="after">
+                      <page string="Stamp Details" attrs="{'invisible':[('od_stamp','=',False)]}" >
+                        <group>
+                          <group>
+                            <field name="od_stamp_date" />
+                            <field name="od_goods_date" />
+                          </group>
+                          <group>
+                            <field name="od_stamp_users"/>
+                            <field name="od_attachement" filename="od_filename" /> 
+                            <field name="od_filename" invisible="1" />
+                          </group>
+                        </group>
+                      </page>
+                  </xpath>
+
+                    
+                    <xpath expr="//field[@name='invoice_line_ids']/tree/field[@name='name']" position="after">
+                        <field name="od_article_no" />
+                        <field name="od_item_code" />
+                        <field name="od_carton_no" />
+                        <field name="od_packaging_no" />
+                    </xpath>
+                    
+                    <field name="date_invoice" position="after">
+                       <field name="od_requested_date"/>
+                    
+                    </field>
+                    <xpath expr="//page[@name='other_info']/group/group[1]" position="inside">
+<!--                        <field name="od_carton_no" />-->
+                        <field name="od_packaging_no" />
+                         <field name="od_invoice_print" />
+                   </xpath>
+                    <xpath expr="//field[@name='invoice_line_ids']/tree/field[@name='quantity']" position="attributes">
+                            <attribute name="sum">Total Qty</attribute>
+                    </xpath>
+
+                    <page name="other_info" position="before">
+                    
+                        <page string="Despatch">
+                             <button string="Confirm" name="od_confirm" type="object" class="oe_highlight" attrs="{'invisible':['|',('od_transport_type','!=','third'),('od_desp_confirm','=',True)]}" />
+                           <group>
+
+                                 <group>
+ 									 <field name="od_transport_type" widget="radio" attrs="{'readonly':[('od_desp_confirm','=',True)]}" />
+                                      <field name="od_transporter_id" attrs="{'readonly':['|',('od_transport_type','!=','third'),('od_desp_confirm','=',True)]}"/>
+                                     <field name="od_trans_ref" attrs="{'readonly':['|',('od_transport_type','!=','third'),('od_desp_confirm','=',True)]}"/>
+                                     <field name="od_transporter_inv_ref"  attrs="{'readonly':['|',('od_transport_type','!=','third'),('od_desp_confirm','=',True)]}" groups="account.group_account_manager" invisible="1"/>
+                                      <field name="od_transporter_inv_date"  attrs="{'readonly':['|',('od_transport_type','!=','third'),('od_desp_confirm','=',True)]}" groups="account.group_account_manager" invisible="1"/>
+                          			  <field name="od_state_id" context="{'od_despatch':1}" attrs="{'readonly':[('od_desp_confirm','=',True)]}" />
+                                      <field name="od_carton_no"  attrs="{'readonly':['|',('od_transport_type','!=','third'),('od_desp_confirm','=',True)]}" invisible="1"/>
+                                      
+                                       <field name="od_transit_days"  attrs="{'readonly':['|',('od_transport_type','!=','third'),('od_desp_confirm','=',True)]}" invisible="1"/>
+                                       <field name="od_journal_id" attrs="{'readonly':['|',('od_transport_type','!=','third'),('od_desp_confirm','=',True)]}"/>
+                                        <field name="od_trans_acc_id" attrs="{'readonly':['|',('od_transport_type','!=','third'),('od_desp_confirm','=',True)]}" invisible="0"/>
+                                        <field name="od_narration" attrs="{'readonly':['|',('od_transport_type','!=','third'),('od_desp_confirm','=',True)]}" invisible="0"/>
+                                         <field name="od_move_id" invisible="0"/>
+                                         <field name="despath_move_id" attrs="{'invisible':[('despath_move_id','=',False)]}" readonly="1"/>
+                                 </group>
+                                 <group>
+
+                                      <field name="od_despatch_date"  attrs="{'required':[('od_despatch_state','=','despatched')]}"/>
+                                      <field name="od_despatch_state" attrs="{'readonly':[('od_desp_confirm','=',True)]}"/>
+                                       <field name="od_driver_id" attrs="{'readonly':[('od_desp_confirm','=',True)]}"/> 
+                                        <field name="od_amount" /> 
+                                        <field name="od_delivery_date" invisible="1"/>    
+                                        <field name="od_delivery_assis_ids" widget="many2many_tags" attrs="{'readonly':['|',('od_transport_type','!=','own'),('od_desp_confirm','=',True)]}"/>
+                                        <field name="od_fleet_id" attrs="{'readonly':[('od_desp_confirm','=',True)]}"/>    
+                                        <field name="od_desp_confirm" invisible="1"/>                                   <field name="no_of_carton" />
+                                                 
+                                                              
+                                 </group>
+
+                           <field name="od_desc" invisble="1"/>
+                           <field name="od_dispatch_line" nolabel="1" attrs="{'readonly':['|',('od_transport_type','!=','third'),('od_desp_confirm','=',True)]}">
+                           		<tree editable="top">
+                                       <field name="cartonsize_id" invisible="1"/>
+                                      <field name="inv_id" invisible="1"/>
+                                       <field name="unit_price" /> 
+                                        <field name="no_ofcarton" /> 
+                                        <field name="amount" />
+                                        <field name="od_transporter_id" invisible="1"/> 
+                                        <field name="od_state_id" invisible="1"/>                                        
+                           		
+                           		</tree>
+                           </field>
+                           </group> 
+						</page>
+
+                    </page>
+                </data>
+            </field>
+        </record>
+
+        <act_window
+            id="action_generate_despatch_entry "
+            name="Generate Despatch Entry"
+            multi="True"
+            key2="client_action_multi"
+            res_model="despatch.entry.merge"
+            src_model="account.invoice"
+            view_mode="form"
+            target="new"
+            view_type="form"/>
+</odoo>

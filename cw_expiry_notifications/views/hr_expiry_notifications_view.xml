@@ -1,0 +1,332 @@
+<?xml version="1.0"?>
+<odoo>
+	<data>
+
+		<record model='ir.ui.view'
+			id='employee_document_form_view_inherit_expiry_notify'>
+			<field name="name">hr.employee.document.form.inherit.expiry.notify
+			</field>
+			<field name="model">hr.employee.document</field>
+			<field name="inherit_id"
+				ref="oh_employee_documents_expiry.employee_document_form_view" />
+			<field name="arch" type="xml">
+				<xpath expr="//field[@name='expiry_date']" position="after">
+					<field name="type" />
+				</xpath>
+			</field>
+		</record>
+
+		<record model='ir.ui.view'
+			id='employee_document_tree_view_inherit_expiry_notify'>
+			<field name="name">hr.employee.document.tree.inherit.expiry.notify
+			</field>
+			<field name="model">hr.employee.document</field>
+			<field name="inherit_id"
+				ref="oh_employee_documents_expiry.employee_document_tree_view" />
+			<field name="arch" type="xml">
+				<xpath expr="//field[@name='expiry_date']" position="after">
+					<field name="type" />
+				</xpath>
+			</field>
+		</record>
+
+
+		<record id="view_expiry_notification_search" model="ir.ui.view">
+			<field name="name">hr.expiry.notification.search</field>
+			<field name="model">hr.expiry.notification</field>
+			<field name="arch" type="xml">
+				<search string="Expiry Notifications Search">
+					<field name="name" string="Notification" />
+					<field name="expire_date" />
+					<field name="employee_id" />
+					<field name="department_id" />
+<!--
+					<separator />
+					<filter string="Today" name="today" domain="[('expire_date','&gt;=',current_date),('expire_date','&lt;=',current_date)]" />
+					<filter string="Current Month" domain="[('expire_date','&gt;=', datetime.datetime.now().strftime('%Y-%m-01'))]" />
+					<separator />
+					<filter string="Red" name="red" domain="[('days_left','&lt;=',30)]" />
+					<filter string="Green" name="green" domain="[('days_left','&gt;', 30)]" />
+					<separator />
+-->
+<!--
+					<filter string="My Notifications" domain="[('employee_id.user_id.id', '=', uid)]" />
+-->
+					<group expand="0" string="Group By...">
+						<filter name="department" string="Department" icon="terp-personal"
+							domain="[]" context="{'group_by':'department_id'}" />
+						<filter name="employee" string="Employee" icon="terp-personal"
+							domain="[]" context="{'group_by':'employee_id'}" />
+					</group>
+				</search>
+			</field>
+		</record>
+
+		<record id="view_expiry_notification_form" model="ir.ui.view">
+			<field name="name">hr.expiry.notification.form</field>
+			<field name="model">hr.expiry.notification</field>
+			<field name="arch" type="xml">
+				<form string="Expiry Notifications">
+					<header>
+						<field invisible="1" name="type" />
+						<button class="oe_highlight" name="action_solve" string="Solved"
+							groups="hr.group_hr_user" type="object" context="{'type': type}" />
+					</header>
+					<sheet>
+						<group col="2">
+							<field name="name" readonly="1" />
+							<field name="expire_date" readonly="1" />
+							<field name="days_left" readonly="1" />
+							<field name="employee_code" readonly="1" />
+							<field name="employee_id" readonly="1" />
+							<field name="department_id" readonly="1" />
+							<field name="job_id" readonly="1" />
+						</group>
+					</sheet>
+				</form>
+			</field>
+		</record>
+
+
+		<record id="view_expiry_notification_emirate_tree" model="ir.ui.view">
+			<field name="name">hr.expiry.notification.emirate.tree</field>
+			<field name="model">hr.expiry.notification</field>
+			<field name="arch" type="xml">
+				<!-- <tree string="Contracts" decoration-bf="to_date==True" decoration-muted="to_date 
+					== 100" decoration-info="to_date==True" decoration-danger="to_date==True" 
+					decoration-success="to_date==True" decoration-warning="to_date==True" decoration-info="to_date 
+					and (to_date &lt; current_date)" > <tree string="Notifications" decoration-info="days_left&lt;30" 
+					decoration-warning="days_left&lt;7" decoration-danger="days_left==0"> -->
+				<!-- <tree string="Notifications" colors="red: days_left &lt; 30; green: 
+					days_left &gt; 30; " fonts="bold:days_left &lt; 30"> -->
+				<!-- <tree string="Notifications" colors="red:days_left &lt;= 15; orange:days_left 
+					&lt;= 30; blue:days_left &lt;= 60; green: days_left &gt; 60" fonts="bold:days_left 
+					&lt; 30"> -->
+				<tree string="Notifications">
+					<field name="employee_code" />
+					<field name="employee_id" />
+					<field name="department_id" />
+					<field name="job_id" />
+					<field name="emirate_id" attrs="{'invisible': [('type','!=', 'emirate')]}" />
+					<field name="expire_date" />
+					<field name="days_left" widget="expired" />
+					<field name="type" invisible="1" />
+				</tree>
+			</field>
+		</record>
+
+		<record id="view_expiry_notification_passport_tree" model="ir.ui.view">
+			<field name="name">hr.expiry.notification.passport.tree</field>
+			<field name="model">hr.expiry.notification</field>
+			<field name="arch" type="xml">
+				<tree string="Notifications">
+					<field name="employee_code" />
+					<field name="employee_id" />
+					<field name="department_id" />
+					<field name="job_id" />
+					<field name="passport_id" attrs="{'invisible': [('type','!=', 'passport')]}" />
+					<field name="expire_date" />
+					<field name="days_left" widget="expired" />
+					<field name="type" invisible="1" />
+				</tree>
+			</field>
+		</record>
+
+		<record id="view_expiry_notification_visa_tree" model="ir.ui.view">
+			<field name="name">hr.expiry.notification.visa.tree</field>
+			<field name="model">hr.expiry.notification</field>
+			<field name="arch" type="xml">
+				<tree string="Notifications">
+					<field name="employee_code" />
+					<field name="employee_id" />
+					<field name="department_id" />
+					<field name="job_id" />
+					<field name="visa_no" attrs="{'invisible': [('type','!=', 'visa')]}" />
+					<field name="expire_date" />
+					<field name="days_left" widget="expired" />
+					<field name="type" invisible="1" />
+				</tree>
+			</field>
+		</record>
+
+		<record id="view_expiry_notification_health_tree" model="ir.ui.view">
+			<field name="name">hr.expiry.notification.health.tree</field>
+			<field name="model">hr.expiry.notification</field>
+			<field name="arch" type="xml">
+				<tree string="Notifications">
+					<field name="employee_code" />
+					<field name="employee_id" />
+					<field name="department_id" />
+					<field name="job_id" />
+					<field name="healthcard_id" attrs="{'invisible': [('type','!=', 'health')]}" />
+					<field name="expire_date" />
+					<field name="days_left" widget="expired" />
+					<field name="type" invisible="1" />
+				</tree>
+			</field>
+		</record>
+
+		<record id="view_expiry_notification_fire_safety_tree" model="ir.ui.view">
+			<field name="name">hr.expiry.notification.fire_safety.tree</field>
+			<field name="model">hr.expiry.notification</field>
+			<field name="arch" type="xml">
+				<tree string="Notifications">
+					<field name="employee_code" />
+					<field name="employee_id" />
+					<field name="department_id" />
+					<field name="job_id" />
+					<field name="fire_safety_id" attrs="{'invisible': [('type','!=', 'fire_safety')]}" />
+					<field name="expire_date" />
+					<field name="days_left" widget="expired" />
+					<field name="type" invisible="1" />
+				</tree>
+			</field>
+		</record>
+
+		<record id="view_expiry_notification_hazmat_tree" model="ir.ui.view">
+			<field name="name">hr.expiry.notification.hazmat.tree</field>
+			<field name="model">hr.expiry.notification</field>
+			<field name="arch" type="xml">
+				<tree string="Notifications">
+					<field name="employee_code" />
+					<field name="employee_id" />
+					<field name="department_id" />
+					<field name="job_id" />
+					<field name="hazmat_id" attrs="{'invisible': [('type','!=', 'hazmat')]}" />
+					<field name="expire_date" />
+					<field name="days_left" widget="expired" />
+					<field name="type" invisible="1" />
+				</tree>
+			</field>
+		</record>
+
+		<record id="view_expiry_notification_other_tree" model="ir.ui.view">
+			<field name="name">hr.expiry.notification.other.tree</field>
+			<field name="model">hr.expiry.notification</field>
+			<field name="arch" type="xml">
+				<tree string="Notifications">
+					<field name="employee_code" />
+					<field name="employee_id" />
+					<field name="department_id" />
+					<field name="job_id" />
+					<field name="other_id" attrs="{'invisible': [('type','!=', 'other')]}" />
+					<field name="expire_date" />
+					<field name="days_left" widget="expired" />
+					<field name="type" invisible="1" />
+				</tree>
+			</field>
+		</record>
+
+		<record id="action_expiry_notification_emirate" model="ir.actions.act_window">
+			<field name="name">Emirates ID Expiry Notifications</field>
+			<field name="type">ir.actions.act_window</field>
+			<field name="res_model">hr.expiry.notification</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">tree,form</field>
+			<field name="domain">[('type','=','emirate')]</field>
+			<field name="view_id" ref="view_expiry_notification_emirate_tree" />
+			<field name="search_view_id" ref="view_expiry_notification_search" />
+		</record>
+
+		<record id="action_expiry_notification_passport" model="ir.actions.act_window">
+			<field name="name">Passport Expiry Notifications</field>
+			<field name="type">ir.actions.act_window</field>
+			<field name="res_model">hr.expiry.notification</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">tree,form</field>
+			<field name="domain">[('type','=','passport')]</field>
+			<field name="view_id" ref="view_expiry_notification_passport_tree" />
+			<field name="search_view_id" ref="view_expiry_notification_search" />
+		</record>
+
+		<record id="action_expiry_notification_visa" model="ir.actions.act_window">
+			<field name="name">Visa Expiry Notifications</field>
+			<field name="type">ir.actions.act_window</field>
+			<field name="res_model">hr.expiry.notification</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">tree,form</field>
+			<field name="domain">[('type','=','visa')]</field>
+			<field name="view_id" ref="view_expiry_notification_visa_tree" />
+			<field name="search_view_id" ref="view_expiry_notification_search" />
+		</record>
+
+		<record id="action_expiry_notification_health" model="ir.actions.act_window">
+			<field name="name">Health Card Expiry Notifications</field>
+			<field name="type">ir.actions.act_window</field>
+			<field name="res_model">hr.expiry.notification</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">tree,form</field>
+			<field name="domain">[('type','=','health')]</field>
+			<field name="view_id" ref="view_expiry_notification_health_tree" />
+			<field name="search_view_id" ref="view_expiry_notification_search" />
+		</record>
+
+		<record id="action_expiry_notification_fire_safety" model="ir.actions.act_window">
+			<field name="name">Fire &amp; Safety Expiry Notifications</field>
+			<field name="type">ir.actions.act_window</field>
+			<field name="res_model">hr.expiry.notification</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">tree,form</field>
+			<field name="domain">[('type','=','fire_safety')]</field>
+			<field name="view_id" ref="view_expiry_notification_fire_safety_tree" />
+			<field name="search_view_id" ref="view_expiry_notification_search" />
+		</record>
+
+		<record id="action_expiry_notification_hazmat" model="ir.actions.act_window">
+			<field name="name">Hazmat Expiry Notifications</field>
+			<field name="type">ir.actions.act_window</field>
+			<field name="res_model">hr.expiry.notification</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">tree,form</field>
+			<field name="domain">[('type','=','hazmat')]</field>
+			<field name="view_id" ref="view_expiry_notification_hazmat_tree" />
+			<field name="search_view_id" ref="view_expiry_notification_search" />
+		</record>
+
+		<record id="action_expiry_notification_other" model="ir.actions.act_window">
+			<field name="name">Other Docs Expiry Notifications</field>
+			<field name="type">ir.actions.act_window</field>
+			<field name="res_model">hr.expiry.notification</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">tree,form</field>
+			<field name="domain">[('type','=','other')]</field>
+			<field name="view_id" ref="view_expiry_notification_other_tree" />
+			<field name="search_view_id" ref="view_expiry_notification_search" />
+		</record>
+
+		<menuitem id="menu_hr_notification_root" name="Notifications"
+			parent="hr.menu_hr_root" sequence="95" groups="hr.group_hr_user" />
+
+		<menuitem id="menu_hr_expiry_notification_root" name="Expiry Notifications"
+			parent="hr.menu_hr_root" sequence="95" groups="hr.group_hr_user" />
+
+		<menuitem id="menu_hr_emirate_notification" name="Emirates ID"
+			groups="hr.group_hr_user" parent="menu_hr_expiry_notification_root"
+			action="action_expiry_notification_emirate" sequence="10" />
+
+		<menuitem id="menu_hr_passport_notification" name="Passport"
+			groups="hr.group_hr_user" parent="menu_hr_expiry_notification_root"
+			action="action_expiry_notification_passport" sequence="20" />
+
+		<menuitem id="menu_hr_visa_notification" name="Visa"
+			groups="hr.group_hr_user" parent="menu_hr_expiry_notification_root"
+			action="action_expiry_notification_visa" sequence="30" />
+
+		<menuitem id="menu_hr_health_notification" name="Health Card"
+			groups="hr.group_hr_user" parent="menu_hr_expiry_notification_root"
+			action="action_expiry_notification_health" sequence="40" />
+
+		<menuitem id="menu_hr_fire_safety_notification" name="Fire &amp; Safety"
+			groups="hr.group_hr_user" parent="menu_hr_expiry_notification_root"
+			action="action_expiry_notification_fire_safety" sequence="50" />
+
+		<menuitem id="menu_hr_hazmat_notification" name="Hazmat"
+			groups="hr.group_hr_user" parent="menu_hr_expiry_notification_root"
+			action="action_expiry_notification_hazmat" sequence="60" />
+
+		<menuitem id="menu_hr_other_notification" name="Other Docs"
+			groups="hr.group_hr_user" parent="menu_hr_expiry_notification_root"
+			action="action_expiry_notification_other" sequence="70" />
+
+	</data>
+</odoo>

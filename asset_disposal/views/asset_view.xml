@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record model="ir.ui.view" id="asset_form_view_inherit">
+            <field name="name">account.asset.asset.form</field>
+            <field name="model">account.asset.asset</field>
+            <field name="inherit_id" ref="account_asset.view_account_asset_asset_form"/>
+            <field name="arch" type="xml">
+            	<xpath expr="//field[@name='category_id']" position="after">
+            		<field name="disposed_move_id" invisible="1"/>
+            	</xpath>
+                <xpath expr="//button[@name='set_to_close']" position="attributes">
+                    <attribute name="name">%(asset_disposal.action_asset_dispose)d</attribute>
+                    <attribute name="type">action</attribute>
+                    <attribute name="context">{'default_asset_id':active_id,'default_residual_amount':value_residual,'default_sale_amount':value_residual}</attribute>
+                </xpath>
+                <xpath expr="//form/sheet/notebook/page[2]" position="after">
+            		<page name="asset_info" string="Asset Disposal" attrs="{'invisible':[('disposed_move_id','=',False)]}">
+            			<group>
+            				<group>
+            					<field name="date_wizard"/>
+            					<field name="disposal_type"/>
+            					<field name="disposal_partner_id" attrs="{'invisible':[('type','=','writeoff')]}"/>
+            					<field name="sale_amount" attrs="{'invisible':[('type','=','writeoff')]}"/>
+            					<field name="disposal_residual_amount"/>
+            					<field name="cus_invoice_id" attrs="{'invisible':[('type','=','writeoff')]}"/>
+            				</group>
+            			</group>
+            			
+            		
+            		</page>
+            	</xpath>
+                
+            </field>
+        </record>
+        
+        
+         <record model="ir.ui.view" id="view_account_asset_category_form_inherit_disposal">
+            <field name="name">account.asset.category.form.inherit</field>
+            <field name="model">account.asset.category</field>
+            <field name="inherit_id" ref="account_asset.view_account_asset_category_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='account_analytic_id']" position="after">
+                	<field name="disposal_gain_account_id" required="1"/>
+                    <field name="disposal_loss_account_id" required="1"/>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

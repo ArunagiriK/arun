@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+        <record model="ir.ui.view" id="stock_picking_form_view">
+            <field name="name">stock.picking</field>
+            <field name="model">stock.picking</field>
+            <field name="type">form</field>
+            <field name="inherit_id" ref="stock.view_picking_form"/>
+            <field name="arch" type="xml">
+                <button name="button_scrap" position="after">
+       				<button name="od_button_create_invoice" string="Create Invoice" type="object" 
+                          attrs="{'invisible':[('od_invoice_control','!=','to_invoice')]}"/>
+            	</button>
+                <button name="action_picking_move_tree" position="after">
+                    <button name="action_view_invoice" type="object" class="oe_stat_button" icon="fa-pencil-square-o" attrs="{'invisible':[('invoice_id', '=', False)]}" >
+                            <div class="o_stat_info">
+                                <span class="o_stat_text"> Credit Note </span>
+                            </div>
+                    </button>
+                </button>
+                <field name="move_type" position="after">
+                    <field name="od_invoice_control" attrs="{'invisible':[('state','!=','done')]}"/>
+                    <field name="invoice_id" attrs="{'invisible':[('state','!=','done')]}" readonly="1"/>
+                </field>
+            </field>
+        </record>
+    </data>
+</odoo>

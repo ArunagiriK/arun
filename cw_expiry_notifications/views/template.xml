@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<data>
+		<template id="assets_backend" name="assets" inherit_id="web.assets_backend">
+			<xpath expr="." position="inside">
+				<link rel="stylesheet" href="/cw_expiry_notifications/static/src/css/color.css" />
+				<script type="text/javascript" src="/cw_expiry_notifications/static/src/js/color.js" />
+			</xpath>
+		</template>
+	</data>
+</odoo>

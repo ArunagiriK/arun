@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<data noupdate="1">
+
+		<record id="mt_advance_request_confirmed" model="mail.message.subtype">
+			<field name="name">Confirmed</field>
+			<field name="res_model">advance.request.form</field>
+			<field name="description">Salary Advance Request created and waiting
+				confirmation
+			</field>
+		</record>
+
+		<record id="mt_advance_request_verified" model="mail.message.subtype">
+			<field name="name">Verify</field>
+			<field name="res_model">advance.request.form</field>
+			<field name="default" eval="False" />
+			<field name="description">Salary Advance Request verified</field>
+		</record>
+
+		<record id="mt_advance_request_approved" model="mail.message.subtype">
+			<field name="name">Approved</field>
+			<field name="res_model">advance.request.form</field>
+			<field name="description">Salary Advance Request approved</field>
+		</record>
+
+		<record id="mt_advance_request_refused" model="mail.message.subtype">
+			<field name="name">Refused</field>
+			<field name="res_model">advance.request.form</field>
+			<field name="default" eval="False" />
+			<field name="description">Salary Advance Request refused</field>
+		</record>
+
+	</data>
+	<data>
+
+		<record model="advance.category" id="advance_category_fixed">
+			<field name="name">Salary Advance (Upto 2500)</field>
+			<field name="type">fixed</field>
+			<field name="maximum_amount">2500</field>
+			<field name="repayment_period">6.0</field>
+		</record>
+
+		<record model="advance.category" id="advance_category_variable">
+			<field name="name">70 % of Salary Advance</field>
+			<field name="type">variable</field>
+			<field name="amount_percentage">70.0</field>
+			<field name="months">1.0</field>
+			<field name="repayment_period">6.0</field>
+		</record>
+
+	</data>
+</odoo>

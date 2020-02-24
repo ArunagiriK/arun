@@ -1,0 +1,333 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<data noupdate="1"></data>
+
+	<data noupdate="1">
+
+		<record id="annual_leave_rule_30" model="hr.annual.leave.rule">
+			<field name="name">0-5</field>
+			<field name="sequence">10</field>
+			<field name="year_from">0</field>
+			<field name="year_to">5</field>
+			<field name="days">30</field>
+		</record>
+
+
+		<record id="annual_leave_rule_35" model="hr.annual.leave.rule">
+			<field name="name">6-10</field>
+			<field name="sequence">20</field>
+			<field name="year_from">6</field>
+			<field name="year_to">10</field>
+			<field name="days">35</field>
+		</record>
+
+
+		<record id="annual_leave_rule_40" model="hr.annual.leave.rule">
+			<field name="name">11-15</field>
+			<field name="sequence">30</field>
+			<field name="year_from">11</field>
+			<field name="year_to">15</field>
+			<field name="days">40</field>
+		</record>
+
+
+		<record id="annual_leave_rule_45" model="hr.annual.leave.rule">
+			<field name="name">16-un</field>
+			<field name="sequence">40</field>
+			<field name="year_from">16</field>
+			<field name="year_to">0</field>
+			<field name="days">45</field>
+		</record>
+
+
+		<record id="hr_holidays.holiday_status_cl" model="hr.leave.type">
+			<field name="code">AL</field>
+			<field name="name">Annual Leaves</field>
+			<field name="double_validation">True</field>
+			<field name="color_name">lavender</field>
+			<field name="active">True</field>
+			<field name="exclude_probation">True</field>
+			<field name="exclude_rest_days">True</field>
+			<field name="exclude_public_holidays">True</field>
+			<field name="type">annual</field>
+			<field name="expire_on">var</field>
+			<field name="var_base">ann_start</field>
+			<field name="expire_type">month</field>
+			<field name="expire_value">24</field>
+			<field name="annual_leave_rules" eval="[(6, 0, [ref('annual_leave_rule_30'), ref('annual_leave_rule_35'), ref('annual_leave_rule_40'), ref('annual_leave_rule_45')])]"/>
+			<field name="prorated">True</field>
+			<field name="limit_over_holidays">True</field>
+        </record>
+
+
+
+		<record id="holiday_status_paternity" model="hr.leave.type">
+			<field name="code">PL</field>
+			<field name="name">Paternity Leave</field>
+			<field name="double_validation">True</field>
+			<field name="type">paternity</field>
+			<field name="color_name">ivory</field>
+			<field name="active">True</field>
+			<field name="days">5</field>
+			<field name="exclude_probation">True</field>
+			<field name="exclude_rest_days">True</field>
+			<field name="exclude_public_holidays">True</field>
+			<field name="exclude_leave_frst_yr">True</field>
+			<field name="enable_per_service">True</field>
+			<field name="no_per_service">2</field>
+			<field name="gender">male</field>
+			<field name="marital">married</field>
+			<field name="expire_on">comp_end</field>
+			<field name="need_attachment">True</field>
+		</record>
+
+
+
+		<record id="holiday_status_maternity" model="hr.leave.type">
+			<field name="code">ML</field>
+			<field name="name">Maternity Leave</field>
+			<field name="double_validation">True</field>
+			<field name="color_name">lightpink</field>
+			<field name="active">True</field>
+			<field name="type">maternity</field>
+			<field name="days">90</field>
+			<field name="exclude_probation">True</field>
+			<field name="exclude_rest_days">True</field>
+			<field name="exclude_public_holidays">True</field>
+			<field name="gender">female</field>
+			<field name="marital">married</field>
+			<field name="expire_on">comp_end</field>
+			<field name="exclude_leave_frst_yr">True</field>
+			<field name="enable_per_service">True</field>
+			<field name="no_per_service">2</field>
+			<field name="need_attachment">True</field>
+		</record>
+
+
+
+		<record id="holiday_status_emergency" model="hr.leave.type">
+			<field name="code">EML</field>
+			<field name="name">Emergency Leave</field>
+			<field name="double_validation">True</field>
+			<field name="type">emergency</field>
+			<field name="limit">False</field>
+			<field name="days">5</field>
+			<field name="color_name">red</field>
+			<field name="active">True</field>
+			<field name="exclude_probation">True</field>
+			<field name="exclude_rest_days">True</field>
+			<field name="exclude_public_holidays">True</field>
+			<field name="expire_on">comp_end</field>
+			<field name="need_attachment">True</field>
+		</record>
+
+
+		<record id="hr_holidays.holiday_status_sl" model="hr.leave.type">
+			<field name="code">SL</field>
+			<field name="name">Medical Leave</field>
+			<field name="double_validation">True</field>
+			<field name="type">sick</field>
+			<field name="days">15</field>
+			<field name="exclude_probation">True</field>
+			<field name="exclude_rest_days">True</field>
+			<field name="exclude_public_holidays">True</field>
+			<field name="limit" eval="False" />
+			<field name="expire_on">comp_end</field>
+			<field name="need_attachment">True</field>
+		</record>
+
+
+		<record id="hr_holidays.holiday_status_comp" model="hr.leave.type">
+			<field name="code">CL</field>
+			<field name="double_validation">True</field>
+			<field name="limit" eval="False" />
+			<field name="type">compen</field>
+			<field name="auto_allocate">False</field>
+			<field name="exclude_probation">True</field>
+			<field name="exclude_rest_days">True</field>
+			<field name="exclude_public_holidays">True</field>
+			<field name="color_name">lavender</field>
+			<field name="need_attachment">True</field>
+		</record>
+
+		<record id="hr_holidays.holiday_status_unpaid" model="hr.leave.type">
+			<field name="code">UL</field>
+			<field name="double_validation">True</field>
+			<field name="type">unpaid</field>
+			<field name="exclude_probation">True</field>
+			<field name="exclude_rest_days">True</field>
+			<field name="exclude_public_holidays">True</field>
+			<field name="limit" eval="True" />
+			<field name="expire_on">comp_end</field>
+		</record>
+
+		<record id="holiday_status_idaleave" model="hr.leave.type">
+			<field name="code">IL</field>
+			<field name="name">Ida Leave</field>
+			<field name="double_validation">True</field>
+			<field name="color_name">wheat</field>
+			<field name="active">False</field>
+			<field name="days">132</field>
+			<field name="exclude_probation">True</field>
+			<field name="exclude_rest_days">True</field>
+			<field name="exclude_public_holidays">True</field>
+			<field name="gender">female</field>
+			<field name="marital">married</field>
+			<field name="religion_id" ref="cw_hr_extended.ald_rel_MU" />
+			<field name="expire_on">comp_end</field>
+			<field name="need_attachment">True</field>
+		</record>
+
+
+		<record id="holiday_status_educationleave" model="hr.leave.type">
+			<field name="code">EL</field>
+			<field name="name">Education Leave</field>
+			<field name="double_validation">True</field>
+			<field name="color_name">lightyellow</field>
+			<field name="active">False</field>
+			<field name="exclude_probation">True</field>
+			<field name="exclude_rest_days">True</field>
+			<field name="exclude_public_holidays">True</field>
+			<field name="expire_on">comp_end</field>
+			<field name="need_attachment">True</field>
+		</record>
+
+		<record id="holiday_status_trainingleave" model="hr.leave.type">
+			<field name="code">TL</field>
+			<field name="name">Training Leave</field>
+			<field name="double_validation">True</field>
+			<field name="limit">False</field>
+			<field name="color_name">lightsalmon</field>
+			<field name="active">False</field>
+			<field name="type">training</field>
+			<field name="exclude_probation">True</field>
+			<field name="exclude_rest_days">True</field>
+			<field name="exclude_public_holidays">True</field>
+			<field name="expire_on">comp_end</field>
+			<field name="need_attachment">True</field>
+		</record>
+
+		<record id="holiday_status_hajjleave" model="hr.leave.type">
+			<field name="code">HJL</field>
+			<field name="name">Hajj Leave</field>
+			<field name="double_validation">True</field>
+			<field name="color_name">lightgreen</field>
+			<field name="active">False</field>
+			<field name="type">haj</field>
+			<field name="days">15</field>
+			<field name="religion_id" ref="cw_hr_extended.ald_rel_MU" />
+			<field name="exclude_probation">True</field>
+			<field name="expire_on">comp_end</field>
+			<field name="need_attachment">True</field>
+			<field name="exclude_leave_frst_yr">True</field>
+			<field name="enable_per_service">True</field>
+			<field name="no_per_service">1</field>
+		</record>
+
+		<record id="holiday_status_clootc" model="hr.leave.type">
+			<field name="code">CPL</field>
+			<field name="name">Companion Leave (out of the country)</field>
+			<field name="double_validation">True</field>
+			<field name="color_name">magenta</field>
+			<field name="active">False</field>
+			<field name="type">compan</field>
+			<field name="days">90</field>
+			<field name="exclude_probation">True</field>
+			<field name="exclude_rest_days">True</field>
+			<field name="exclude_public_holidays">True</field>
+			<field name="country_id" ref="base.ae" />
+			<field name="expire_on">comp_end</field>
+		</record>
+
+		<record id="holiday_status_clitc" model="hr.leave.type">
+			<field name="code">CPL IN</field>
+			<field name="name">Companion Leave (in the country)</field>
+			<field name="double_validation">True</field>
+			<field name="color_name">magenta</field>
+			<field name="active">False</field>
+			<field name="type">compan</field>
+			<field name="days">60</field>
+			<field name="exclude_probation">True</field>
+			<field name="exclude_rest_days">True</field>
+			<field name="exclude_public_holidays">True</field>
+			<field name="country_id" ref="base.ae" />
+			<field name="expire_on">comp_end</field>
+		</record>-->
+
+		<record id="holiday_status_clitcsd" model="hr.leave.type">
+			<field name="code">CTL IN</field>
+			<field name="name">Compassionate Leave ( in the country) Second Degree
+			</field>
+			<field name="double_validation">True</field>
+			<field name="color_name">lightcoral</field>
+			<field name="active">False</field>
+			<field name="type">compas</field>
+			<field name="days">3</field>
+			<field name="exclude_probation">True</field>
+			<field name="exclude_rest_days">True</field>
+			<field name="exclude_public_holidays">True</field>
+			<field name="expire_on">comp_end</field>
+		</record>
+
+		<record id="holiday_status_clootcsd" model="hr.leave.type">
+			<field name="code">CTL</field>
+			<field name="name">Compassionate Leave ( out of the country) Second
+				Degree
+			</field>
+			<field name="double_validation">True</field>
+			<field name="color_name">lightcoral</field>
+			<field name="active">False</field>
+			<field name="type">compas</field>
+			<field name="days">5</field>
+			<field name="exclude_probation">True</field>
+			<field name="exclude_rest_days">True</field>
+			<field name="exclude_public_holidays">True</field>
+			<field name="expire_on">comp_end</field>
+		</record>
+
+		<record id="holiday_status_clitcfd" model="hr.leave.type">
+			<field name="code">CPL IN FD</field>
+			<field name="name">Compassionate Leave ( in the country) First Degree
+			</field>
+			<field name="double_validation">True</field>
+			<field name="color_name">red</field>
+			<field name="active">False</field>
+			<field name="type">compas</field>
+			<field name="days">5</field>
+			<field name="exclude_probation">True</field>
+			<field name="exclude_rest_days">True</field>
+			<field name="exclude_public_holidays">True</field>
+			<field name="expire_on">comp_end</field>
+		</record>
+
+		<record id="holiday_status_clootcfd" model="hr.leave.type">
+			<field name="code">CPL OUT FD</field>
+			<field name="name">Compassionate Leave ( out of the country) First
+				Degree
+			</field>
+			<field name="double_validation">True</field>
+			<field name="color_name">red</field>
+			<field name="active">False</field>
+			<field name="type">compas</field>
+			<field name="days">7</field>
+			<field name="exclude_probation">True</field>
+			<field name="exclude_rest_days">True</field>
+			<field name="exclude_public_holidays">True</field>
+			<field name="expire_on">comp_end</field>
+		</record>
+
+		<record id="holiday_status_exceptional" model="hr.leave.type">
+			<field name="code">EXL</field>
+			<field name="name">Exceptional Leave</field>
+			<field name="double_validation">True</field>
+			<field name="limit">False</field>
+			<field name="color_name">red</field>
+			<field name="active">False</field>
+			<field name="exclude_probation">True</field>
+			<field name="exclude_rest_days">True</field>
+			<field name="exclude_public_holidays">True</field>
+			<field name="expire_on">comp_end</field>
+		</record>
+
+	</data>
+</odoo>

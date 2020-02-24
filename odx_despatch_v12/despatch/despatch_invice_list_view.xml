@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+   <record model="ir.ui.view" id="despatch_invice_list_tree_view">
+      <field name="name">od.despatch.invoice.list</field>
+      <field name="model">od.despatch.invoice.list</field>
+      <field name="type">tree</field>
+      <field name="arch" type="xml">
+         <tree editable="top" create="false" import="false">
+            <field name="inv_date" readonly="1" />
+            <field name="partner_id" readonly="1" string="Customer Name"/>
+            <field name="invoice_id" readonly="1" string="Invoice Number"/>
+            <field name="client_order_ref" readonly="1"/>
+            <field name="amount" readonly="1" string="Invoice Amount"/>
+            <field name="user_id" readonly="1"/>
+            <field name="requested_date" readonly="1"/>
+            <field name="state_id" readonly="1"/>
+            <field name="so_no" readonly="1" string="Sale Order Number"/>
+ 
+         </tree>
+      </field>
+   </record>
+   
+ 
+    <record model="ir.actions.server" id="action_orchid_despatch_wizard">
+        <field name="name">Dispatch</field>
+        <field name="model_id" ref="model_od_despatch_invoice_list"/>
+        <field name="code">
+          action = model.open_despatch_wizard()
+        </field>
+    </record> 
+   
+   
+    <record model="ir.actions.server" id="update_despatch_lines">
+        <field name="name">Update prepayment despatch</field>
+        <field name="model_id" ref="model_od_despatch_invoice_list"/>
+        <field name="code">
+          action = model.load_despatch_line()
+        </field>
+    </record>   
+   
+   <record model="ir.actions.act_window" id="action_despatch_invice_list_view">
+      <field name="name">To be Dispatched</field>
+      <field name="type">ir.actions.act_window</field>
+      <field name="res_model">od.despatch.invoice.list</field>
+      <!-- <field name="domain">[('field_name','condition',criteria)]</field>-->
+      <field name="view_type">form</field>
+      <field name="view_mode">tree,form</field>
+      <field name="view_id" ref="despatch_invice_list_tree_view"/>
+   </record>
+    <menuitem name="Despatch" id="update_despatch_linesid" parent="sale.menu_sale_config" action="update_despatch_lines" sequence="39"/>
+</odoo>

@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record id="product_template_form_view" model="ir.ui.view">
+        <field name="name">product.template.form.inherit</field>
+        <field name="model">product.template</field>
+        <field name="priority">5</field>
+        <field name="inherit_id" ref="product.product_template_form_view"/>
+        <field name="arch" type="xml">
+            <field name="categ_id" position="after">
+                <field name="article_no"/>
+            </field>
+        </field>
+    </record>
+
+
+<!--
+    <record model="ir.ui.view" id="edit_product_normal_form_view_form_inhirit">
+        <field name="name">product.product.information.form</field>
+        <field name="model">product.product</field>
+        <field name="inherit_id" ref="product.product_normal_form_view"/>
+        <field name="arch" type="xml">
+            <field name="type" position="after">
+                 <field name="article_no"/>
+            </field>
+        </field>
+    </record>
+-->
+
+</odoo>

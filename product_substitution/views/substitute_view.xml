@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+        <record model="ir.ui.view" id="edit_product_normal_form_view_form_inhirit">
+            <field name="name">product.product.information.form</field>
+            <field name="model">product.product</field>
+            <field name="inherit_id" ref="product.product_normal_form_view"/>
+            <field name="arch" type="xml">
+                <page name="sales" position="after">
+                    <page name="product_substitute" string="Product Substitutes">
+                        <field name="substitute_product_ids"/>
+                    </page>
+                </page>
+            </field>
+        </record>
+</odoo>

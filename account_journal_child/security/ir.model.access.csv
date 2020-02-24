@@ -1,0 +1,4 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_account_move_template,account.move.template,model_account_move_template,base.group_user,1,1,1,1
+access_account_move_template_child_one,account.move.line.child.one,model_account_move_line_child_one,base.group_user,1,1,1,1
+access_account_move_template_child_two,account.move.line.child.two,model_account_move_line_child_two,base.group_user,1,1,1,1

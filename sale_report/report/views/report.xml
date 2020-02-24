@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <report
+            id="action_report_stock_picking_sales"
+            model="sale.order"
+            string="Stock picking"
+            report_type="qweb-pdf"
+            name="sale_report.report_picking_saleorder"
+            file="sale_report.report_picking_saleorder"
+        />
+    </data>
+</odoo>

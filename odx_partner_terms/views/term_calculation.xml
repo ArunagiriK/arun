@@ -1,0 +1,99 @@
+<odoo>
+    <record model="ir.ui.view" id="calculation_form_view">
+         <field name="name">calculation.form</field>
+         <field name="model">partner.term.calculation</field>
+         <field name="arch" type="xml">
+             <form string="Partner Term Calculations">
+                <sheet>
+                    <div class="oe_button_box" name="button_box">
+                        <button name="toggle_active" type="object"
+                                class="oe_stat_button" icon="fa-archive">
+                            <field name="active" widget="boolean_button"/>
+                        </button>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="name"/>
+                            <field name="partner_term_product_id"
+                                   context="{'default_is_term_product':1,'default_type':'consu'}"/>
+                            <field name="create_type"/>
+                            <field name="debit_account_id"
+                                        attrs="{'invisible': [('create_type', '!=', 'journal')],
+                                            'required': [('create_type', '=', 'journal')]}"/>
+                            <field name="credit_account_id"
+                                        attrs="{'invisible': [('create_type', '!=', 'journal')],
+                                            'required': [('create_type', '=', 'journal')]}"/>
+                        </group>
+                        <group>
+                            <field name="partner_term_journal_id"/>
+                            <field name="term_calculation_type"/>
+                             <field name="frequency"
+                                   attrs="{'invisible': [('term_calculation_type', '!=', 'automatic')],
+                                            'required': [('term_calculation_type', '=', 'automatic')]}"/>
+                            <field name="automatic_calculation_type"
+                                   attrs="{'invisible': ['|',('term_calculation_type', '!=', 'automatic'),('frequency','!=','periodic')],
+                                            'required': [('term_calculation_type', '=', 'automatic')]}"/>
+                            <field name="periodic_terms"
+                                   attrs="{'invisible': [('term_calculation_type', '!=', 'on_invoice')]}"/>
+
+
+                        </group>
+                    </group>
+                    <notebook colspan="6">
+                        <page string="Computation">
+                            <group>
+                                <group>
+                                    <separator string="Term Computation" colspan="6"/>
+                                    <field name="calculation_type" colspan="6" />
+                                </group>
+                            </group>
+                            <group>
+                                <newline/>
+                                <field name="computation_code" colspan="6" required="1"/>
+                            </group>
+                        </page>
+                        <page string="History">
+                            <field name="history_invoice_ids" readonly="1" nolabel="1">
+                                <tree>
+                                    <field name="number"/>
+                                    <field name="state"/>
+                                    <field name="date_invoice"/>
+                                    <field name="partner_term_value"/>
+                                </tree>
+                                <form readonly="1">
+                                </form>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+             </form>
+         </field>
+
+    </record>
+    <record model="ir.ui.view" id="calculation_tree_view">
+        <field name="name">calculation.tree</field>
+         <field name="model">partner.term.calculation</field>
+         <field name="arch" type="xml">
+            <tree string="Term Calculations">
+                <field name="name"/>
+                <field name="calculation_type"/>
+            </tree>
+         </field>
+
+    </record>
+
+    <record model="ir.actions.act_window" id="calculation_list_action">
+            <field name="name">Partner Terms</field>
+            <field name="res_model">partner.term.calculation</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_empty_folder">Create Partner Terms
+                </p>
+            </field>
+    </record>
+
+    <menuitem id="calculation_menu" name="Partner Terms" parent="sale.menu_sale_config" action="calculation_list_action"/>
+
+
+</odoo>

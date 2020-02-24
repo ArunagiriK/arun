@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="sale_view_form_substitution" model="ir.ui.view">
+            <field name="name">sale.order.form.substitution</field>
+            <field name="model">sale.order</field>
+            <field name="inherit_id" ref="sale.view_order_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//notebook/page[@name='order_lines']/field[@name='order_line']/tree/field[@name='price_subtotal']"
+                       position="after">
+<!--
+                    <button name="%(product_substitution.action_view_product_substitution_wiz)d" string="Substitute Products" type="action" icon='fa-bars'/>
+-->
+                </xpath>
+            </field>
+        </record>
+
+    </data>
+</odoo>
